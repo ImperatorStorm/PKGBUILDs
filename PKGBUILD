@@ -29,14 +29,12 @@ makedepends=(cmake ninja git python)
 source=("https://github.com/aseprite/aseprite/releases/download/v${pkgver}/Aseprite-v${pkgver}-Source.zip"
         # Which branch a given build of Aseprite requires is noted in its `INSTALL.md`
         "git+https://github.com/aseprite/skia.git#branch=aseprite-m81"
-	"aseprite.desktop"
         # Python 3-compliant version of the script
         is_clang.py
         # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2535.patch
         shared-libarchive.patch)
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'SKIP'
-            'deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25'
             'cb901aaf479bcf1a2406ce21eb31e43d3581712a9ea245672ffd8fbcd9190441'
             'e42675504bfbc17655aef1dca957041095026cd3dd4e6981fb6df0a363948aa7')
 
@@ -90,6 +88,6 @@ package() {
 	install -vDm 755 "$srcdir/staging/bin/aseprite" "$pkgdir/usr/bin/aseprite"
 	install -vd "$pkgdir/usr/share/aseprite"
 	cp -rv "$srcdir/staging/share/aseprite" "$pkgdir/usr/share"
-	# Also install the EULA
-	install -vDm 644 -t "$pkgdir/usr/share/licenses/$pkgname" "$srcdir/EULA.txt"
+	# Also install the licenses
+	install -vDm 644 -t "$pkgdir/usr/share/licenses/$pkgname" "$srcdir/EULA.txt" "$srcdir/docs/LICENSES.md"
 }
