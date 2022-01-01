@@ -25,10 +25,12 @@ pkgbase = aseprite
 	depends = libxcursor
 	source = https://github.com/aseprite/aseprite/releases/download/v1.2.30/Aseprite-v1.2.30-Source.zip
 	source = git+https://github.com/aseprite/skia.git#branch=aseprite-m81
+	source = aseprite.desktop
 	source = is_clang.py
 	source = shared-libarchive.patch
 	sha256sums = 9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874
 	sha256sums = SKIP
+	sha256sums = deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25
 	sha256sums = cb901aaf479bcf1a2406ce21eb31e43d3581712a9ea245672ffd8fbcd9190441
 	sha256sums = e42675504bfbc17655aef1dca957041095026cd3dd4e6981fb6df0a363948aa7
 
