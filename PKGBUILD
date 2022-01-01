@@ -61,7 +61,7 @@ prepare() {
 build() {
 	echo Building Skia...
 	cd skia
-	local skiadir="$PWD"
+	local _skiadir="$PWD"
 	# Must use the bundled `gn` executable and HarfBuzz libraries because of incompatibilities
 	buildtools/linux64/gn gen build --args="is_debug=false is_official_build=true "\
 skia_use_system_{expat,icu,libjpeg_turbo,libpng,libwebp,zlib,freetype2}"=true "\
@@ -75,7 +75,7 @@ skia_use_{freetype,harfbuzz}"=true skia_use_sfntly=false skia_pdf_subset_harfbuz
 	# Suppress install messages since we install to a temporary area; `install -v` will do the job
 	cmake -S . -B build -G Ninja -Wno-dev -DCMAKE_INSTALL_MESSAGE=NEVER -DCMAKE_BUILD_TYPE=None \
 -DLAF_WITH_EXAMPLES=OFF -DLAF_WITH_TESTS=OFF -DLAF_BACKEND=skia \
--DSKIA_DIR="$skiadir" -DSKIA_LIBRARY_DIR="$skiadir/build" -DSKIA_LIBRARY="$skiadir/build/libskia.a" \
+-DSKIA_DIR="$_skiadir" -DSKIA_LIBRARY_DIR="$_skiadir/build" -DSKIA_LIBRARY="$_skiadir/build/libskia.a" \
 -DUSE_SHARED_{CMARK,CURL,GIFLIB,JPEGLIB,ZLIB,LIBPNG,TINYXML,PIXMAN,FREETYPE,HARFBUZZ,LIBARCHIVE}=YES \
 -DWEBP_BUILD_{ANIM_UTILS,CWEBP,DWEBP,EXTRAS,IMG2WEBP,VWEBP,WEBPINFO,WEBP_JS}=NO \
 -DWEBP_BUILD_GIF2WEBP=YES
@@ -98,10 +98,10 @@ package() {
 	install -vDm 755 staging/bin/aseprite "$pkgdir/usr/bin/aseprite"
 	install -vDm 644 aseprite.desktop "$pkgdir/usr/share/applications/$pkgname.desktop"
 	# Install the icons in the correct directory (which is not the default)
-	local size
-	for size in 16 32 48 64 128 256; do
+	local _size
+	for _size in 16 32 48 64 128 256; do
 		# The installed icon's name is taken from the `.desktop` file
-		install -vDm 644 staging/share/aseprite/data/icons/ase$size.png "$pkgdir/usr/share/icons/hicolor/${size}x$size/apps/aseprite.png"
+		install -vDm 644 staging/share/aseprite/data/icons/ase$_size.png "$pkgdir/usr/share/icons/hicolor/${_size}x$_size/apps/aseprite.png"
 	done
 	# Delete the icons to avoid copying them in two places (they aren't used by Aseprite itself)
 	rm -rf staging/share/aseprite/data/icons
