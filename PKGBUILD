@@ -18,6 +18,7 @@ depends=(# ~ Aseprite's direct dependencies ~
          # pixman is not linked to because we use Skia instead
          # harfbuzz is linked statically because Aseprite expects an older version
          cmark libcurl.so libgif.so libjpeg.so zlib libpng tinyxml libfreetype.so libarchive.so
+         hicolor-icon-theme # For installing Aseprite's icons
          # ~ Skia deps ~
          # (Skia links dynamically to HarfBuzz, only Aseprite itself doesn't. >_<)
          libexpat.so=1-64 icu libharfbuzz.so=0-64
@@ -71,7 +72,8 @@ skia_use_{freetype,harfbuzz}"=true skia_use_sfntly=false skia_pdf_subset_harfbuz
 	echo Building Aseprite...
 	cd ..
 	# gif2webp or img2webp is required to get `libwebpdemux`, which Aseprite requires
-	cmake -S . -B build -G Ninja -Wno-dev -DCMAKE_BUILD_TYPE=None \
+	# Suppress install messages since we install to a temporary area; `install -v` will do the job
+	cmake -S . -B build -G Ninja -Wno-dev -DCMAKE_INSTALL_MESSAGE=NEVER -DCMAKE_BUILD_TYPE=None \
 -DLAF_WITH_EXAMPLES=OFF -DLAF_WITH_TESTS=OFF -DLAF_BACKEND=skia \
 -DSKIA_DIR="$skiadir" -DSKIA_LIBRARY_DIR="$skiadir/build" -DSKIA_LIBRARY="$skiadir/build/libskia.a" \
 -DUSE_SHARED_{CMARK,CURL,GIFLIB,JPEGLIB,ZLIB,LIBPNG,TINYXML,PIXMAN,FREETYPE,HARFBUZZ,LIBARCHIVE}=YES \
@@ -92,10 +94,19 @@ package() {
 	# instead of too much (cruft rarely goes noticed). Also hope that it doesn't break :)
 	cmake --install build --prefix=staging --strip
 
-	install -vDm 755 "$srcdir/staging/bin/aseprite" "$pkgdir/usr/bin/aseprite"
-	install -vd "$pkgdir/usr/share/aseprite"
-	cp -rv "$srcdir/staging/share/aseprite" "$pkgdir/usr/share"
+	# Install the binary and its `.desktop` file
+	install -vDm 755 staging/bin/aseprite "$pkgdir/usr/bin/aseprite"
 	install -vDm 644 aseprite.desktop "$pkgdir/usr/share/applications/$pkgname.desktop"
+	# Install the icons in the correct directory (which is not the default)
+	local size
+	for size in 16 32 48 64 128 256; do
+		# The installed icon's name is taken from the `.desktop` file
+		install -vDm 644 staging/share/aseprite/data/icons/ase$size.png "$pkgdir/usr/share/icons/hicolor/${size}x$size/apps/aseprite.png"
+	done
+	# Delete the icons to avoid copying them in two places (they aren't used by Aseprite itself)
+	rm -rf staging/share/aseprite/data/icons
+	# Install all of the program's data
+	cp -vrt "$pkgdir/usr/share" staging/share/aseprite
 	# Also install the licenses
-	install -vDm 644 -t "$pkgdir/usr/share/licenses/$pkgname" "$srcdir/EULA.txt" "$srcdir/docs/LICENSES.md"
+	install -vDm 644 -t "$pkgdir/usr/share/licenses/$pkgname" EULA.txt docs/LICENSES.md
 }

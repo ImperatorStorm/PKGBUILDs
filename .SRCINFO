@@ -19,6 +19,7 @@ pkgbase = aseprite
 	depends = tinyxml
 	depends = libfreetype.so
 	depends = libarchive.so
+	depends = hicolor-icon-theme
 	depends = libexpat.so=1-64
 	depends = icu
 	depends = libharfbuzz.so=0-64
