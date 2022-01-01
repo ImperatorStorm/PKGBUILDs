@@ -9,6 +9,7 @@ pkgbase = aseprite
 	makedepends = ninja
 	makedepends = git
 	makedepends = python
+	makedepends = libxi
 	depends = cmark
 	depends = libcurl.so
 	depends = libgif.so

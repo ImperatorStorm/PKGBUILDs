@@ -14,19 +14,24 @@ pkgdesc='Create animated sprites and pixel art'
 arch=('x86_64')
 url="http://www.aseprite.org/"
 license=('custom')
-depends=(
-# ~ Aseprite's direct dependencies ~
-# pixman is not linked to because we use Skia instead
-# harfbuzz is linked statically because Aseprite expects an older version
-cmark libcurl.so libgif.so libjpeg.so zlib libpng tinyxml libfreetype.so libarchive.so
-# ~ Skia deps ~
-# (Skia links dynamically to HarfBuzz, only Aseprite itself doesn't. >_<)
-libexpat.so=1-64 icu libharfbuzz.so=0-64
-# Already required by Aseprite: libjpeg-turbo libpng zlib freetype2
-# These two are only reported by Namcap, but don't seem to be direct dependencies?
-libfontconfig.so libxcursor)
-makedepends=(cmake ninja git python)
-source=("https://github.com/aseprite/aseprite/releases/download/v${pkgver}/Aseprite-v${pkgver}-Source.zip"
+depends=(# ~ Aseprite's direct dependencies ~
+         # pixman is not linked to because we use Skia instead
+         # harfbuzz is linked statically because Aseprite expects an older version
+         cmark libcurl.so libgif.so libjpeg.so zlib libpng tinyxml libfreetype.so libarchive.so
+         # ~ Skia deps ~
+         # (Skia links dynamically to HarfBuzz, only Aseprite itself doesn't. >_<)
+         libexpat.so=1-64 icu libharfbuzz.so=0-64
+         # Already required by Aseprite: libjpeg-turbo libpng zlib freetype2
+         # These two are only reported by Namcap, but don't seem to be direct dependencies?
+         libfontconfig.so libxcursor)
+makedepends=(# "Meta" dependencies
+             cmake ninja git python
+             # Aseprite (including e.g. LAF)
+             libxi
+             # Skia
+             # harfbuzz-icu would be required if we weren't using the bundled version
+             )
+source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprite-v$pkgver-Source.zip"
         # Which branch a given build of Aseprite requires is noted in its `INSTALL.md`
         "git+https://github.com/aseprite/skia.git#branch=aseprite-m81"
         "$pkgname.desktop"
