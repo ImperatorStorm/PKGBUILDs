@@ -12,7 +12,7 @@ pkgver=1.2.30
 pkgrel=4
 pkgdesc='Create animated sprites and pixel art'
 arch=('x86_64')
-url="http://www.aseprite.org/"
+url="https://www.aseprite.org/"
 license=('custom')
 depends=(# ~ Aseprite's direct dependencies ~
          # pixman is not linked to because we use Skia instead
