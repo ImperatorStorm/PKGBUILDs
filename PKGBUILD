@@ -109,4 +109,6 @@ package() {
 	cp -vrt "$pkgdir/usr/share" staging/share/aseprite
 	# Also install the licenses
 	install -vDm 644 -t "$pkgdir/usr/share/licenses/$pkgname" EULA.txt docs/LICENSES.md
+	# Copy the font's license, but leave it in the font directory as well (probably doesn't hurt)
+	install -vm 644 data/fonts/LICENSE.txt "$pkgdir/usr/share/licenses/$pkgname/font.txt"
 }
