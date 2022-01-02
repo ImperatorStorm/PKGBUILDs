@@ -56,7 +56,7 @@ prepare() {
 	cp -v is_clang.py skia/gn
 
 	# Allow using shared libarchive (the bundled version prevents using the `None` build type...)
-	patch -p1 <shared-libarchive.patch
+	patch -tp1 <shared-libarchive.patch
 }
 
 build() {
