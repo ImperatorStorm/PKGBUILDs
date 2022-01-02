@@ -21,7 +21,6 @@ pkgbase = aseprite
 	depends = libarchive.so
 	depends = hicolor-icon-theme
 	depends = libexpat.so=1-64
-	depends = icu
 	depends = libharfbuzz.so=0-64
 	depends = libfontconfig.so
 	depends = libxcursor
