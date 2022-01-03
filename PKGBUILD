@@ -36,6 +36,9 @@ makedepends=(# "Meta" dependencies
 source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprite-v$pkgver-Source.zip"
         # Which branch a given build of Aseprite requires is noted in its `INSTALL.md`
         "git+https://github.com/aseprite/skia.git#branch=aseprite-m81"
+        # `gn` executable required to configure Skia, pulled from `skia/bin/fetch-gn`
+        # Normally we'd use the Arch-provided one, but it has API incompatibilities
+        "gn::https://chromium-gn.storage-download.googleapis.com/3523d50538357829725d4ed74b777a572ce0ac74"
         # Skia dependencies, determined from `skia/DEPS`
         # Only pulling what we need, though
         "git+https://chromium.googlesource.com/chromium/buildtools.git#commit=505de88083136eefd056e5ee4ca0f01fe9b33de8"
@@ -54,6 +57,7 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
 noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'SKIP'
+            'c8c2d617f1a33d6eb27f25ebcc30bd8ba1e6a0aa980cada21dda2ad1401fa4a2'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -86,8 +90,8 @@ prepare() {
 	for _dep in "${!_skiadeps[@]}"; do
 		ln -svf "$(realpath $_dep)" "skia/${_skiadeps[$_dep]}"
 	done
-	# Also fetch the bundled `gn` version
-	env -C skia bin/fetch-gn
+
+	chmod 755 gn
 
 	# Replace `is_clang.py` with Python 3-compliant version
 	cp -v is_clang.py skia/gn
@@ -101,7 +105,7 @@ build() {
 	local _skiadir="$PWD/skia/obj"
 	# Must use the bundled `gn` executable and HarfBuzz libraries because of incompatibilities
 	# Flags can typically be found in `src/skia/gn/skia.gni`... but you're kind of on your own
-	env -C skia buildtools/linux64/gn gen "$_skiadir" --args="`printf '%s ' \
+	env -C skia ../gn gen "$_skiadir" --args="`printf '%s ' \
 is_debug=false is_official_build=true \
 skia_use_system_harfbuzz=false \
 skia_use_{freetype,harfbuzz}=true skia_use_sfntly=false skia_enable_skottie=false`"
