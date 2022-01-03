@@ -91,7 +91,7 @@ prepare() {
 	                    [libgifcodec]=third_party/externals/libgifcodec
 	                    [piex]=third_party/externals/piex) _dep
 	for _dep in "${!_skiadeps[@]}"; do
-		ln -svf "$(realpath $_dep)" "skia/${_skiadeps[$_dep]}"
+		ln -svfT "$(realpath $_dep)" "skia/${_skiadeps[$_dep]}"
 	done
 
 	chmod 755 gn
