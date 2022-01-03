@@ -24,6 +24,7 @@ pkgbase = aseprite
 	depends = libharfbuzz.so=0-64
 	depends = libfontconfig.so
 	depends = libxcursor
+	noextract = Aseprite-v1.2.30-Source.zip
 	source = https://github.com/aseprite/aseprite/releases/download/v1.2.30/Aseprite-v1.2.30-Source.zip
 	source = git+https://github.com/aseprite/skia.git#branch=aseprite-m81
 	source = aseprite.desktop

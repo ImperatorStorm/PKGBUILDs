@@ -41,6 +41,7 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
         is_clang.py
         # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2535.patch
         shared-libarchive.patch)
+noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'SKIP'
             'deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25'
@@ -48,6 +49,10 @@ sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'e42675504bfbc17655aef1dca957041095026cd3dd4e6981fb6df0a363948aa7')
 
 prepare() {
+	# Extract Aseprite's sources
+	mkdir -p aseprite
+	bsdtar -xf "${noextract[0]}" -C aseprite
+
 	# Get Skia's build dependencies (requires connectivity, OK to do in `prepare()`)
 	# TODO: we only need very few of these, see if we can skip cloning those we don't need
 	env -C skia python tools/git-sync-deps
@@ -56,27 +61,26 @@ prepare() {
 	cp -v is_clang.py skia/gn
 
 	# Allow using shared libarchive (the bundled version prevents using the `None` build type...)
-	patch -tp1 <shared-libarchive.patch
+	env -C aseprite patch -tp1 <shared-libarchive.patch
 }
 
 build() {
 	echo Building Skia...
-	cd skia
-	local _skiadir="$PWD"
+	local _skiadir="$PWD/skia/obj"
 	# Must use the bundled `gn` executable and HarfBuzz libraries because of incompatibilities
-	buildtools/linux64/gn gen build --args="is_debug=false is_official_build=true "\
+	# Flags can typically be found in `src/skia/gn/skia.gni`... but you're kind of on your own
+	env -C skia buildtools/linux64/gn gen "$_skiadir" --args="is_debug=false is_official_build=true "\
 skia_use_system_{expat,icu,libjpeg_turbo,libpng,libwebp,zlib,freetype2}"=true "\
 "skia_use_system_harfbuzz=false "\
 skia_use_{freetype,harfbuzz}"=true skia_use_sfntly=false skia_pdf_subset_harfbuzz=true"
-	ninja -C build skia modules
+	ninja -C "$_skiadir" skia modules
 
 	echo Building Aseprite...
-	cd ..
 	# gif2webp or img2webp is required to get `libwebpdemux`, which Aseprite requires
 	# Suppress install messages since we install to a temporary area; `install -v` will do the job
-	cmake -S . -B build -G Ninja -Wno-dev -DCMAKE_INSTALL_MESSAGE=NEVER -DCMAKE_BUILD_TYPE=None \
+	cmake -S aseprite -B build -G Ninja -Wno-dev -DCMAKE_INSTALL_MESSAGE=NEVER -DCMAKE_BUILD_TYPE=None \
 -DLAF_WITH_EXAMPLES=OFF -DLAF_WITH_TESTS=OFF -DLAF_BACKEND=skia \
--DSKIA_DIR="$_skiadir" -DSKIA_LIBRARY_DIR="$_skiadir/build" -DSKIA_LIBRARY="$_skiadir/build/libskia.a" \
+-DSKIA_DIR="$PWD/skia" -DSKIA_LIBRARY_DIR="$_skiadir" -DSKIA_LIBRARY="$_skiadir/libskia.a" \
 -DUSE_SHARED_{CMARK,CURL,GIFLIB,JPEGLIB,ZLIB,LIBPNG,TINYXML,PIXMAN,FREETYPE,HARFBUZZ,LIBARCHIVE}=YES \
 -DWEBP_BUILD_{ANIM_UTILS,CWEBP,DWEBP,EXTRAS,IMG2WEBP,VWEBP,WEBPINFO,WEBP_JS}=NO \
 -DWEBP_BUILD_GIF2WEBP=YES
