@@ -101,10 +101,11 @@ build() {
 	local _skiadir="$PWD/skia/obj"
 	# Must use the bundled `gn` executable and HarfBuzz libraries because of incompatibilities
 	# Flags can typically be found in `src/skia/gn/skia.gni`... but you're kind of on your own
-	env -C skia buildtools/linux64/gn gen "$_skiadir" --args="is_debug=false is_official_build=true "\
-skia_use_system_{expat,icu,libjpeg_turbo,libpng,libwebp,zlib,freetype2}"=true "\
-"skia_use_system_harfbuzz=false "\
-skia_use_{freetype,harfbuzz}"=true skia_use_sfntly=false skia_enable_skottie=false"
+	env -C skia buildtools/linux64/gn gen "$_skiadir" --args="`printf '%s ' \
+is_debug=false is_official_build=true \
+skia_use_system_{expat,icu,libjpeg_turbo,libpng,libwebp,zlib,freetype2}=true \
+skia_use_system_harfbuzz=false \
+skia_use_{freetype,harfbuzz}=true skia_use_sfntly=false skia_enable_skottie=false`"
 	ninja -C "$_skiadir" skia modules
 
 	echo Building Aseprite...
