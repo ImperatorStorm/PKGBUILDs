@@ -36,6 +36,16 @@ makedepends=(# "Meta" dependencies
 source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprite-v$pkgver-Source.zip"
         # Which branch a given build of Aseprite requires is noted in its `INSTALL.md`
         "git+https://github.com/aseprite/skia.git#branch=aseprite-m81"
+        # Skia dependencies, determined from `skia/DEPS`
+        # Only pulling what we need, though
+        "git+https://chromium.googlesource.com/chromium/buildtools.git#commit=505de88083136eefd056e5ee4ca0f01fe9b33de8"
+        "git+https://skia.googlesource.com/common.git#commit=9737551d7a52c3db3262db5856e6bcd62c462b92"
+        "git+https://android.googlesource.com/platform/external/dng_sdk.git#commit=c8d0c9b1d16bfda56f15165d39e0ffa360a11123"
+        "git+https://skia.googlesource.com/third_party/freetype2.git#commit=0a3d2bb99b45b72e1d45185ab054efa993d97210"
+        "git+https://chromium.googlesource.com/external/github.com/harfbuzz/harfbuzz.git#commit=3a74ee528255cc027d84b204a87b5c25e47bff79"
+        "git+https://chromium.googlesource.com/chromium/deps/icu.git#commit=dbd3825b31041d782c5b504c59dcfb5ac7dda08c"
+        "git+https://skia.googlesource.com/libgifcodec#commit=38d9c73f49b861bb4a9829371ac311544b120023"
+        "git+https://android.googlesource.com/platform/external/piex.git#commit=bb217acdca1cc0c16b704669dd6f91a1b509c406"
         "$pkgname.desktop"
         # Python 3-compliant version of the script
         is_clang.py
@@ -43,6 +53,14 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
         shared-libarchive.patch)
 noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
             'SKIP'
             'deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25'
             'cb901aaf479bcf1a2406ce21eb31e43d3581712a9ea245672ffd8fbcd9190441'
@@ -53,9 +71,23 @@ prepare() {
 	mkdir -p aseprite
 	bsdtar -xf "${noextract[0]}" -C aseprite
 
-	# Get Skia's build dependencies (requires connectivity, OK to do in `prepare()`)
-	# TODO: we only need very few of these, see if we can skip cloning those we don't need
-	env -C skia python tools/git-sync-deps
+	# Symlink Skia's build dependencies
+	# Sort of emulating `skia/tools/git-sync-deps`, but only grabbing what we need
+	mkdir -p skia/third_party/externals
+	# Key = repo name (from above), value = path under `src/skia/`
+	local -A _skiadeps=([buildtools]=buildtools
+	                    [common]=common
+	                    [dng_sdk]=third_party/externals/dng_sdk
+	                    [freetype2]=third_party/externals/freetype
+	                    [harfbuzz]=third_party/externals/harfbuzz
+	                    [icu]=third_party/externals/icu
+	                    [libgifcodec]=third_party/externals/libgifcodec
+	                    [piex]=third_party/externals/piex) _dep
+	for _dep in "${!_skiadeps[@]}"; do
+		ln -svf "$(realpath $_dep)" "skia/${_skiadeps[$_dep]}"
+	done
+	# Also fetch the bundled `gn` version
+	env -C skia bin/fetch-gn
 
 	# Replace `is_clang.py` with Python 3-compliant version
 	cp -v is_clang.py skia/gn
@@ -113,7 +145,7 @@ package() {
 	# Install all of the program's data
 	cp -vrt "$pkgdir/usr/share" staging/share/aseprite
 	# Also install the licenses
-	install -vDm 644 -t "$pkgdir/usr/share/licenses/$pkgname" EULA.txt docs/LICENSES.md
+	install -vDm 644 -t "$pkgdir/usr/share/licenses/$pkgname" aseprite/{EULA.txt,docs/LICENSES.md}
 	# Copy the font's license, but leave it in the font directory as well (probably doesn't hurt)
-	install -vm 644 data/fonts/LICENSE.txt "$pkgdir/usr/share/licenses/$pkgname/font.txt"
+	install -vm 644 aseprite/data/fonts/LICENSE.txt "$pkgdir/usr/share/licenses/$pkgname/font.txt"
 }
