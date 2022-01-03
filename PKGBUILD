@@ -22,7 +22,7 @@ depends=(# ~ Aseprite's direct dependencies ~
          hicolor-icon-theme # For installing Aseprite's icons
          # ~ Skia deps ~
          # (Skia links dynamically to HarfBuzz, only Aseprite itself doesn't. >_<)
-         libexpat.so=1-64 libharfbuzz.so=0-64
+         libexpat.so=1-64 libharfbuzz.so=0-64 libgl
          # Already required by Aseprite: libjpeg-turbo libpng zlib freetype2
          # These two are only reported by Namcap, but don't seem to be direct dependencies?
          libfontconfig.so libxcursor)

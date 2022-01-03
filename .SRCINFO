@@ -22,6 +22,7 @@ pkgbase = aseprite
 	depends = hicolor-icon-theme
 	depends = libexpat.so=1-64
 	depends = libharfbuzz.so=0-64
+	depends = libgl
 	depends = libfontconfig.so
 	depends = libxcursor
 	noextract = Aseprite-v1.2.30-Source.zip
