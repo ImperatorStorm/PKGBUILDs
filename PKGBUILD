@@ -43,9 +43,6 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
         # Only pulling what we need, though
         "git+https://chromium.googlesource.com/chromium/buildtools.git#commit=505de88083136eefd056e5ee4ca0f01fe9b33de8"
         "git+https://skia.googlesource.com/common.git#commit=9737551d7a52c3db3262db5856e6bcd62c462b92"
-        "git+https://android.googlesource.com/platform/external/dng_sdk.git#commit=c8d0c9b1d16bfda56f15165d39e0ffa360a11123"
-        "git+https://skia.googlesource.com/libgifcodec#commit=38d9c73f49b861bb4a9829371ac311544b120023"
-        "git+https://android.googlesource.com/platform/external/piex.git#commit=bb217acdca1cc0c16b704669dd6f91a1b509c406"
         "$pkgname.desktop"
         # Python 3-compliant version of the script
         is_clang.py
@@ -58,9 +55,6 @@ noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'SKIP'
             'c8c2d617f1a33d6eb27f25ebcc30bd8ba1e6a0aa980cada21dda2ad1401fa4a2'
-            'SKIP'
-            'SKIP'
-            'SKIP'
             'SKIP'
             'SKIP'
             'deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25'
@@ -79,10 +73,7 @@ prepare() {
 	mkdir -p skia/third_party/externals
 	# Key = repo name (from above), value = path under `src/skia/`
 	local -A _skiadeps=([buildtools]=buildtools
-	                    [common]=common
-	                    [dng_sdk]=third_party/externals/dng_sdk
-	                    [libgifcodec]=third_party/externals/libgifcodec
-	                    [piex]=third_party/externals/piex) _dep
+	                    [common]=common) _dep
 	for _dep in "${!_skiadeps[@]}"; do
 		ln -svfT "$(realpath $_dep)" "skia/${_skiadeps[$_dep]}"
 	done
@@ -105,8 +96,8 @@ build() {
 	# Must use the bundled `gn` executable and HarfBuzz libraries because of incompatibilities
 	# Flags can typically be found in `src/skia/gn/skia.gni`... but you're kind of on your own
 	env -C skia ../gn gen "$_skiadir" --args="`printf '%s ' \
-is_debug=false is_official_build=true \
-skia_use_{freetype,harfbuzz}=true skia_use_sfntly=false skia_enable_skottie=false`"
+is_debug=false is_official_build=true skia_enable_{skottie,pdf}=false \
+skia_use_{expat,libjpeg_turbo,libwebp,xps,zlib,libgifcodec,sfntly}=false`"
 	ninja -C "$_skiadir" skia modules
 
 	echo Building Aseprite...
