@@ -19,3 +19,7 @@ jobs:
       uses: edlanglois/pkgbuild-action@v1
       with:
           pkgdir: "minizip-git"
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+          path: ${{ steps.makepkg.outputs.pkgfile0 }}
