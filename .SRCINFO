@@ -11,6 +11,7 @@ pkgbase = aseprite
 	makedepends = python
 	makedepends = libxi
 	makedepends = libwebp
+	makedepends = pixman
 	depends = cmark
 	depends = libcurl.so
 	depends = libgif.so

@@ -29,7 +29,7 @@ depends=(# ~ Aseprite's direct dependencies ~
 makedepends=(# "Meta" dependencies
              cmake ninja git python
              # Aseprite (including e.g. LAF)
-             libxi libwebp
+             libxi libwebp pixman
              # Skia
              # harfbuzz-icu would be required if we weren't using the bundled version
              )
@@ -121,7 +121,7 @@ skia_use_{freetype,harfbuzz}=true skia_use_sfntly=false skia_enable_skottie=fals
 	cmake -S aseprite -B build -G Ninja -Wno-dev -DCMAKE_INSTALL_MESSAGE=NEVER -DCMAKE_BUILD_TYPE=None \
 -DLAF_WITH_EXAMPLES=OFF -DLAF_WITH_TESTS=OFF -DLAF_BACKEND=skia \
 -DSKIA_DIR="$PWD/skia" -DSKIA_LIBRARY_DIR="$_skiadir" -DSKIA_LIBRARY="$_skiadir/libskia.a" \
--DUSE_SHARED_{CMARK,CURL,GIFLIB,JPEGLIB,ZLIB,LIBPNG,TINYXML,PIXMAN,FREETYPE,HARFBUZZ,LIBARCHIVE,LIBWEBP}=YES \
+-DUSE_SHARED_{CMARK,CURL,GIFLIB,JPEGLIB,ZLIB,LIBPNG,TINYXML,PIXMAN,FREETYPE,HARFBUZZ,LIBARCHIVE,WEBP}=YES \
 -DWEBP_BUILD_{ANIM_UTILS,CWEBP,DWEBP,EXTRAS,IMG2WEBP,VWEBP,WEBPINFO,WEBP_JS}=NO \
 -DWEBP_BUILD_GIF2WEBP=YES
 	ninja -C build
