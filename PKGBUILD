@@ -54,6 +54,7 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
         is_clang.py
         # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2535.patch
         shared-libarchive.patch
+        # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2523.patch
         shared-libwebp.patch)
 noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
@@ -70,7 +71,7 @@ sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25'
             'cb901aaf479bcf1a2406ce21eb31e43d3581712a9ea245672ffd8fbcd9190441'
             'e42675504bfbc17655aef1dca957041095026cd3dd4e6981fb6df0a363948aa7'
-            '2e4e308ccb055685d002d31605a5e7d4dfca4c8a5153e8f1b22969882f5b701f')
+            '24cb9530b63b669e8b1f23c34dd94c1b6359db2d140ebb7748d65d3092174deb')
 
 prepare() {
 	# Extract Aseprite's sources
