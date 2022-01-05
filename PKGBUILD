@@ -52,7 +52,8 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
         # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2535.patch
         shared-libarchive.patch
         # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2523.patch
-        shared-libwebp.patch)
+        shared-libwebp.patch
+        optional-pixman.patch)
 noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'SKIP'
@@ -65,7 +66,8 @@ sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25'
             'cb901aaf479bcf1a2406ce21eb31e43d3581712a9ea245672ffd8fbcd9190441'
             'e42675504bfbc17655aef1dca957041095026cd3dd4e6981fb6df0a363948aa7'
-            '9a85e9b1b52c1d33d128cb87c12395d9a245049cfc10e148659ae2acd4cab3e6')
+            '9a85e9b1b52c1d33d128cb87c12395d9a245049cfc10e148659ae2acd4cab3e6'
+            'c2d14f9738a96a9db3695c00ac3d14b1312b6a595b151bd56e19422c86517654')
 
 prepare() {
 	# Extract Aseprite's sources
@@ -93,6 +95,8 @@ prepare() {
 	env -C aseprite patch -tp1 <shared-libarchive.patch
 	# Allow using shared libarchive (breaks builds otherwise...)
 	env -C aseprite patch -tp1 <shared-libwebp.patch
+	# Skip the build-time dependency on Pixman since it doesn't get used in the end
+	env -C aseprite patch -tp1 <optional-pixman.patch
 }
 
 build() {

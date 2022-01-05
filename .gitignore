@@ -6,3 +6,4 @@
 !/is_clang.py
 !/shared-libarchive.patch
 !/shared-libwebp.patch
+!/optional-pixman.patch
