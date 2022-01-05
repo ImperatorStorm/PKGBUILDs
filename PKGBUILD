@@ -31,8 +31,7 @@ makedepends=(# "Meta" dependencies
              # Aseprite (including e.g. LAF)
              libxi libwebp pixman
              # Skia
-             # harfbuzz-icu would be required if we weren't using the bundled version
-             )
+             harfbuzz-icu)
 source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprite-v$pkgver-Source.zip"
         # Which branch a given build of Aseprite requires is noted in its `INSTALL.md`
         "git+https://github.com/aseprite/skia.git#branch=aseprite-m81"
@@ -44,9 +43,6 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
         "git+https://chromium.googlesource.com/chromium/buildtools.git#commit=505de88083136eefd056e5ee4ca0f01fe9b33de8"
         "git+https://skia.googlesource.com/common.git#commit=9737551d7a52c3db3262db5856e6bcd62c462b92"
         "git+https://android.googlesource.com/platform/external/dng_sdk.git#commit=c8d0c9b1d16bfda56f15165d39e0ffa360a11123"
-        "git+https://skia.googlesource.com/third_party/freetype2.git#commit=0a3d2bb99b45b72e1d45185ab054efa993d97210"
-        "git+https://chromium.googlesource.com/external/github.com/harfbuzz/harfbuzz.git#commit=3a74ee528255cc027d84b204a87b5c25e47bff79"
-        "git+https://chromium.googlesource.com/chromium/deps/icu.git#commit=dbd3825b31041d782c5b504c59dcfb5ac7dda08c"
         "git+https://skia.googlesource.com/libgifcodec#commit=38d9c73f49b861bb4a9829371ac311544b120023"
         "git+https://android.googlesource.com/platform/external/piex.git#commit=bb217acdca1cc0c16b704669dd6f91a1b509c406"
         "$pkgname.desktop"
@@ -60,9 +56,6 @@ noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'SKIP'
             'c8c2d617f1a33d6eb27f25ebcc30bd8ba1e6a0aa980cada21dda2ad1401fa4a2'
-            'SKIP'
-            'SKIP'
-            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -85,15 +78,11 @@ prepare() {
 	local -A _skiadeps=([buildtools]=buildtools
 	                    [common]=common
 	                    [dng_sdk]=third_party/externals/dng_sdk
-	                    [freetype2]=third_party/externals/freetype
-	                    [harfbuzz]=third_party/externals/harfbuzz
-	                    [icu]=third_party/externals/icu
 	                    [libgifcodec]=third_party/externals/libgifcodec
 	                    [piex]=third_party/externals/piex) _dep
 	for _dep in "${!_skiadeps[@]}"; do
 		ln -svfT "$(realpath $_dep)" "skia/${_skiadeps[$_dep]}"
 	done
-
 	chmod 755 gn
 
 	# Replace `is_clang.py` with Python 3-compliant version
@@ -112,7 +101,6 @@ build() {
 	# Flags can typically be found in `src/skia/gn/skia.gni`... but you're kind of on your own
 	env -C skia ../gn gen "$_skiadir" --args="`printf '%s ' \
 is_debug=false is_official_build=true \
-skia_use_system_harfbuzz=false \
 skia_use_{freetype,harfbuzz}=true skia_use_sfntly=false skia_enable_skottie=false`"
 	ninja -C "$_skiadir" skia modules
 
