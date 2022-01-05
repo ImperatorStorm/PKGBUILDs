@@ -64,7 +64,7 @@ sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25'
             'cb901aaf479bcf1a2406ce21eb31e43d3581712a9ea245672ffd8fbcd9190441'
             'e42675504bfbc17655aef1dca957041095026cd3dd4e6981fb6df0a363948aa7'
-            '24cb9530b63b669e8b1f23c34dd94c1b6359db2d140ebb7748d65d3092174deb')
+            '9a85e9b1b52c1d33d128cb87c12395d9a245049cfc10e148659ae2acd4cab3e6')
 
 prepare() {
 	# Extract Aseprite's sources
