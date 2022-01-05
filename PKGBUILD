@@ -19,6 +19,7 @@ depends=(# ~ Aseprite's direct dependencies ~
          # pixman is not linked to because we use Skia instead
          # harfbuzz is linked statically because Aseprite expects an older version
          cmark libcurl.so libgif.so libjpeg.so zlib libpng tinyxml libfreetype.so libarchive.so
+         libwebp.so libwebpmux.so libwebpdemux.so
          hicolor-icon-theme # For installing Aseprite's icons
          # ~ Skia deps ~
          # (Skia links dynamically to HarfBuzz, only Aseprite itself doesn't. >_<)
@@ -29,7 +30,7 @@ depends=(# ~ Aseprite's direct dependencies ~
 makedepends=(# "Meta" dependencies
              cmake ninja git python
              # Aseprite (including e.g. LAF)
-             libxi libwebp pixman
+             libxi pixman
              # Skia
              harfbuzz-icu)
 source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprite-v$pkgver-Source.zip"

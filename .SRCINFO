@@ -10,7 +10,6 @@ pkgbase = aseprite
 	makedepends = git
 	makedepends = python
 	makedepends = libxi
-	makedepends = libwebp
 	makedepends = pixman
 	makedepends = harfbuzz-icu
 	depends = cmark
@@ -22,6 +21,9 @@ pkgbase = aseprite
 	depends = tinyxml
 	depends = libfreetype.so
 	depends = libarchive.so
+	depends = libwebp.so
+	depends = libwebpmux.so
+	depends = libwebpdemux.so
 	depends = hicolor-icon-theme
 	depends = libexpat.so=1-64
 	depends = libharfbuzz.so=0-64
