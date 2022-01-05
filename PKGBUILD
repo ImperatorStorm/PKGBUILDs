@@ -29,7 +29,7 @@ depends=(# ~ Aseprite's direct dependencies ~
 makedepends=(# "Meta" dependencies
              cmake ninja git python
              # Aseprite (including e.g. LAF)
-             libxi
+             libxi libwebp
              # Skia
              # harfbuzz-icu would be required if we weren't using the bundled version
              )
@@ -53,7 +53,8 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
         # Python 3-compliant version of the script
         is_clang.py
         # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2535.patch
-        shared-libarchive.patch)
+        shared-libarchive.patch
+        shared-libwebp.patch)
 noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'SKIP'
@@ -68,7 +69,8 @@ sha256sums=('9f4b098fe2327f2e9d73eb9f2aeebecad63e87ff2cf6fb6eeeee3c0778bb8874'
             'SKIP'
             'deaf646a615c79a4672b087562a09c44beef37e7acfc6f5f66a437d4f3b97a25'
             'cb901aaf479bcf1a2406ce21eb31e43d3581712a9ea245672ffd8fbcd9190441'
-            'e42675504bfbc17655aef1dca957041095026cd3dd4e6981fb6df0a363948aa7')
+            'e42675504bfbc17655aef1dca957041095026cd3dd4e6981fb6df0a363948aa7'
+            '2e4e308ccb055685d002d31605a5e7d4dfca4c8a5153e8f1b22969882f5b701f')
 
 prepare() {
 	# Extract Aseprite's sources
@@ -98,6 +100,8 @@ prepare() {
 
 	# Allow using shared libarchive (the bundled version prevents using the `None` build type...)
 	env -C aseprite patch -tp1 <shared-libarchive.patch
+	# Allow using shared libarchive (breaks builds otherwise...)
+	env -C aseprite patch -tp1 <shared-libwebp.patch
 }
 
 build() {
@@ -117,7 +121,7 @@ skia_use_{freetype,harfbuzz}=true skia_use_sfntly=false skia_enable_skottie=fals
 	cmake -S aseprite -B build -G Ninja -Wno-dev -DCMAKE_INSTALL_MESSAGE=NEVER -DCMAKE_BUILD_TYPE=None \
 -DLAF_WITH_EXAMPLES=OFF -DLAF_WITH_TESTS=OFF -DLAF_BACKEND=skia \
 -DSKIA_DIR="$PWD/skia" -DSKIA_LIBRARY_DIR="$_skiadir" -DSKIA_LIBRARY="$_skiadir/libskia.a" \
--DUSE_SHARED_{CMARK,CURL,GIFLIB,JPEGLIB,ZLIB,LIBPNG,TINYXML,PIXMAN,FREETYPE,HARFBUZZ,LIBARCHIVE}=YES \
+-DUSE_SHARED_{CMARK,CURL,GIFLIB,JPEGLIB,ZLIB,LIBPNG,TINYXML,PIXMAN,FREETYPE,HARFBUZZ,LIBARCHIVE,LIBWEBP}=YES \
 -DWEBP_BUILD_{ANIM_UTILS,CWEBP,DWEBP,EXTRAS,IMG2WEBP,VWEBP,WEBPINFO,WEBP_JS}=NO \
 -DWEBP_BUILD_GIF2WEBP=YES
 	ninja -C build
