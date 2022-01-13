@@ -1,9 +1,10 @@
 *
 !/.gitignore
 !/.SRCINFO
-!/aseprite.desktop
 !/PKGBUILD
-!/is_clang.py
+!/desktop.patch
+!/shared-fmt.patch
 !/shared-libarchive.patch
 !/shared-libwebp.patch
+!/shared-skia-deps.patch
 !/optional-pixman.patch
