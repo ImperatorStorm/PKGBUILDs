@@ -1,0 +1,25 @@
+name: Makepkg CI - Linux-LTS-LLVM
+on:
+  push:
+    paths:
+        - "linux-lts-llvm/**"
+  pull_request:
+    paths:
+        - "linux-lts-llvm/**"
+  workflow_dispatch:
+
+jobs:
+  pkgbuild:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Makepkg Build
+      id: makepkg
+      uses: edlanglois/pkgbuild-action@v1
+      with:
+          pkgdir: "linux-lts-llvm"
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+          path: ${{ steps.makepkg.outputs.pkgfile0 }} ${{ steps.makepkg.outputs.pkgfile1 }}
