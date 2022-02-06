@@ -3,9 +3,11 @@ on:
   push:
     paths:
         - "aseprite/**"
+        - "makepkg.conf"
   pull_request:
     paths:
         - "aseprite/**"
+        - "makepkg.conf"
   workflow_dispatch:
 
 jobs:

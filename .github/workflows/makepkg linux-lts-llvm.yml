@@ -3,9 +3,11 @@ on:
   push:
     paths:
         - "linux-lts-llvm/**"
+        - "makepkg.conf"
   pull_request:
     paths:
         - "linux-lts-llvm/**"
+        - "makepkg.conf"
   workflow_dispatch:
 
 jobs:
