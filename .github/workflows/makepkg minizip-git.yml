@@ -3,9 +3,11 @@ on:
   push:
     paths:
         - "minizip-git/**"
+        - "makepkg.conf"
   pull_request:
     paths:
         - "minizip-git/**"
+        - "makepkg.conf"
   workflow_dispatch:
 
 jobs:
