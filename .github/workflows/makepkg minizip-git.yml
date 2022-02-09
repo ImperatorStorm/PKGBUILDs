@@ -1,7 +1,7 @@
 name: Makepkg CI - Minizip-git
 
 env:
-  GPG_TTY=$(tty)
+  GPG_TTY: $(tty)
 
 on:
   push:
