@@ -40,7 +40,7 @@ jobs:
         sudo apt install pinentry-curses
         find | grep tar
         whereis pinentry
-        gpg --verbose --sign --detach-sign --no-tty ${{ steps.makepkg.outputs.pkgfile0 }}
+        gpg --verbose --sign --detach-sign --batch --pinentry-mode loopback --passphrase ${{ secrets.PASSPHRASE }} ${{ steps.makepkg.outputs.pkgfile0 }}
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
