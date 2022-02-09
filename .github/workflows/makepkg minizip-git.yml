@@ -36,6 +36,8 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
     - name: Sign Packages
       run: |
+        apt install findutils
+        find | grep tar
         gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
     - name: Upload Packages
       uses: actions/upload-artifact@v2
