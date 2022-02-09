@@ -28,21 +28,21 @@ jobs:
       with:
           pkgdir: "linux-lts-llvm"
           makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
-    - name: Import GPG key
-      id: import_gpg
-      uses: crazy-max/ghaction-import-gpg@v4
-      with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-    - name: Sign Packages
-      run: |
-        gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
-        gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
+    #- name: Import GPG key
+    #  id: import_gpg
+    #  uses: crazy-max/ghaction-import-gpg@v4
+    #  with:
+    #      gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+    #      passphrase: ${{ secrets.PASSPHRASE }}
+    #- name: Sign Packages
+    #  run: |
+    #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
+    #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
           path: |
             ${{ steps.makepkg.outputs.pkgfile0 }}
-            ${{ steps.makepkg.outputs.pkgfile0 }}.sig
+    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
             ${{ steps.makepkg.outputs.pkgfile1 }}
-            ${{ steps.makepkg.outputs.pkgfile1 }}.sig
+    #       ${{ steps.makepkg.outputs.pkgfile1 }}.sig
