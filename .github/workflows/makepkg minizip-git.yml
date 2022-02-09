@@ -38,6 +38,7 @@ jobs:
       run: |
         sudo apt install findutils
         find | grep tar
+        whereis pinentry
         gpg --verbose --sign --detach-sign --no-tty ${{ steps.makepkg.outputs.pkgfile0 }}
     - name: Upload Packages
       uses: actions/upload-artifact@v2
