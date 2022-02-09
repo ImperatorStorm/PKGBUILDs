@@ -4,10 +4,12 @@ on:
     paths:
         - "minizip-git/**"
         - "makepkg.conf"
+        - ".github/workflows/makepkg minizip-git.yml"
   pull_request:
     paths:
         - "minizip-git/**"
         - "makepkg.conf"
+        - ".github/workflows/makepkg minizip-git.yml"
   workflow_dispatch:
 
 jobs:
@@ -22,7 +24,18 @@ jobs:
       with:
           pkgdir: "minizip-git"
           makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
-    - name: Upload Artifacts
+    - name: Import GPG key
+      id: import_gpg
+      uses: crazy-max/ghaction-import-gpg@v4
+      with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+    - name: Sign Packages
+      run: |
+        gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
+    - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
-          path: ${{ steps.makepkg.outputs.pkgfile0 }}
+          path: |
+            ${{ steps.makepkg.outputs.pkgfile0 }}
+            ${{ steps.makepkg.outputs.pkgfile0 }}.sig
