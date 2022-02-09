@@ -37,6 +37,7 @@ jobs:
     - name: Sign Packages
       run: |
         sudo apt install findutils
+        sudo apt install pinentry-curses
         find | grep tar
         whereis pinentry
         gpg --verbose --sign --detach-sign --no-tty ${{ steps.makepkg.outputs.pkgfile0 }}
