@@ -32,6 +32,8 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
     - name: Sign Packages
       run: |
+        GPG_TTY=$(tty)
+        export GPG_TTY
         gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
     - name: Upload Packages
       uses: actions/upload-artifact@v2
