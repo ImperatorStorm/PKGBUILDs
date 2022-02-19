@@ -44,5 +44,6 @@ jobs:
           path: |
             ${{ steps.makepkg.outputs.pkgfile0 }}
             ${{ steps.makepkg.outputs.pkgfile1 }}
+            "linux-lts-llvm/src/linux-**/.config"
     #       ${{ steps.makepkg.outputs.pkgfile0 }}.sig
     #       ${{ steps.makepkg.outputs.pkgfile1 }}.sig
