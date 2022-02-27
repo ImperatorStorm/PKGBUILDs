@@ -12,7 +12,8 @@ url='https://github.com/uutils/coreutils'
 license=('MIT')
 depends=('glibc' 'gcc-libs')
 makedepends=('git' 'rust' 'cargo' 'cmake' 'python-sphinx')
-conflicts=('uutils-coreutils-git')
+conflicts=('uutils-coreutils-git' 'coreutils')
+provides=('coreutils')
 source=("uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf")
 sha256sums=('SKIP')
 
@@ -44,7 +45,7 @@ package() {
   for sum in 1 224 256 384 512
   do
   ln -s "/usr/bin/hashsum" "${pkgdir}/usr/bin/sha${sum}sum"
-  ln -s "/usr/bin/hashsum" "${pkgdir}/usr/bin/md5sum"
   done
+  ln -s "/usr/bin/hashsum" "${pkgdir}/usr/bin/md5sum"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${pkgname}/LICENSE"
 }
