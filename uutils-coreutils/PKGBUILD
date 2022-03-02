@@ -5,7 +5,7 @@
 
 pkgname="uutils-coreutils"
 pkgver=r6379.2e251f91f
-pkgrel=2
+pkgrel=1
 pkgdesc="GNU Coreutils rewritten in Rust"
 arch=('x86_64')
 url='https://github.com/uutils/coreutils'
@@ -41,4 +41,10 @@ package() {
     PREFIX=/usr \
     MANDIR=/share/man/man1 \
     PROFILE=release
+  # below algos implemented in hashsum, fix to keep compat with GNU Coreutils
+  for algo in sha1 sha224 sha256 sha384 sha512 md5 b2 sha3{,-224,-256,-384,-512} shake{128,256}
+  do
+  ln -s "hashsum" "${pkgdir}/usr/bin/${algo}sum"
+  done
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${pkgname}/LICENSE"
 }
