@@ -6,14 +6,14 @@ env:
 on:
   push:
     paths:
-        - "uutils/**"
+        - "coreutils/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg uutils.yml"
+        - ".github/workflows/makepkg coreutils.yml"
   pull_request:
     paths:
-        - "uutils/**"
+        - "coreutils/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg uutils.yml"
+        - ".github/workflows/makepkg coreutils.yml"
   workflow_dispatch:
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
       id: makepkg
       uses: edlanglois/pkgbuild-action@v1
       with:
-          pkgdir: "uutils"
+          pkgdir: "coreutils"
           makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
     #- name: Import GPG key
     #  id: import_gpg
