@@ -5,7 +5,7 @@
 
 pkgname="uutils-coreutils"
 pkgver=r6379.2e251f91f
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU Coreutils rewritten in Rust"
 arch=('x86_64')
 url='https://github.com/uutils/coreutils'
@@ -41,11 +41,4 @@ package() {
     PREFIX=/usr \
     MANDIR=/share/man/man1 \
     PROFILE=release
-  # sha{1,224,256,384,512}sum and md5sum replaced with hashsum, fix to keep compat with GNUtils
-  for sum in 1 224 256 384 512
-  do
-  ln -s "/usr/bin/hashsum" "${pkgdir}/usr/bin/sha${sum}sum"
-  done
-  ln -s "/usr/bin/hashsum" "${pkgdir}/usr/bin/md5sum"
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${pkgname}/LICENSE"
 }
