@@ -37,8 +37,6 @@ makedepends=(# "Meta" dependencies
              # clang
              )
 source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprite-v$pkgver-Source.zip"
-        # Which branch a given build of Aseprite requires is noted in its `INSTALL.md`
-        "git+https://github.com/aseprite/skia.git#branch=aseprite-m96"
         desktop.patch
         shared-fmt.patch
         # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2535.patch
@@ -49,7 +47,6 @@ source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprit
         optional-pixman.patch)
 noextract=("${source[0]##*/}") # Don't extract Aseprite sources at the root
 sha256sums=('c3a86005f59483fcfcedae89bf82dfc6f82bba8d5244835ca4c005beab31435b'
-            'SKIP'
             '8b14e36939e930de581e95abf0591645aa0fcfd47161cf88b062917dbaaef7f9'
             '821f1354dbbc0bb3fa700e63037ed3c89b0d32bd2ab253450f91eeacd7d47c06'
             'd7f2f8c43d24382453273ed17b1c0e05928980a36ad0b7c988da3aa0fe32de53'
@@ -58,6 +55,10 @@ sha256sums=('c3a86005f59483fcfcedae89bf82dfc6f82bba8d5244835ca4c005beab31435b'
             'c2d14f9738a96a9db3695c00ac3d14b1312b6a595b151bd56e19422c86517654')
 
 prepare() {
+
+        # Clone skia, which branch a given build of Aseprite requires is noted in its `INSTALL.md`
+	git clone --depth=1 --branch aseprite-m96 https://github.com/aseprite/skia.git
+
 	# Extract Aseprite's sources
 	mkdir -p aseprite
 	bsdtar -xf "${noextract[0]}" -C aseprite
