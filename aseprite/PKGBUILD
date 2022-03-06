@@ -55,8 +55,7 @@ sha256sums=('c3a86005f59483fcfcedae89bf82dfc6f82bba8d5244835ca4c005beab31435b'
             'c2d14f9738a96a9db3695c00ac3d14b1312b6a595b151bd56e19422c86517654')
 
 prepare() {
-
-        # Clone skia, which branch a given build of Aseprite requires is noted in its `INSTALL.md`
+	# Clone skia, which branch a given build of Aseprite requires is noted in its `INSTALL.md`
 	git clone --depth=1 --branch aseprite-m96 https://github.com/aseprite/skia.git
 
 	# Extract Aseprite's sources
