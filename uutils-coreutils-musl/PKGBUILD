@@ -24,7 +24,7 @@ pkgver() {
 
 build() {
   cd ${srcdir}/uutils || exit 1
-  make PROFILE=release CARGOFLAGS=" --frozen --target x86_64-unknown-linux-musl"
+  make PROFILE=release CARGOFLAGS=" --target x86_64-unknown-linux-musl"
 }
 
 check() {
@@ -36,7 +36,7 @@ check() {
 
 package() {
   cd ${srcdir}/uutils || exit 1
-  make CARGOFLAGS=" --frozen --target x86_64-unknown-linux-musl" install \
+  make CARGOFLAGS=" --target x86_64-unknown-linux-musl" install \
     DESTDIR="$pkgdir" \
     PREFIX=/usr \
     MANDIR=/share/man/man1 \
