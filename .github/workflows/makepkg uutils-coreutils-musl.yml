@@ -1,0 +1,46 @@
+name: Makepkg CI - uutils-coreutils-musl
+
+env:
+  GPG_TTY: $(tty)
+
+on:
+  push:
+    paths:
+        - "uutils-coreutils-musl/**"
+        - "makepkg.conf"
+        - ".github/workflows/makepkg uutils-coreutils-musl.yml"
+  pull_request:
+    paths:
+        - "uutils-coreutils-musl/**"
+        - "makepkg.conf"
+        - ".github/workflows/makepkg uutils-coreutils-musl.yml"
+  workflow_dispatch:
+
+jobs:
+  pkgbuild:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Makepkg Build
+      id: makepkg
+      uses: edlanglois/pkgbuild-action@v1
+      with:
+          pkgdir: "uutils-coreutils-musl"
+          makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
+    #- name: Import GPG key
+    #  id: import_gpg
+    #  uses: crazy-max/ghaction-import-gpg@v4
+    #  with:
+    #      gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+    #      passphrase: ${{ secrets.PASSPHRASE }}
+    #- name: Sign Packages
+    #  run: |
+    #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
+    #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
+    - name: Upload Packages
+      uses: actions/upload-artifact@v2
+      with:
+          path: |
+            ${{ steps.makepkg.outputs.pkgfile0 }}
+    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
