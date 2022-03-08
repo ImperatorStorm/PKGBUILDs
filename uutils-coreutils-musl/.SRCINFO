@@ -11,6 +11,7 @@ pkgbase = uutils-coreutils-musl
 	makedepends = cargo
 	makedepends = cmake
 	makedepends = python-sphinx
+	makedepends = musl
 	depends = gcc-libs
 	provides = coreutils
 	provides = uutils-coreutils
