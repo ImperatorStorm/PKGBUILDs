@@ -1,0 +1,13 @@
+diff --git a/GNUmakefile b/GNUmakefile
+index 12cd95013..26c70ac0a 100644
+--- a/GNUmakefile
++++ b/GNUmakefile
+@@ -38,7 +38,7 @@ PROG_PREFIX ?=
+ # This won't support any directory with spaces in its name, but you can just
+ # make a symlink without spaces that points to the directory.
+ BASEDIR       ?= $(shell pwd)
+-BUILDDIR      := $(BASEDIR)/target/${PROFILE}
++BUILDDIR      := $(BASEDIR)/target/x86_64-unknown-linux-musl/${PROFILE}
+ PKG_BUILDDIR  := $(BUILDDIR)/deps
+ DOCSDIR       := $(BASEDIR)/docs
+ 
