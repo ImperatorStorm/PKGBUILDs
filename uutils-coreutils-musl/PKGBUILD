@@ -24,19 +24,20 @@ pkgver() {
 
 build() {
   cd ${srcdir}/uutils || exit 1
-  make PROFILE=release CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl"
+  make PROFILE=release SKIP_UTILS="pinky uptime users who" CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl"
 }
 
 check() {
   cd ${srcdir}/uutils || exit 1
   # TODO: Fix the failing tests. These 4 seem to fail for a few benign reasons.
-  make CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl" PROFILE=release test \
+  make CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl" PROFILE=release SKIP_UTILS="pinky uptime users who" test \
     TEST_NO_FAIL_FAST="--no-fail-fast -- --skip test_chown::test_chown_only_group --skip test_chown::test_chown_only_group_id --skip test_pinky::test_no_flag --skip test_who::test_lookup"
 }
 
 package() {
   cd ${srcdir}/uutils || exit 1
   make CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl" install \
+    SKIP_UTILS="pinky uptime users who" \
     DESTDIR="$pkgdir" \
     PREFIX=/usr \
     MANDIR=/share/man/man1 \
