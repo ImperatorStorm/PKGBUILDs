@@ -14,9 +14,14 @@ depends=('gcc-libs')
 makedepends=('git' 'rust' 'rust-musl' 'cargo' 'cmake' 'python-sphinx' 'musl')
 conflicts=('uutils-coreutils-git' 'uutils-coreutils' 'coreutils')
 provides=('coreutils' 'uutils-coreutils')
-source=("uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf")
-sha256sums=('SKIP')
-
+source=("uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf"
+        0001_fix-install.patch)
+sha256sums=('SKIP'
+            'ae02faf5ca52e0f3005f968e3399d4cb0f736aa2c64c897f8ec856e02fdf11f0')
+prepare(){
+  cd ${srcdir}/uutils || exit 1
+  patch -tp1 <../0001_fix-install.patch
+}
 pkgver() {
   cd ${srcdir}/uutils || exit 1
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
