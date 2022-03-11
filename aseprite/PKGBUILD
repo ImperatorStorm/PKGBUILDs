@@ -38,7 +38,7 @@ makedepends=(# "Meta" dependencies
              )
 source=("https://github.com/aseprite/aseprite/releases/download/v$pkgver/Aseprite-v$pkgver-Source.zip"
         # Which branch a given build of Aseprite requires is noted in its `INSTALL.md`
-        "git+https://github.com/aseprite/skia.git#branch=aseprite-m96"
+        "https://github.com/aseprite/skia/archive/refs/tags/m96-2f1f21b8a9.tar.gz"
         desktop.patch
         shared-fmt.patch
         # Based on https://patch-diff.githubusercontent.com/raw/aseprite/aseprite/pull/2535.patch
