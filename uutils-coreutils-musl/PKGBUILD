@@ -7,11 +7,10 @@ pkgname="uutils-coreutils-musl"
 pkgver=r6379.2e251f91f
 pkgrel=1
 pkgdesc="GNU Coreutils rewritten in Rust - Built with musl libc"
-arch=('x86_64')
+arch=($CARCH)
 url='https://github.com/uutils/coreutils'
 license=('MIT')
-depends=('gcc-libs')
-makedepends=('git' 'rust' 'rust-musl' 'cargo' 'cmake' 'python-sphinx' 'musl')
+makedepends=('git' 'rust' 'rust-musl' 'cargo' 'cmake' 'python-sphinx' 'musl' 'gcc-libs')
 conflicts=('uutils-coreutils-git' 'uutils-coreutils' 'coreutils')
 provides=('coreutils' 'uutils-coreutils')
 source=("uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf"
