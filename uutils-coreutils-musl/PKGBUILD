@@ -29,13 +29,20 @@ pkgver() {
 build() {
   cd ${srcdir}/uutils || exit 1
   make PROFILE=release SKIP_UTILS="pinky uptime users who" CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl"
+  # {pinky uptime users who} break with musl libc. See https://github.com/uutils/coreutils/issues/2029.
 }
 
+# Tests fail sporadically on musl, see https://github.com/uutils/coreutils/issues/2024.
 #check() {
 #  cd ${srcdir}/uutils || exit 1
-#  # TODO: Fix the failing tests. These 4 seem to fail for a few benign reasons.
-#  make CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl" PROFILE=release SKIP_UTILS="pinky uptime users who" test \
-#    TEST_NO_FAIL_FAST="--no-fail-fast -- --skip test_chown::test_chown_only_group --skip test_chown::test_chown_only_group_id --skip test_pinky::test_no_flag --skip test_who::test_lookup"
+#  # TODO: Fix the failing tests. These 2 seem to fail for a few benign reasons.
+#  make test \
+#      PROFILE=release \
+#      CARGOFLAGS=--release \
+#      TEST_NO_FAIL_FAST="--no-fail-fast -- \
+#      --skip test_chown::test_big_p \
+#      --skip test_chgrp::test_big_p \
+#      --skip test_chgrp::test_big_h"
 #}
 
 package() {
@@ -46,7 +53,7 @@ package() {
     PREFIX=/usr \
     MANDIR=/share/man/man1 \
     PROFILE=release
-  # below algos implemented in hashsum, fix to keep compat with GNU Coreutils
+  # below algos implemented in hashsum, symlink to keep compat with GNU Coreutils
   for algo in sha1 sha224 sha256 sha384 sha512 md5 b2 sha3{,-224,-256,-384,-512} shake{128,256}
   do
   ln -s "hashsum" "${pkgdir}/usr/bin/${algo}sum"
