@@ -13,6 +13,7 @@ pkgbase = linux-lts-llvm
 	makedepends = perl
 	makedepends = tar
 	makedepends = xz
+	makedepends = initramfs
 	makedepends = xmlto
 	makedepends = python-sphinx
 	makedepends = python-sphinx_rtd_theme
