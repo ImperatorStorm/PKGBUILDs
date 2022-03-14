@@ -1,4 +1,4 @@
-name: Makepkg CI - uutils-coreutils
+name: Makepkg CI - uutils-coreutils-storm
 
 env:
   GPG_TTY: $(tty)
@@ -6,14 +6,14 @@ env:
 on:
   push:
     paths:
-        - "uutils-coreutils/**"
+        - "uutils-coreutils-storm/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg uutils-coreutils.yml"
+        - ".github/workflows/makepkg uutils-coreutils-storm.yml"
   pull_request:
     paths:
-        - "uutils-coreutils/**"
+        - "uutils-coreutils-storm/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg uutils-coreutils.yml"
+        - ".github/workflows/makepkg uutils-coreutils-storm.yml"
   workflow_dispatch:
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
       id: makepkg
       uses: edlanglois/pkgbuild-action@v1
       with:
-          pkgdir: "uutils-coreutils"
+          pkgdir: "uutils-coreutils-storm"
           makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
     #- name: Import GPG key
     #  id: import_gpg

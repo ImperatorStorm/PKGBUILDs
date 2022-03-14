@@ -3,7 +3,7 @@
 
 # shellcheck disable=2034,2148,2154
 
-pkgname="uutils-coreutils"
+pkgname="uutils-coreutils-storm"
 pkgver=r6379.2e251f91f
 pkgrel=1
 pkgdesc="GNU Coreutils rewritten in Rust"
@@ -29,9 +29,13 @@ build() {
 
 check() {
   cd ${srcdir}/uutils || exit 1
-  # TODO: Fix the failing tests. These 4 seem to fail for a few benign reasons.
-  make test \
-    TEST_NO_FAIL_FAST="--no-fail-fast -- --skip test_chown::test_chown_only_group --skip test_chown::test_chown_only_group_id --skip test_pinky::test_no_flag --skip test_who::test_lookup"
+   make test \
+      PROFILE=release \
+      CARGOFLAGS=--release \
+      TEST_NO_FAIL_FAST="--no-fail-fast -- \
+        --skip test_chown::test_big_p \
+        --skip test_chgrp::test_big_p \
+        --skip test_chgrp::test_big_h"
 }
 
 package() {
@@ -46,5 +50,5 @@ package() {
   do
   ln -s "hashsum" "${pkgdir}/usr/bin/${algo}sum"
   done
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/${pkgname}/LICENSE"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/uutils-coreutils/LICENSE"
 }
