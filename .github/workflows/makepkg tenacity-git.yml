@@ -28,7 +28,7 @@ jobs:
       with:
           pkgdir: "tenacity-git"
           makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
-          aurDeps: "wxgtk3-dev-light"
+    #      aurDeps: "wxgtk3-dev-light"
     #- name: Import GPG key
     #  id: import_gpg
     #  uses: crazy-max/ghaction-import-gpg@v4
