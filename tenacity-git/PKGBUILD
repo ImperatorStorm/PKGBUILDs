@@ -48,7 +48,6 @@ build() {
   CC=clang CXX=clang++ cmake \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DwxWidgets_CONFIG_EXECUTABLE=/usr/bin/wx-config-gtk3-3.1 \
     audacity_use_ffmpeg:STRING=loaded \
     ..
   cmake --build .
