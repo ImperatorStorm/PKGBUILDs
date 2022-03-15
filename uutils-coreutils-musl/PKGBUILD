@@ -17,6 +17,7 @@ source=("uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5
         0001_fix-install.patch)
 sha256sums=('SKIP'
             'ae02faf5ca52e0f3005f968e3399d4cb0f736aa2c64c897f8ec856e02fdf11f0')
+options=(!lto)
 prepare(){
   cd ${srcdir}/uutils || exit 1
   patch -tp1 <../0001_fix-install.patch
