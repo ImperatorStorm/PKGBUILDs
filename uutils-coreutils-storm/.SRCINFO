@@ -1,4 +1,4 @@
-pkgbase = uutils-coreutils
+pkgbase = uutils-coreutils-storm
 	pkgdesc = GNU Coreutils rewritten in Rust
 	pkgver = r6379.2e251f91f
 	pkgrel = 1
@@ -18,4 +18,4 @@ pkgbase = uutils-coreutils
 	source = uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf
 	sha256sums = SKIP
 
-pkgname = uutils-coreutils
+pkgname = uutils-coreutils-storm
