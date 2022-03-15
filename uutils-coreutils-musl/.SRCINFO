@@ -18,6 +18,7 @@ pkgbase = uutils-coreutils-musl
 	conflicts = uutils-coreutils-git
 	conflicts = uutils-coreutils
 	conflicts = coreutils
+	options = !lto
 	source = uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf
 	source = 0001_fix-install.patch
 	sha256sums = SKIP
