@@ -39,6 +39,11 @@ jobs:
     #  run: |
     #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
     #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
+    - name: Remove colons in filename
+      run: |
+        sudo apt install rename
+        rename '1:' '' ${{ steps.makepkg.outputs.pkgfile0 }}
+        export steps.makepkg.outputs.pkgfile0=$(find *.tar.zst)
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
