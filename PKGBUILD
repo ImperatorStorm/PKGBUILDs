@@ -16,6 +16,7 @@ conflicts=('uutils-coreutils-git' 'coreutils')
 provides=('coreutils')
 source=("uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf")
 sha256sums=('SKIP')
+options=(!lto)
 
 pkgver() {
   cd ${srcdir}/uutils || exit 1
