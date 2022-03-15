@@ -28,8 +28,8 @@ pkgver() {
 
 build() {
   cd ${srcdir}/uutils || exit 1
-  make PROFILE=release SKIP_UTILS="pinky uptime users who" CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl"
   # {pinky uptime users who} break with musl libc. See https://github.com/uutils/coreutils/issues/2029.
+  make PROFILE=release SKIP_UTILS="pinky uptime users who" CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl"
 }
 
 # Tests fail sporadically on musl, see https://github.com/uutils/coreutils/issues/2024.
@@ -38,7 +38,10 @@ build() {
 #  # TODO: Fix the failing tests. These 2 seem to fail for a few benign reasons.
 #  make test \
 #      PROFILE=release \
-#      CARGOFLAGS=--release \
+#      CARGOFLAGS="--release \
+#      --target x86_64-unknown-linux-musl \
+#      --features feat_os_unix_musl" \
+#      SKIP_UTILS="pinky uptime users who" \
 #      TEST_NO_FAIL_FAST="--no-fail-fast -- \
 #      --skip test_chown::test_big_p \
 #      --skip test_chgrp::test_big_p \

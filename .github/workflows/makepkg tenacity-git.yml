@@ -1,0 +1,47 @@
+name: Makepkg CI - Tenacity-git
+
+env:
+  GPG_TTY: $(tty)
+
+on:
+  push:
+    paths:
+        - "tenacity-git/**"
+        - "makepkg.conf"
+        - ".github/workflows/makepkg tenacity-git.yml"
+  pull_request:
+    paths:
+        - "tenacity-git/**"
+        - "makepkg.conf"
+        - ".github/workflows/makepkg tenacity-git.yml"
+  workflow_dispatch:
+
+jobs:
+  pkgbuild:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Makepkg Build
+      id: makepkg
+      uses: edlanglois/pkgbuild-action@v1
+      with:
+          pkgdir: "tenacity-git"
+          makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
+          aurDeps: "wxgtk3-dev-light"
+    #- name: Import GPG key
+    #  id: import_gpg
+    #  uses: crazy-max/ghaction-import-gpg@v4
+    #  with:
+    #      gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+    #      passphrase: ${{ secrets.PASSPHRASE }}
+    #- name: Sign Packages
+    #  run: |
+    #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
+    #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
+    - name: Upload Packages
+      uses: actions/upload-artifact@v2
+      with:
+          path: |
+            ${{ steps.makepkg.outputs.pkgfile0 }}
+    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
