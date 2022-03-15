@@ -14,7 +14,7 @@ arch=(i686 x86_64)
 url="https://tenacityaudio.org"
 license=(GPL2 CCPL)
 groups=(pro-audio)
-depends=(gtk3 wxgtk3-dev-light libid3tag lilv lv2 portsmf suil libmad twolame vamp-plugin-sdk libsoxr
+depends=(gtk3 wxgtk3 libid3tag lilv lv2 portsmf suil libmad twolame vamp-plugin-sdk libsoxr
          soundtouch portaudio portmidi lame jack)
 makedepends=(git cmake clang sdl2 libsoup libnotify gstreamer gst-plugins-bad-libs
              ffmpeg4.4 nasm chrpath)
