@@ -16,7 +16,7 @@ license=(GPL2 CCPL)
 groups=(pro-audio)
 depends=(gtk3 wxgtk3 glib2 libid3tag lilv lv2 portsmf suil libmad twolame vamp-plugin-sdk libsoxr
          soundtouch portaudio portmidi lame jack sdl2)
-makedepends=(git cmake libsoup libnotify gstreamer gst-plugins-bad-libs
+makedepends=(git cmake clang libsoup libnotify gstreamer gst-plugins-bad-libs
              ffmpeg4.4 nasm chrpath expat gcc-libs gdk-pixbuf2 glibc
              flac libogg libsndfile libvorbis ffmpeg mold)
 optdepends=('ffmpeg4.4: additional import/export capabilities')
