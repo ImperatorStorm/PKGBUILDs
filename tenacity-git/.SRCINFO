@@ -11,7 +11,6 @@ pkgbase = tenacity-git
 	license = CCPL
 	makedepends = git
 	makedepends = cmake
-	makedepends = clang
 	makedepends = libsoup
 	makedepends = libnotify
 	makedepends = gstreamer
