@@ -50,5 +50,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
           path: |
-            ${{ pkgfile0 }}
+            **.pkg.tar.zst
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
