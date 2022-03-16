@@ -28,6 +28,7 @@ pkgbase = tenacity-git
 	makedepends = libsndfile
 	makedepends = libvorbis
 	makedepends = ffmpeg
+	makedepends = mold
 	depends = gtk3
 	depends = wxgtk3
 	depends = glib2

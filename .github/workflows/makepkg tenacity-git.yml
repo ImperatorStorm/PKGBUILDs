@@ -41,6 +41,7 @@ jobs:
     #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
     - name: Remove colons in filename
       run: |
+        sudo apt install util-linux
         cp ${{ steps.makepkg.outputs.pkgfile0 }} ./
         export pkgfile0=$(find *.tar.zst)
         rename '1:' '' $pkgfile0

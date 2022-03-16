@@ -18,7 +18,7 @@ depends=(gtk3 wxgtk3 glib2 libid3tag lilv lv2 portsmf suil libmad twolame vamp-p
          soundtouch portaudio portmidi lame jack sdl2)
 makedepends=(git cmake clang libsoup libnotify gstreamer gst-plugins-bad-libs
              ffmpeg4.4 nasm chrpath expat gcc-libs gdk-pixbuf2 glibc
-             flac libogg libsndfile libvorbis ffmpeg)
+             flac libogg libsndfile libvorbis ffmpeg mold)
 optdepends=('ffmpeg4.4: additional import/export capabilities')
 provides=(tenacity)
 conflicts=(tenacity)
@@ -47,7 +47,7 @@ prepare() {
 build() {
   cd tenacity/build
   export WX_CONFIG=/usr/bin/wx-config-gtk3
-  CC=clang CXX=clang++ cmake \
+  CC=clang CXX=clang++ CFLAGS+=" -B /usr/lib/mold/ld" cmake \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DWX_CONFIG=/usr/bin/wx-config-gtk3 \
