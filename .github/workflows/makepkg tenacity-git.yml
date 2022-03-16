@@ -44,7 +44,7 @@ jobs:
         sudo apt install util-linux
         cp ${{ steps.makepkg.outputs.pkgfile0 }} ./
         export pkgfile0=$(find *.tar.zst)
-        rename '1:' '' $pkgfile0
+        /bin/rename.ul '1:' '' $pkgfile0
         export pkgfile0=$(find *.tar.zst)
     - name: Upload Packages
       uses: actions/upload-artifact@v2
