@@ -1,4 +1,5 @@
-# Maintainer: Andreas Radke <andyrtr@archlinux.org>
+# Maintainer: Imperator Storm <30777770+ImperatorStorm@users.noreply.github.com>
+# Contributor: Andreas Radke <andyrtr@archlinux.org>
 
 pkgbase=linux-lts-llvm
 pkgver=5.15.29
