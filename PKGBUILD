@@ -1,4 +1,5 @@
-# Maintainer: Sam <dev at samarthj dot com>
+# Maintainer: Imperator Storm <30777770+ImperatorStorm@users.noreply.github.com>
+# Contributor: Sam <dev at samarthj dot com>
 # Contributor: Árni Dagur <arnidg@protonmail.ch>
 
 # shellcheck disable=2034,2148,2154
