@@ -6,7 +6,7 @@
 # Contributor: Bernhard Landauer <oberon@manjaro.org>
 # Contributor: Eric Bélanger <eric@archlinux.org>
 
-pkgname=tenacity-git
+pkgname=tenacity-wxgtk3-git
 pkgver=r1.g0665614b8
 pkgrel=1
 epoch=1
