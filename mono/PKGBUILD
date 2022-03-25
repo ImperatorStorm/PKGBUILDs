@@ -4,7 +4,7 @@
 # Contributor: Brice Carpentier <brice@dlfp.org>
 
 pkgname=mono
-_gitcommit=71ad7a0460627eb899bc54cfe33a2584419f75f8
+_gitcommit=adf1bc4335d710088c58e824b6027255096cc295
 pkgver=6.12.0.174
 pkgrel=1
 pkgdesc='Free implementation of the .NET platform including runtime and compiler'

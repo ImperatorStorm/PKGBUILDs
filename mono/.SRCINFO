@@ -17,7 +17,7 @@ pkgbase = mono
 	depends = ca-certificates
 	provides = monodoc
 	conflicts = monodoc
-	source = mono::git+https://github.com/mono/mono#commit=71ad7a0460627eb899bc54cfe33a2584419f75f8
+	source = mono::git+https://github.com/mono/mono#commit=adf1bc4335d710088c58e824b6027255096cc295
 	source = git+https://github.com/mono/aspnetwebstack
 	source = git+https://github.com/mono/Newtonsoft.Json
 	source = git+https://github.com/mono/cecil
