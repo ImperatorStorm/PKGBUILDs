@@ -4,8 +4,8 @@ env:
   GPG_TTY: $(tty)
 
 on:
-  schedule:
-  - cron: '0 * * * *'
+#  schedule:
+#  - cron: '0 * * * *'
   push:
     paths:
         - "mono-msbuild/**"
