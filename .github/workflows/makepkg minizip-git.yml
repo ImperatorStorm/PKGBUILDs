@@ -41,11 +41,13 @@ jobs:
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
+          name: packages
           path: |
             ${{ steps.makepkg.outputs.pkgfile0 }}
     - name: Upload Debug Packages
       uses: actions/upload-artifact@v2
       with:
+          name: debug packages
           path: |
-            ${{ steps.makepkg.outputs.pkgfile1 }}
+            minizip-git-debug**
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
