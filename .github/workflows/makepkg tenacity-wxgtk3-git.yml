@@ -43,6 +43,11 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
           path: |
-            ${{ steps.makepkg.outputs.pkgfile0 }}
-            ${{ steps.makepkg.outputs.pkgfile1 }}
+            **.zst
+            **!debug**.zst
+    - name: Upload Debug Packages
+      uses: actions/upload-artifact@v2
+      with:
+          path: |
+            **debug**.zst
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
