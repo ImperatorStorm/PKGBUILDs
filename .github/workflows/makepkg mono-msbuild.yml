@@ -46,4 +46,6 @@ jobs:
           path: |
             ${{ steps.makepkg.outputs.pkgfile0 }}
             ${{ steps.makepkg.outputs.pkgfile1 }}
+            ${{ steps.makepkg.outputs.pkgfile2 }}
+            ${{ steps.makepkg.outputs.pkgfile3 }}
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
