@@ -42,11 +42,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
           path: |
-            **.zst
-            !*debug*.zst
+            ${{ steps.makepkg.outputs.pkgfile0 }}
     - name: Upload Debug Packages
       uses: actions/upload-artifact@v2
       with:
           path: |
-            *debug*.zst
+            ${{ steps.makepkg.outputs.pkgfile1 }}
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
