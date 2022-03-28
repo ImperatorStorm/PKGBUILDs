@@ -43,7 +43,7 @@ jobs:
       with:
           path: |
             **.zst
-            **!debug**.zst
+            !**debug**.zst
     - name: Upload Debug Packages
       uses: actions/upload-artifact@v2
       with:
