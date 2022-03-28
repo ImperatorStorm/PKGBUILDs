@@ -44,6 +44,8 @@ jobs:
           name: packages
           path: |
             ${{ steps.makepkg.outputs.pkgfile0 }}
+    - name: Debug
+      run: echo ${{ steps.makepkg.outputs.pkgfile1 }}
     - name: Upload Debug Packages
       uses: actions/upload-artifact@v2
       with:
