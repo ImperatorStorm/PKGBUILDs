@@ -49,5 +49,5 @@ jobs:
       with:
           name: debug packages
           path: |
-            minizip-git-debug**
+            minizip-git-debug*
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
