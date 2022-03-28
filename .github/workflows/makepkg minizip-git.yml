@@ -27,7 +27,7 @@ jobs:
       uses: edlanglois/pkgbuild-action@v1
       with:
           pkgdir: "minizip-git"
-          makepkgArgs: "--skippgpcheck --config=../makepkg.conf --packagelist"
+          makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
     #- name: Import GPG key
     #  id: import_gpg
     #  uses: crazy-max/ghaction-import-gpg@v4
@@ -42,11 +42,11 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
           path: |
-            **.zst
-            !**debug**.zst
+            *.zst
+            !*debug*.zst
     - name: Upload Debug Packages
       uses: actions/upload-artifact@v2
       with:
           path: |
-            **debug**.zst
+            *debug*.zst
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
