@@ -38,7 +38,7 @@ jobs:
     #  run: |
     #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
     #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
-    - run: ls
+    - run: ls minizip-git
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
