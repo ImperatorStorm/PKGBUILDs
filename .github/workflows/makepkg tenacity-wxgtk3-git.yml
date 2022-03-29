@@ -42,12 +42,12 @@ jobs:
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
+          name: packages
           path: |
-            **.zst
-            !**debug**.zst
-    - name: Upload Debug Packages
-      uses: actions/upload-artifact@v2
+            ${{ steps.makepkg.outputs.pkgfile0 }}
+    - uses: actions/upload-artifact@v2
       with:
+          name: debug_packages
           path: |
-            **debug**.zst
+            tenacity-wxgtk3-git/*debug*.zst
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
