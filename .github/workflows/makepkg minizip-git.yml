@@ -38,18 +38,16 @@ jobs:
     #  run: |
     #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
     #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
+    - run: ls
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
           name: packages
           path: |
             ${{ steps.makepkg.outputs.pkgfile0 }}
-    - name: Debug
-      run: echo ${{ steps.makepkg.outputs.pkgfile1 }}
-    - name: Upload Debug Packages
-      uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v2
       with:
-          name: debug packages
+          name: debug_packages
           path: |
-            minizip-git-debug*
+            ${{ steps.makepkg.outputs.pkgfile1 }}
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
