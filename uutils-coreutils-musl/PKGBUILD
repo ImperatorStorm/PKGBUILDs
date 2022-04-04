@@ -14,7 +14,7 @@ license=('MIT')
 makedepends=('git' 'rust' 'rust-musl' 'cargo' 'cmake' 'python-sphinx' 'musl' 'gcc-libs')
 conflicts=('uutils-coreutils-git' 'uutils-coreutils' 'coreutils')
 provides=('coreutils' 'uutils-coreutils')
-source=("uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf"
+source=("uutils::git+https://github.com/uutils/coreutils.git#commit=db22b15faf164190627f05eb52eb3539524bb378"
         0001_fix-install.patch)
 sha256sums=('SKIP'
             'ae02faf5ca52e0f3005f968e3399d4cb0f736aa2c64c897f8ec856e02fdf11f0')
