@@ -15,7 +15,7 @@ depends=('glibc' 'gcc-libs')
 makedepends=('git' 'rust' 'cargo' 'cmake' 'python-sphinx')
 conflicts=('uutils-coreutils-git' 'coreutils')
 provides=('coreutils')
-source=("uutils::git+https://github.com/uutils/coreutils.git#commit=2e251f91f1f5c65518f84c4d2219bf3bca50faaf")
+source=("uutils::git+https://github.com/uutils/coreutils.git#commit=db22b15faf164190627f05eb52eb3539524bb378")
 sha256sums=('SKIP')
 options=(!lto)
 
