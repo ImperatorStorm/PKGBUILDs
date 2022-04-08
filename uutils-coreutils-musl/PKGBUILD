@@ -5,7 +5,7 @@
 # shellcheck disable=2034,2148,2154
 
 pkgname="uutils-coreutils-musl"
-pkgver=r6379.2e251f91f
+pkgver=r7345.db22b15fa
 pkgrel=1
 pkgdesc="GNU Coreutils rewritten in Rust - Built with musl libc"
 arch=($CARCH)

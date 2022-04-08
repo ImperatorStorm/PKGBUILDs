@@ -1,6 +1,6 @@
 pkgbase = uutils-coreutils-musl
 	pkgdesc = GNU Coreutils rewritten in Rust - Built with musl libc
-	pkgver = r6379.2e251f91f
+	pkgver = r7345.db22b15fa
 	pkgrel = 1
 	url = https://github.com/uutils/coreutils
 	arch = x86_64
