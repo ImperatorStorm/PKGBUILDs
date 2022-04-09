@@ -5,7 +5,7 @@
 # shellcheck disable=2034,2148,2154
 
 pkgname="uutils-coreutils-musl"
-pkgver=r7345.db22b15fa
+pkgver=0.0.13
 pkgrel=1
 pkgdesc="GNU Coreutils rewritten in Rust - Built with musl libc"
 arch=($CARCH)
@@ -17,7 +17,8 @@ provides=('coreutils' 'uutils-coreutils')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz"
         tests.patch
         0001_fix-install.patch)
-sha256sums=('SKIP'
+sha256sums=('4f5de6369a826837dfb6fe578580589d38f69e6d2aa9ccc103c9c075c466ff32'
+            'ed6a905a004275b4629d2a720d6697c845e2c48e8a1062bd27284ced3631baf8'
             'ae02faf5ca52e0f3005f968e3399d4cb0f736aa2c64c897f8ec856e02fdf11f0')
 options=(!lto)
 
