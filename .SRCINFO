@@ -1,14 +1,12 @@
 pkgbase = uutils-coreutils-storm
 	pkgdesc = GNU Coreutils rewritten in Rust
-	pkgver = r7345.db22b15fa
+	pkgver = 0.0.13
 	pkgrel = 1
 	url = https://github.com/uutils/coreutils
 	arch = x86_64
 	license = MIT
-	makedepends = git
 	makedepends = rust
 	makedepends = cargo
-	makedepends = cmake
 	makedepends = python-sphinx
 	depends = glibc
 	depends = gcc-libs
@@ -16,7 +14,9 @@ pkgbase = uutils-coreutils-storm
 	conflicts = uutils-coreutils-git
 	conflicts = coreutils
 	options = !lto
-	source = uutils::git+https://github.com/uutils/coreutils.git#commit=db22b15faf164190627f05eb52eb3539524bb378
-	sha256sums = SKIP
+	source = uutils-coreutils-storm-0.0.13.tar.gz::https://github.com/uutils/coreutils/archive/0.0.13.tar.gz
+	source = tests.patch
+	sha256sums = 4f5de6369a826837dfb6fe578580589d38f69e6d2aa9ccc103c9c075c466ff32
+	sha256sums = ed6a905a004275b4629d2a720d6697c845e2c48e8a1062bd27284ced3631baf8
 
 pkgname = uutils-coreutils-storm
