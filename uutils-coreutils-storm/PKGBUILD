@@ -5,6 +5,7 @@
 # shellcheck disable=2034,2148,2154
 
 pkgname="uutils-coreutils-storm"
+_pkgname="coreutils"
 pkgver=0.0.13
 pkgrel=1
 pkgdesc="GNU Coreutils rewritten in Rust"
