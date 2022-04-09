@@ -5,32 +5,36 @@
 # shellcheck disable=2034,2148,2154
 
 pkgname="uutils-coreutils-storm"
-pkgver=r7345.db22b15fa
+pkgver=0.0.13
 pkgrel=1
 pkgdesc="GNU Coreutils rewritten in Rust"
 arch=('x86_64')
 url='https://github.com/uutils/coreutils'
 license=('MIT')
 depends=('glibc' 'gcc-libs')
-makedepends=('git' 'rust' 'cargo' 'cmake' 'python-sphinx')
+makedepends=('rust' 'cargo' 'python-sphinx')
 conflicts=('uutils-coreutils-git' 'coreutils')
 provides=('coreutils')
-source=("uutils::git+https://github.com/uutils/coreutils.git#commit=db22b15faf164190627f05eb52eb3539524bb378")
-sha256sums=('SKIP')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz"
+        tests.patch)
+sha256sums=('4f5de6369a826837dfb6fe578580589d38f69e6d2aa9ccc103c9c075c466ff32'
+            'ed6a905a004275b4629d2a720d6697c845e2c48e8a1062bd27284ced3631baf8')
 options=(!lto)
 
-pkgver() {
-  cd ${srcdir}/uutils || exit 1
-  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+
+prepare() {
+  cd $_pkgname-$pkgver
+  sed 's|"bin"|"builduser"|g' -i tests/by-util/test_{chgrp,chown}.rs
+  patch -Np1 < ../tests.patch
 }
 
 build() {
-  cd ${srcdir}/uutils || exit 1
+  cd $_pkgname-$pkgver
   make PROFILE=release
 }
 
 check() {
-  cd ${srcdir}/uutils || exit 1
+  cd $_pkgname-$pkgver
    make test \
       PROFILE=release \
       CARGOFLAGS=--release \
@@ -41,7 +45,7 @@ check() {
 }
 
 package() {
-  cd ${srcdir}/uutils || exit 1
+  cd $_pkgname-$pkgver
   make install \
     DESTDIR="$pkgdir" \
     PREFIX=/usr \

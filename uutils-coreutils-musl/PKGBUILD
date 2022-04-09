@@ -14,44 +14,43 @@ license=('MIT')
 makedepends=('git' 'rust' 'rust-musl' 'cargo' 'cmake' 'python-sphinx' 'musl' 'gcc-libs')
 conflicts=('uutils-coreutils-git' 'uutils-coreutils' 'coreutils')
 provides=('coreutils' 'uutils-coreutils')
-source=("uutils::git+https://github.com/uutils/coreutils.git#commit=db22b15faf164190627f05eb52eb3539524bb378"
+source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz"
+        tests.patch
         0001_fix-install.patch)
 sha256sums=('SKIP'
             'ae02faf5ca52e0f3005f968e3399d4cb0f736aa2c64c897f8ec856e02fdf11f0')
 options=(!lto)
+
 prepare(){
-  cd ${srcdir}/uutils || exit 1
+  cd $_pkgname-$pkgver
+  sed 's|"bin"|"builduser"|g' -i tests/by-util/test_{chgrp,chown}.rs
+  patch -Np1 < ../tests.patch
   patch -tp1 <../0001_fix-install.patch
-}
-pkgver() {
-  cd ${srcdir}/uutils || exit 1
-  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-  cd ${srcdir}/uutils || exit 1
+  cd $_pkgname-$pkgver || exit 1
   # {pinky uptime users who} break with musl libc. See https://github.com/uutils/coreutils/issues/2029.
   make PROFILE=release SKIP_UTILS="pinky uptime users who" CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl"
 }
 
 # Tests fail sporadically on musl, see https://github.com/uutils/coreutils/issues/2024.
-#check() {
-#  cd ${srcdir}/uutils || exit 1
-#  # TODO: Fix the failing tests. These 2 seem to fail for a few benign reasons.
-#  make test \
-#      PROFILE=release \
-#      CARGOFLAGS="--release \
-#      --target x86_64-unknown-linux-musl \
-#      --features feat_os_unix_musl" \
-#      SKIP_UTILS="pinky uptime users who" \
-#      TEST_NO_FAIL_FAST="--no-fail-fast -- \
-#      --skip test_chown::test_big_p \
-#      --skip test_chgrp::test_big_p \
-#      --skip test_chgrp::test_big_h"
-#}
+check() {
+  cd $_pkgname-$pkgver || exit 1
+  make test \
+      PROFILE=release \
+      CARGOFLAGS="--release \
+      --target x86_64-unknown-linux-musl \
+      --features feat_os_unix_musl" \
+      SKIP_UTILS="pinky uptime users who" \
+      TEST_NO_FAIL_FAST="--no-fail-fast -- \
+      --skip test_chown::test_big_p \
+      --skip test_chgrp::test_big_p \
+      --skip test_chgrp::test_big_h"
+}
 
 package() {
-  cd ${srcdir}/uutils || exit 1
+  cd $_pkgname-$pkgver || exit 1
   make CARGOFLAGS=" --target x86_64-unknown-linux-musl --features feat_os_unix_musl" install \
     SKIP_UTILS="pinky uptime users who" \
     DESTDIR="$pkgdir" \
