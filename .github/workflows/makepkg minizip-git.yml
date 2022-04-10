@@ -4,6 +4,8 @@ env:
   GPG_TTY: $(tty)
 
 on:
+  schedule:
+  - cron: '0 0 * * *'
   push:
     paths:
         - "minizip-git/**"
