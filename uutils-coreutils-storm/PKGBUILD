@@ -42,7 +42,11 @@ check() {
       TEST_NO_FAIL_FAST="--no-fail-fast -- \
         --skip test_chown::test_big_p \
         --skip test_chgrp::test_big_p \
-        --skip test_chgrp::test_big_h"
+        --skip test_chgrp::test_big_h \
+        --skip test_chgrp::test_1 \
+        --skip test_chgrp::test_fail_silently \
+        --skip test_chgrp::test_preserve_root \
+        --skip test_chgrp::test_preserve_root_symlink"
 }
 
 package() {
