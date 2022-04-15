@@ -36,17 +36,20 @@ jobs:
         cd minizip-git
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
-        sudo -u builder makepkg -s --noconfirm --config=../makepkg.conf
+        sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
           name: packages
           path: |
             minizip-git/*.zst
+            minizip-git/*.zst.sig
             !minizip-git/*debug*.zst
+            !minizip-git/*debug*.zst.sig
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
     - uses: actions/upload-artifact@v2
       with:
           name: debug_packages
           path: |
             minizip-git/*debug*.zst
+            minizip-git/*debug*.zst.sig
