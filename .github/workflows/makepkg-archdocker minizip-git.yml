@@ -41,7 +41,7 @@ jobs:
         ls
         pacman -Syu --noconfirm
         cd minizip-git
-        runuser -u nobody makepkg -s --sign --noconfirm
+        sudo -u nobody makepkg -s --sign --noconfirm
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
