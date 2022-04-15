@@ -33,10 +33,9 @@ jobs:
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
         BASEDIR="$PWD"
-        sudo -u builder sh -c "export GNUPGHOME='$PWD'"
-        pwd
+        cd minizip-git
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
-        sudo -D minizip-git -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
+        sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
