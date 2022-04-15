@@ -1,4 +1,4 @@
-name: Makepkg CI - Tenacity-wxgtk3-git
+name: Makepkg CI - tenacity-wxgtk3-git
 
 env:
   GPG_TTY: $(tty)
@@ -11,6 +11,7 @@ on:
         - "tenacity-wxgtk3-git/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg tenacity-wxgtk3-git.yml"
+        - ".github/workflows/makepkg-archdocker tenacity-wxgtk3-git.yml"
   pull_request:
     paths:
         - "tenacity-wxgtk3-git/**"
@@ -21,35 +22,34 @@ on:
 jobs:
   pkgbuild:
     runs-on: ubuntu-latest
+    container: archlinux/archlinux:base-devel
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Makepkg Build
-      id: makepkg
-      uses: edlanglois/pkgbuild-action@v1
-      with:
-          pkgdir: "tenacity-wxgtk3-git"
-          makepkgArgs: "--skippgpcheck --config=../makepkg.conf"
-    #      aurDeps: "wxgtk3-dev-light"
-    #- name: Import GPG key
-    #  id: import_gpg
-    #  uses: crazy-max/ghaction-import-gpg@v4
-    #  with:
-    #      gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-    #      passphrase: ${{ secrets.PASSPHRASE }}
-    #- name: Sign Packages
-    #  run: |
-    #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile0 }}
-    #    gpg --sign --detach-sign ${{ steps.makepkg.outputs.pkgfile1 }}
+    - name: Makepkg
+      run: |
+        pacman -Syu --noconfirm
+        useradd builder -m
+        echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        chmod -R a+rw .
+        BASEDIR="$PWD"
+        cd tenacity-wxgtk3-git
+        sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
+        sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
+        sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
           name: packages
           path: |
-            ${{ steps.makepkg.outputs.pkgfile0 }}
+            tenacity-wxgtk3-git/*.zst
+            tenacity-wxgtk3-git/*.zst.sig
+            !tenacity-wxgtk3-git/*debug*.zst
+            !tenacity-wxgtk3-git/*debug*.zst.sig
+    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
     - uses: actions/upload-artifact@v2
       with:
           name: debug_packages
           path: |
             tenacity-wxgtk3-git/*debug*.zst
-    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
+            tenacity-wxgtk3-git/*debug*.zst.sig
