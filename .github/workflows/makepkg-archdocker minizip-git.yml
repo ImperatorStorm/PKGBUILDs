@@ -35,9 +35,9 @@ jobs:
     - name: Makepkg
       run: |
         ls
-        sudo pacman -Syu --no-confirm
+        sudo pacman -Syu --noconfirm
         cd minizip-git
-        makepkg -s --sign --no-confirm
+        makepkg -s --sign --noconfirm
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
