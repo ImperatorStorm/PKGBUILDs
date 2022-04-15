@@ -34,10 +34,14 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
     - name: Makepkg
       run: |
+        chgrp nobody minizip-git
+        chmod g+ws minizip-git
+        setfacl -m u::rwx,g::rwx minizip-git
+        setfacl -d --set u::rwx,g::rwx,o::- minizip-git
         ls
-        sudo pacman -Syu --noconfirm
+        pacman -Syu --noconfirm
         cd minizip-git
-        makepkg -s --sign --noconfirm
+        runuser -u nobody makepkg -s --sign --noconfirm
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
