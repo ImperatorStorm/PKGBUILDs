@@ -1,4 +1,4 @@
-name: Makepkg CI - Minizip-git
+name: Makepkg CI - Minizip-git - Archlinux Docker
 
 env:
   GPG_TTY: $(tty)
@@ -11,6 +11,7 @@ on:
         - "minizip-git/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg minizip-git.yml"
+        - ".github/workflows/makepkg-archdocker minizip-git.yml"
   pull_request:
     paths:
         - "minizip-git/**"
@@ -20,6 +21,7 @@ on:
 
 jobs:
   pkgbuild:
+    runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
     - name: Checkout
