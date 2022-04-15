@@ -34,6 +34,7 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         cd minizip-git
+        sudo -u builder echo -n "${{ env.GPG_PRIVATE_KEY }}" | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
         sudo -u builder makepkg -s --noconfirm --config=../makepkg.conf
     - name: Upload Packages
