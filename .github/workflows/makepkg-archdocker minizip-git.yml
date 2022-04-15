@@ -35,7 +35,7 @@ jobs:
         BASEDIR="$PWD"
         cd minizip-git
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
-        sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
+        sudo -u builder makepkg -s --noconfirm --config=../makepkg.conf
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
