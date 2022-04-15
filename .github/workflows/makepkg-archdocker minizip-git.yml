@@ -35,8 +35,8 @@ jobs:
         ls
         pacman -Syu --noconfirm
         cd minizip-git
-        sudo -u nobody echo -e "${{ env.GPG_PRIVATE_KEY }}" | sudo -u nobody gpg --import --batch --no-tty
-        sudo -u nobody makepkg -s --sign --noconfirm
+        sudo -u nobody echo -e "${{ env.GPG_PRIVATE_KEY }}" | $GNUPGHOME=$(pwd) sudo -u nobody gpg --import --batch --no-tty
+        $GNUPGHOME=$(pwd) sudo -u nobody makepkg -s --sign --noconfirm
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
