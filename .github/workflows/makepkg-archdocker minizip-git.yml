@@ -32,12 +32,11 @@ jobs:
         chmod g+ws minizip-git
         setfacl -m u::rwx,g::rwx minizip-git
         setfacl -d --set u::rwx,g::rwx,o::- minizip-git
-        ls
         pacman -Syu --noconfirm
-        cd minizip-git
+        sudo -u nobody cd minizip-git
         sudo -u nobody sh -c "export GNUPGHOME=$(pwd)"
         sudo -u nobody echo -e "${{ env.GPG_PRIVATE_KEY }}" | sudo -u nobody gpg --import --batch --no-tty
-        sudo -u nobody makepkg -s --sign --noconfirm
+        sudo -D minizip-git -u nobody makepkg -s --sign --noconfirm
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
