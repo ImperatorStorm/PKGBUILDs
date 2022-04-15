@@ -33,7 +33,6 @@ jobs:
         setfacl -m u::rwx,g::rwx minizip-git
         setfacl -d --set u::rwx,g::rwx,o::- minizip-git
         pacman -Syu --noconfirm
-        sudo -u nobody cd minizip-git
         sudo -u nobody sh -c "export GNUPGHOME=$(pwd)"
         sudo -u nobody echo -e "${{ env.GPG_PRIVATE_KEY }}" | sudo -u nobody gpg --import --batch --no-tty
         sudo -D minizip-git -u nobody makepkg -s --sign --noconfirm
