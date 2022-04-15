@@ -35,7 +35,7 @@ jobs:
     - name: Makepkg
       run: |
         ls
-        sudo pacman -Syu
+        sudo pacman -Syu --no-confirm
         cd minizip-git
         makepkg -s --sign --no-confirm
     - name: Upload Packages
