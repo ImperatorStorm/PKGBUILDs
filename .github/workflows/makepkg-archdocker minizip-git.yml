@@ -33,7 +33,7 @@ jobs:
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
         BASEDIR="$PWD"
-        sudo -u builder sh "export GNUPGHOME='$PWD'"
+        sudo -u builder sh -c "export GNUPGHOME='$PWD'"
         sudo -u builder echo -e "${{ env.GPG_PRIVATE_KEY }}" | sudo -u builder gpg --import --batch --no-tty
         sudo -D minizip-git -u builder makepkg -s --sign --noconfirm
     - name: Upload Packages
