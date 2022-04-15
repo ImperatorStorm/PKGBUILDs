@@ -34,7 +34,8 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         sudo -u builder sh -c "export GNUPGHOME='$PWD'"
-        sudo -u builder echo -e "${{ env.GPG_PRIVATE_KEY }}" | sudo -u builder gpg --import --batch --no-tty
+        pwd
+        sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
         sudo -D minizip-git -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Upload Packages
       uses: actions/upload-artifact@v2
