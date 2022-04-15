@@ -1,0 +1,49 @@
+name: Makepkg CI - Minizip-git
+
+env:
+  GPG_TTY: $(tty)
+
+on:
+  schedule:
+  - cron: '0 0 * * *'
+  push:
+    paths:
+        - "minizip-git/**"
+        - "makepkg.conf"
+        - ".github/workflows/makepkg minizip-git.yml"
+  pull_request:
+    paths:
+        - "minizip-git/**"
+        - "makepkg.conf"
+        - ".github/workflows/makepkg minizip-git.yml"
+  workflow_dispatch:
+
+jobs:
+  pkgbuild:
+    container: archlinux/archlinux:base-devel
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Import GPG key
+      id: import_gpg
+      uses: crazy-max/ghaction-import-gpg@v4
+      with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+    - name: Makepkg
+      run: |
+        ls
+        sudo pacman -Syu
+        makepkg -s --sign
+    - name: Upload Packages
+      uses: actions/upload-artifact@v2
+      with:
+          name: packages
+          path: |
+            ${{ steps.makepkg.outputs.pkgfile0 }}
+            ${{ steps.makepkg.outputs.pkgfile0 }}.sig
+    - uses: actions/upload-artifact@v2
+      with:
+          name: debug_packages
+          path: |
+            minizip-git/*debug*.zst
