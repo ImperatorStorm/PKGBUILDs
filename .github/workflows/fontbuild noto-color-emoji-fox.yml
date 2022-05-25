@@ -19,7 +19,7 @@ jobs:
     - name: Build Font
       run: |
         pacman -Syu --noconfirm
-        pacman -S base-devel python-pip scour inkscape  imagemagick pngquant cairo zopfli --needed
+        pacman -S base-devel python-pip scour inkscape  imagemagick pngquant cairo zopfli --needed --noconfirm
         mkdir noto-color-emoji-fox
         cd noto-color-emoji-fox
         git clone --depth=1 https://github.com/googlefonts/noto-emoji .
