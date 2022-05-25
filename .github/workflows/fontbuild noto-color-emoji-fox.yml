@@ -22,7 +22,6 @@ jobs:
       run: |
         pacman -Syu --noconfirm
         pacman -S base-devel python-pip scour inkscape git imagemagick pngquant cairo zopfli noto-fonts --needed --noconfirm
-        mkdir noto-color-emoji-fox
         cd noto-color-emoji-fox
         git clone --depth=1 https://github.com/googlefonts/noto-emoji .
         curl https://raw.githubusercontent.com/googlefonts/noto-emoji/5628587386c78161f87aa2ca9ddee37c2e8ea212/svg/emoji_u1f98a.svg -o svg/emoji_u1f98a.svg
