@@ -1,0 +1,42 @@
+name: Font CI - noto-color-emoji-fox
+
+on:
+  push:
+    paths:
+        - ".github/workflows/fontbuild noto-color-emoji-fox.yml"
+  pull_request:
+    paths:
+        - ".github/workflows/fontbuild noto-color-emoji-fox.yml"
+  workflow_dispatch:
+
+jobs:
+  pkgbuild:
+    runs-on: ubuntu-latest
+    container: archlinux/archlinux:base-devel
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build Font
+      run: |
+        pacman -Syu --noconfirm
+        pacman -S base-devel pip scour inkscape  imagemagick pngquant cairo zopfli --needed
+        mkdir noto-color-emoji-fox
+        cd noto-color-emoji-fox
+        git clone --depth=1 https://github.com/googlefonts/noto-emoji .
+        curl https://raw.githubusercontent.com/googlefonts/noto-emoji/5628587386c78161f87aa2ca9ddee37c2e8ea212/svg/emoji_u1f98a.svg -o svg/emoji_u1f98a.svg
+        scour --strip-xml-prolog --enable-viewboxing --enable-id-stripping --enable-comment-stripping --shorten-ids --no-line-breaks --strip-xml-space **/*.svg
+        inkscape -o png/32/emoji_u1f98a.png -w 32 -h 32 svg/emoji_u1f98a.svg
+        inkscape -o png/72/emoji_u1f98a.png -w 72 -h 72 svg/emoji_u1f98a.svg
+        inkscape -o png/128/emoji_u1f98a.png -w 128 -h 128 svg/emoji_u1f98a.svg
+        inkscape -o png/512/emoji_u1f98a.png -w 512 -h 512 svg/emoji_u1f98a.svg
+        rm fonts/*
+        python -m venv emojibuild
+        source emojibuild/bin/activate
+        pip install -r requirements.txt
+        make -j$(nproc)
+    - name: Upload Font
+      uses: actions/upload-artifact@v2
+      with:
+          name: font.zip
+          path: |
+            **/*.ttf
