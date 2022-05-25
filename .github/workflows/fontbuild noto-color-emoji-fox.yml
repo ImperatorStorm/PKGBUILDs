@@ -23,9 +23,9 @@ jobs:
         pacman -Syu --noconfirm
         pacman -S base-devel python-pip scour inkscape git imagemagick pngquant cairo zopfli noto-fonts --needed --noconfirm
         cd noto-color-emoji-fox
-        mv scour.sh.new ..
+        mv scour_svg.sh.new ..
         git clone --depth=1 https://github.com/googlefonts/noto-emoji .
-        mv ../scour.sh.new .
+        mv ../scour_svg.sh.new .
         curl https://raw.githubusercontent.com/googlefonts/noto-emoji/5628587386c78161f87aa2ca9ddee37c2e8ea212/svg/emoji_u1f98a.svg -o svg/emoji_u1f98a.svg
         SRC_DIR="$(pwd)/svg" DST_DIR="$(pwd)/scoured/svg" ./scour_svg.sh.new
         mv scoured/svg/* svg/
