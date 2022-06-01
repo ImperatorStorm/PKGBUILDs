@@ -28,18 +28,18 @@ jobs:
         mv -v ../scour_svg.sh.new .
         curl https://raw.githubusercontent.com/googlefonts/noto-emoji/5628587386c78161f87aa2ca9ddee37c2e8ea212/svg/emoji_u1f98a.svg -o svg/emoji_u1f98a.svg
         SRC_DIR="$(pwd)/svg" DST_DIR="$(pwd)/scoured/svg" ./scour_svg.sh.new
-        mv scoured/svg/* svg/
+        mv -v scoured/svg/* svg/
         inkscape -o png/32/emoji_u1f98a.png -w 32 -h 32 svg/emoji_u1f98a.svg
         inkscape -o png/72/emoji_u1f98a.png -w 72 -h 72 svg/emoji_u1f98a.svg
         inkscape -o png/128/emoji_u1f98a.png -w 128 -h 128 svg/emoji_u1f98a.svg
         inkscape -o png/512/emoji_u1f98a.png -w 512 -h 512 svg/emoji_u1f98a.svg
-        rm fonts/*
+        rm --verbose fonts/*
         python -m venv emojibuild
         source emojibuild/bin/activate
-        pip install -r requirements.txt
+        pip install -r requirements.txt --verbose
         make -j$(nproc) --no-silent
         tar --zstd --verbose -cf font.tar.zst NotoColorEmoji.ttf
-        mv font.tar.zst ..
+        mv -v font.tar.zst ..
     - name: Upload Font
       uses: actions/upload-artifact@v3
       with:
