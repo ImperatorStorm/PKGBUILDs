@@ -6,7 +6,7 @@
 
 pkgname="uutils-coreutils-storm"
 _pkgname="coreutils"
-pkgver=0.0.13
+pkgver=0.0.14
 pkgrel=1
 pkgdesc="GNU Coreutils rewritten in Rust"
 arch=('x86_64')
@@ -18,7 +18,7 @@ conflicts=('uutils-coreutils-git' 'coreutils')
 provides=('coreutils')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz"
         tests.patch)
-sha256sums=('4f5de6369a826837dfb6fe578580589d38f69e6d2aa9ccc103c9c075c466ff32'
+sha256sums=('527563ff39aeea9e56f91996226a51034ed648732de71d075e3d12683b90b155'
             'ed6a905a004275b4629d2a720d6697c845e2c48e8a1062bd27284ced3631baf8')
 options=(!lto)
 
