@@ -69,6 +69,7 @@ jobs:
         cd aseprite
         sudo -u builder makepkg -s --noconfirm --config=../makepkg.conf
     - name: Upload Packages
+      if: github.event.name != 'pull_request'
       uses: actions/upload-artifact@v2
       with:
           name: packages
@@ -79,6 +80,7 @@ jobs:
             !aseprite/*debug*.zst.sig
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
     - uses: actions/upload-artifact@v2
+      if: github.event.name != 'pull_request'
       with:
           name: debug_packages
           path: |
