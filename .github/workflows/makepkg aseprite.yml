@@ -2,7 +2,6 @@ name: Makepkg CI - aseprite
 
 env:
   GPG_TTY: $(tty)
-  NULL: ${{ null }}
 
 on:
   push:
@@ -20,7 +19,7 @@ on:
 
 jobs:
   pkgbuild:
-    if: ${{ secrets.GPG_PRIVATE_KEY }} != ${NULL}
+    if: secrets.GPG_PRIVATE_KEY != null
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
@@ -54,7 +53,7 @@ jobs:
             aseprite/*debug*.zst
             aseprite/*debug*.zst.sig
   prbuild:
-    if: ${{ secrets.GPG_PRIVATE_KEY }} == ${NULL}
+    if: secrets.GPG_PRIVATE_KEY == null
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
