@@ -2,7 +2,7 @@ name: Makepkg CI - aseprite
 
 env:
   GPG_TTY: $(tty)
-  NULL: ""
+  NULL: ${{ null }}
 
 on:
   push:
