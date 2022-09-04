@@ -2,6 +2,7 @@ name: Makepkg CI - aseprite
 
 env:
   GPG_TTY: $(tty)
+  NULL: ""
 
 on:
   push:
@@ -19,6 +20,7 @@ on:
 
 jobs:
   pkgbuild:
+    if: ${{ secrets.GPG_PRIVATE_KEY }} != ${NULL}
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
@@ -35,6 +37,38 @@ jobs:
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
+    - name: Upload Packages
+      uses: actions/upload-artifact@v2
+      with:
+          name: packages
+          path: |
+            aseprite/*.zst
+            aseprite/*.zst.sig
+            !aseprite/*debug*.zst
+            !aseprite/*debug*.zst.sig
+    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
+    - uses: actions/upload-artifact@v2
+      with:
+          name: debug_packages
+          path: |
+            aseprite/*debug*.zst
+            aseprite/*debug*.zst.sig
+  prbuild:
+    if: ${{ secrets.GPG_PRIVATE_KEY }} == ${NULL}
+    runs-on: ubuntu-latest
+    container: archlinux/archlinux:base-devel
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Makepkg
+      run: |
+        pacman -Syu --noconfirm
+        useradd builder -m
+        echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        chmod -R a+rw .
+        BASEDIR="$PWD"
+        cd aseprite
+        sudo -u builder makepkg -s --noconfirm --config=../makepkg.conf
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
