@@ -19,7 +19,7 @@ on:
 
 jobs:
   pkgbuild:
-    if: github.event.name != pull_request
+    if: github.event.name != 'pull_request'
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
@@ -53,7 +53,7 @@ jobs:
             aseprite/*debug*.zst
             aseprite/*debug*.zst.sig
   prbuild:
-    if: github.event.name == pull_request
+    if: github.event.name == 'pull_request'
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
