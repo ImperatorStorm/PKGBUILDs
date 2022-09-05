@@ -9,7 +9,6 @@ on:
         - "aseprite/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg aseprite.yml"
-        - ".github/workflows/makepkg-archdocker aseprite.yml"
   pull_request:
     paths:
         - "aseprite/**"
@@ -27,6 +26,7 @@ jobs:
       uses: actions/checkout@v2
     - name: Makepkg
       run: |
+        echo ${{ github.event.name }}
         pacman -Syu --noconfirm
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
