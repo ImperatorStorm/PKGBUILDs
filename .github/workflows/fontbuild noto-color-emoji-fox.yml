@@ -37,8 +37,10 @@ jobs:
         python -m venv emojibuild
         source emojibuild/bin/activate
         pip install -r requirements.txt --verbose
-        make -j$(nproc) --no-silent
-        tar --zstd --verbose -cf font.tar.zst NotoColorEmoji.ttf
+        python colrv1_generate_configs.py
+        cd colrv1
+        nanoemoji all.toml
+        tar --zstd --verbose -cf font.tar.zst ../NotoColorEmoji.ttf
         mv -v font.tar.zst ..
     - name: Upload Font
       uses: actions/upload-artifact@v3
