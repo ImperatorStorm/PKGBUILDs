@@ -1,4 +1,4 @@
-name: Makepkg CI - quilt-server
+name: PRbuild CI - quilt-server
 
 env:
   GPG_TTY: $(tty)

@@ -1,4 +1,4 @@
-name: Makepkg CI - minizip-git
+name: PRbuild CI - minizip-git
 
 env:
   GPG_TTY: $(tty)

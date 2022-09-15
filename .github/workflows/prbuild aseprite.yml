@@ -1,4 +1,4 @@
-name: Makepkg CI - aseprite
+name: PRbuild CI - aseprite
 
 env:
   GPG_TTY: $(tty)
