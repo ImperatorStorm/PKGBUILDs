@@ -4,18 +4,15 @@ env:
   GPG_TTY: $(tty)
 
 on:
-  schedule:
-  - cron: '0 0 * * *'
-  push:
+  pull_request:
     paths:
         - "minizip-git/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg minizip-git.yml"
-        - ".github/workflows/makepkg-archdocker minizip-git.yml"
+        - ".github/workflows/prbuild minizip-git.yml"
   workflow_dispatch:
 
 jobs:
-  pkgbuild:
+  prbuild:
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
@@ -29,22 +26,16 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         cd minizip-git
-        sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
-        sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
-        sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
+        sudo -u builder makepkg -s --noconfirm --skippgpcheck --config=../makepkg.conf
     - name: Upload Packages
       uses: actions/upload-artifact@v2
       with:
           name: packages
           path: |
             minizip-git/*.zst
-            minizip-git/*.zst.sig
             !minizip-git/*debug*.zst
-            !minizip-git/*debug*.zst.sig
-    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
     - uses: actions/upload-artifact@v2
       with:
           name: debug_packages
           path: |
             minizip-git/*debug*.zst
-            minizip-git/*debug*.zst.sig

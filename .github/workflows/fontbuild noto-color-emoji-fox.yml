@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  pkgbuild:
+  fontbuild:
     runs-on: ubuntu-latest
     container: archlinux/archlinux:base-devel
     steps:
