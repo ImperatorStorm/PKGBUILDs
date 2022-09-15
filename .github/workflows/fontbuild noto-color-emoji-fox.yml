@@ -40,10 +40,8 @@ jobs:
         python colrv1_generate_configs.py
         cd colrv1
         nanoemoji all.toml
-        cd ..
-        find | grep --fixed-strings --ignore-case NotoColorEmoji.ttf
-#        tar --zstd --verbose -cf font.tar.zst NotoColorEmoji.ttf
-#        mv -v font.tar.zst ../..
+        cd build
+        tar --zstd --verbose -cf ../../../font.tar.zst NotoColorEmoji.ttf
     - name: Upload Font
       uses: actions/upload-artifact@v3
       with:
