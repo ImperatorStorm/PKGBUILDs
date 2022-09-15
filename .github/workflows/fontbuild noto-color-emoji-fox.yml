@@ -1,6 +1,8 @@
 name: Font CI - noto-color-emoji-fox
 
 on:
+  schedule:
+  - cron: '0 0 * * 0'
   push:
     paths:
         - ".github/workflows/fontbuild noto-color-emoji-fox.yml"
