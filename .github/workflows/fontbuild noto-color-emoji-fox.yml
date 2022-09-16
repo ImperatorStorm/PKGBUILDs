@@ -39,7 +39,7 @@ jobs:
         make -j$(nproc)
         mv *.ttf fonts/
         cd colrv1
-        python ../colrv1_generate_configs.py
+        cp ../colrv1_generate_configs.py .
         nanoemoji all.toml
         cp colrv1/build/NotoColorEmoji.ttf fonts/Noto-COLRv1.ttf
         cd ..
