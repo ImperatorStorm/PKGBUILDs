@@ -41,9 +41,16 @@ jobs:
         cd colrv1
         cp ../colrv1_generate_configs.py .
         nanoemoji all.toml
-        cp colrv1/build/NotoColorEmoji.ttf fonts/Noto-COLRv1.ttf
+        cp build/*.ttf ../fonts/
         cd ..
         python colrv1_postproc.py
+    - name: Setup upterm session
+      uses: lhotari/action-upterm@v1
+      with:
+        limit-access-to-actor: true
+        limit-access-to-users: ImperatorStorm
+    - name: Package Font
+      run: |
         tar --zstd --verbose -cf font.tar.zst fonts/NotoColorEmoji.ttf
     - name: Upload Font
       uses: actions/upload-artifact@v3
