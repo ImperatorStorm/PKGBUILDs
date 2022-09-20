@@ -42,8 +42,8 @@ jobs:
         python colrv1_generate_configs.py
         cd colrv1
         nanoemoji all.toml
-        cp build/NotoColorEmoji.ttf ../fonts/Noto-COLRv1
-        cp build/NotoColorEmoji.ttf ../fonts/Noto-COLRv1-noflags
+        cp build/NotoColorEmoji.ttf ../fonts/Noto-COLRv1.ttf
+        cp build/NotoColorEmoji.ttf ../fonts/Noto-COLRv1-noflags.ttf
         cd ..
         python colrv1_postproc.py
         tar --zstd --verbose -cf font.tar.zst fonts/*.ttf
