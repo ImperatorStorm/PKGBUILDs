@@ -22,7 +22,7 @@ jobs:
       run: |
         echo ${{ github.event.name }}
         pacman -Syu --noconfirm
-        pacman -S libedit git
+        pacman -S libedit git --noconfirm --needed
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
