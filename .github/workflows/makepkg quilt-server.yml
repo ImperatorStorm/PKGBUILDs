@@ -4,14 +4,11 @@ env:
   GPG_TTY: $(tty)
 
 on:
-  schedule:
-  - cron: '0 0 * * *'
   push:
     paths:
         - "quilt-server/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg quilt-server.yml"
-        - ".github/workflows/makepkg-archdocker quilt-server.yml"
   workflow_dispatch:
 
 jobs:

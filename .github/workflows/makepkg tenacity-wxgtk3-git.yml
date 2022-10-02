@@ -11,12 +11,6 @@ on:
         - "tenacity-wxgtk3-git/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg tenacity-wxgtk3-git.yml"
-        - ".github/workflows/makepkg-archdocker tenacity-wxgtk3-git.yml"
-  pull_request:
-    paths:
-        - "tenacity-wxgtk3-git/**"
-        - "makepkg.conf"
-        - ".github/workflows/makepkg tenacity-wxgtk3-git.yml"
   workflow_dispatch:
 
 jobs:

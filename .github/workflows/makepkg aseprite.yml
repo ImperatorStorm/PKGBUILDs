@@ -9,11 +9,6 @@ on:
         - "aseprite/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg aseprite.yml"
-  pull_request:
-    paths:
-        - "aseprite/**"
-        - "makepkg.conf"
-        - ".github/workflows/makepkg aseprite.yml"
   workflow_dispatch:
 
 jobs:

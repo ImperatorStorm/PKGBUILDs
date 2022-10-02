@@ -9,12 +9,6 @@ on:
         - "linux-lts-llvm/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg linux-lts-llvm.yml"
-        - ".github/workflows/makepkg-archdocker linux-lts-llvm.yml"
-  pull_request:
-    paths:
-        - "linux-lts-llvm/**"
-        - "makepkg.conf"
-        - ".github/workflows/makepkg linux-lts-llvm.yml"
   workflow_dispatch:
 
 jobs:

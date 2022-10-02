@@ -9,12 +9,6 @@ on:
         - "uutils-coreutils-musl/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg uutils-coreutils-musl.yml"
-        - ".github/workflows/makepkg-archdocker uutils-coreutils-musl.yml"
-  pull_request:
-    paths:
-        - "uutils-coreutils-musl/**"
-        - "makepkg.conf"
-        - ".github/workflows/makepkg uutils-coreutils-musl.yml"
   workflow_dispatch:
 
 jobs:

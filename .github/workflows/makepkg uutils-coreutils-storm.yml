@@ -9,12 +9,6 @@ on:
         - "uutils-coreutils-storm/**"
         - "makepkg.conf"
         - ".github/workflows/makepkg uutils-coreutils-storm.yml"
-        - ".github/workflows/makepkg-archdocker uutils-coreutils-storm.yml"
-  pull_request:
-    paths:
-        - "uutils-coreutils-storm/**"
-        - "makepkg.conf"
-        - ".github/workflows/makepkg uutils-coreutils-storm.yml"
   workflow_dispatch:
 
 jobs:
