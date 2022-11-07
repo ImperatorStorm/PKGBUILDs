@@ -17,7 +17,7 @@ jobs:
     container: archlinux/archlinux:base-devel
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Makepkg
       run: |
         pacman -Syu --noconfirm
@@ -31,7 +31,7 @@ jobs:
         sudo -u builder gpg --recv-keys A2FF3A36AAA56654109064AB19802F8B0D70FC30 C7E7849466FE2358343588377258734B41C31549
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Upload Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
           name: packages
           path: |

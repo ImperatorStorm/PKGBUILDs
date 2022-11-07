@@ -17,7 +17,7 @@ jobs:
     container: archlinux/archlinux:base-devel
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Makepkg
       run: |
         pacman -Syu --noconfirm
@@ -28,13 +28,13 @@ jobs:
         cd aseprite
         sudo -u builder makepkg -s --noconfirm --skippgpcheck --config=../makepkg.conf
     - name: Upload Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
           name: packages
           path: |
             aseprite/*.zst
             !aseprite/*debug*.zst
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
           name: debug_packages
           path: |

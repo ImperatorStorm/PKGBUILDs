@@ -19,7 +19,7 @@ jobs:
     container: archlinux/archlinux:base-devel
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Makepkg
       run: |
         pacman -Syu --noconfirm
@@ -32,7 +32,7 @@ jobs:
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Upload Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
           name: packages
           path: |
@@ -41,7 +41,7 @@ jobs:
             !tenacity-wxgtk3-git/*debug*.zst
             !tenacity-wxgtk3-git/*debug*.zst.sig
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
           name: debug_packages
           path: |
