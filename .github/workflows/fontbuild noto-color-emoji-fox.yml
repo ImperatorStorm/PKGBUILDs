@@ -20,13 +20,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Prepare
+      run: |
+        cd noto-color-emoji-fox
+        rm .gitkeep
+        cd ../
+    - name: Checkout Font
+      uses: actions/checkout@v3
+      with:
+        repository: googlefonts/noto-emoji
+        path: noto-color-emoji-fox
     - name: Build Font
       run: |
         set -x
         pacman -Syu --noconfirm
-        pacman -S base-devel python-pip inkscape git imagemagick pngquant cairo zopfli noto-fonts findutils --needed --noconfirm
-        cd noto-color-emoji-fox
-        rm .gitkeep
+        pacman -S base-devel python-pip inkscape git imagemagick pngquant cairo zopfli noto-fonts findutils zstd --needed --noconfirm
         git clone --depth=1 https://github.com/googlefonts/noto-emoji .
         curl https://raw.githubusercontent.com/googlefonts/noto-emoji/5628587386c78161f87aa2ca9ddee37c2e8ea212/svg/emoji_u1f98a.svg -o svg/emoji_u1f98a.svg
         inkscape -o png/32/emoji_u1f98a.png -w 32 -h 32 svg/emoji_u1f98a.svg
@@ -37,19 +45,20 @@ jobs:
         python -m venv emojibuild
         source emojibuild/bin/activate
         pip install -r requirements.txt --verbose
+        python size_check.py
         make -j$(nproc) VERBOSE=1
         mv *.ttf fonts/
-        python colrv1_generate_configs.py
         cd colrv1
         nanoemoji all.toml
         cp build/NotoColorEmoji.ttf ../fonts/Noto-COLRv1.ttf
         cp build/NotoColorEmoji.ttf ../fonts/Noto-COLRv1-noflags.ttf
         cd ..
         python colrv1_postproc.py
-        tar --zstd --verbose -cf font.tar.zst fonts/*.ttf
+        tar --verbose -cf font.tar fonts/*.ttf
+        zstd -15 -T0 font.tar font.tar.zst
     - name: Upload Font
       uses: actions/upload-artifact@v3
       with:
           name: font
           path: |
-            font.tar.zst
+            noto-color-emoji-fox/font.tar.zst
