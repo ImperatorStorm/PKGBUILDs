@@ -35,6 +35,7 @@ jobs:
         set -x
         pacman -Syu --noconfirm
         pacman -S base-devel python-pip inkscape git imagemagick pngquant cairo zopfli noto-fonts findutils zstd --needed --noconfirm
+        cd noto-color-emoji-fox
         curl https://raw.githubusercontent.com/googlefonts/noto-emoji/5628587386c78161f87aa2ca9ddee37c2e8ea212/svg/emoji_u1f98a.svg -o svg/emoji_u1f98a.svg
         inkscape -o png/32/emoji_u1f98a.png -w 32 -h 32 svg/emoji_u1f98a.svg
         inkscape -o png/72/emoji_u1f98a.png -w 72 -h 72 svg/emoji_u1f98a.svg
