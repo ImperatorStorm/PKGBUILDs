@@ -30,7 +30,7 @@ jobs:
         cd llvm
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
-        sudo -u builder gpg --import-keys keys/pgp/*
+        sudo -u builder gpg --import keys/pgp/*
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Upload Packages
       uses: actions/upload-artifact@v3
