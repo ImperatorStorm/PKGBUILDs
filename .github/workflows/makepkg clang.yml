@@ -29,7 +29,7 @@ jobs:
         pacman-key --init
         pacman-key --add CI-pub.key
         pacman-key --lsign-key C83B19A4ABF6284C
-        pacman -S p7zip
+        pacman -S p7zip --novonfirm
         7z e clang-deps.7z
         pacman -U --noconfirm llvm*.zst
         rm *.zst *.sig clang-deps.7z
