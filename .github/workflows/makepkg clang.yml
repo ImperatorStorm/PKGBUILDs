@@ -26,6 +26,7 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
+        pacman-key --init
         pacman-key --add CI-pub.key
         pacman-key --lsign-key C83B19A4ABF6284C
         pacman -S p7zip
