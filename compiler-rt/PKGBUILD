@@ -1,0 +1,51 @@
+# Maintainer: Evangelos Foutras <evangelos@foutrelis.com>
+# Contributor: Jan "heftig" Steffens <jan.steffens@gmail.com>
+
+pkgname=compiler-rt
+pkgver=15.0.5
+pkgrel=1
+pkgdesc="Compiler runtime libraries for clang"
+arch=('x86_64')
+url="https://compiler-rt.llvm.org/"
+license=('custom:Apache 2.0 with LLVM Exception')
+depends=('gcc-libs')
+makedepends=('llvm' 'cmake' 'ninja' 'python')
+# Build 32-bit compiler-rt libraries on x86_64 (FS#41911)
+makedepends_x86_64=('lib32-gcc-libs')
+options=('staticlibs')
+_source_base=https://github.com/llvm/llvm-project/releases/download/llvmorg-$pkgver
+source=($_source_base/compiler-rt-$pkgver.src.tar.xz{,.sig}
+        $_source_base/cmake-$pkgver.src.tar.xz{,.sig})
+sha256sums=('d2a0680da5936f4187485682c28f17c98aabcd5e402d75af9ce78c992adae2ee'
+            'SKIP'
+            '61a9757f2fb7dd4c992522732531eb58b2bb031a2ca68848ff1cfda1fc07b7b3'
+            'SKIP')
+validpgpkeys=('474E22316ABF4785A88C6E8EA2C794A986419D8A') # Tom Stellard <tstellar@redhat.com>
+
+prepare() {
+  cd compiler-rt-$pkgver.src
+  mkdir build
+}
+
+build() {
+  cp cmake-$pkgver.src/Modules/* compiler-rt-$pkgver.src/cmake/
+  cd compiler-rt-$pkgver.src/build
+  local cmake_args=(
+    -G Ninja
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_INSTALL_PREFIX=/usr
+    -DCMAKE_SKIP_RPATH=ON
+    -DCOMPILER_RT_INSTALL_PATH=/usr/lib/clang/$pkgver
+  )
+  cmake .. "${cmake_args[@]}"
+  ninja
+}
+
+package() {
+  cd compiler-rt-$pkgver.src/build
+
+  DESTDIR="$pkgdir" ninja install
+  install -Dm644 ../LICENSE.TXT "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+# vim:set ts=2 sw=2 et:
