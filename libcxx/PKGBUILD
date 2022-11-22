@@ -1,0 +1,76 @@
+# Maintener: Anatol Pomozov
+# Contributor: Llewelyn Trahaearn <woefulderelict [at] gmail [dot] com>
+# Contributor: Daniel Micay <danielmicay [at] gmail [dot] com>
+# Contributor: MThinkCpp <mtc [dot] maintainer [at] outlook [dot] com>
+
+pkgbase=libc++
+pkgname=(libc++ libc++abi libc++experimental)
+pkgver=15.0.5
+pkgrel=0
+url="https://libcxx.llvm.org/"
+license=('custom:Apache 2.0 with LLVM Exception')
+arch=('x86_64')
+depends=('gcc-libs')
+makedepends=('clang' 'cmake' 'ninja' 'python')
+checkdepends=('llvm')
+options=(!lto)
+source=("https://github.com/llvm/llvm-project/releases/download/llvmorg-$pkgver/llvm-project-$pkgver.src.tar.xz"{,.sig})
+sha512sums=('cf2a89ebb6bc9d7e3f1fd09531c84ac9927cdbe5ee13a6fcb8ce4d08e5a9d6d480ad982f62126b9c757beafa283b34f2ba1fbc56223c641e70da2be4627f59a6'
+            'SKIP')
+validpgpkeys=('474E22316ABF4785A88C6E8EA2C794A986419D8A') # Tom Stellard <tstellar@redhat.com>
+ 
+prepare() {
+  mkdir -p build
+  sed -i 's/CREDITS.TXT/CREDITS/' llvm-project-$pkgver.src/libcxx{,abi}/LICENSE.TXT
+}
+ 
+build() {
+  cd build
+
+  cmake \
+    -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi" \
+    -DLLVM_EXTERNAL_LIT=/usr/bin/lit \
+    -DLIBCXX_INSTALL_EXPERIMENTAL_LIBRARY=NO \
+    ../llvm-project-$pkgver.src/runtimes
+  ninja cxx cxxabi cxx_experimental
+}
+
+check() {
+  ninja -C build check-cxx check-cxxabi
+}
+
+# Do not remove the space before the () or commitpkg will
+# accidentally to run this function on the system (!!!) 
+package_libc++ () {
+  pkgdesc='LLVM C++ standard library.'
+  depends=("libc++abi=$pkgver-$pkgrel")
+  options=('staticlibs')
+
+  DESTDIR="$pkgdir" ninja -C build install-cxx
+
+  install -Dm0644 llvm-project-$pkgver.src/libcxx/CREDITS.TXT "$pkgdir"/usr/share/licenses/"$pkgname"/CREDITS
+  install -Dm0644 llvm-project-$pkgver.src/libcxx/LICENSE.TXT "$pkgdir"/usr/share/licenses/"$pkgname"/LICENSE
+}
+ 
+package_libc++abi() {
+  pkgdesc='Low level support for the LLVM C++ standard library.'
+  options=('staticlibs')
+  
+  DESTDIR="$pkgdir" ninja -C build install-cxxabi
+  install -Dm0644 llvm-project-$pkgver.src/libcxxabi/CREDITS.TXT "$pkgdir"/usr/share/licenses/"$pkgname"/CREDITS
+  install -Dm0644 llvm-project-$pkgver.src/libcxxabi/LICENSE.TXT "$pkgdir"/usr/share/licenses/"$pkgname"/LICENSE
+}
+ 
+package_libc++experimental() {
+  depends=("libc++=$pkgver-$pkgrel")
+  pkgdesc='LLVM C++ experimental library.'
+  
+  install -Dm0644 -t "$pkgdir"/usr/lib/ build/lib/libc++experimental.a
+  install -Dm0644 llvm-project-$pkgver.src/libcxx/CREDITS.TXT "$pkgdir"/usr/share/licenses/"$pkgname"/CREDITS
+  install -Dm0644 llvm-project-$pkgver.src/libcxx/LICENSE.TXT "$pkgdir"/usr/share/licenses/"$pkgname"/LICENSE
+}

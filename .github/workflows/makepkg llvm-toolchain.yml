@@ -8,7 +8,7 @@ on:
     paths:
         - "makepkg.conf"
         - "llvm/**"
-        - "libc++/**"
+        - "libcxx/**"
         - "compiler-rt/**"
         - "clang/**"
         - ".github/workflows/makepkg llvm-toolchain.yml"
@@ -33,10 +33,6 @@ jobs:
         sudo -u builder gpg --import keys/pgp/*
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
         pacman -U *.zst
-        cd '../libc++'
-        sudo -u builder gpg --import keys/pgp/*
-        sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
-        pacman -U *.zst
         cd '../compiler-rt'
         sudo -u builder gpg --import keys/pgp/*
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
@@ -44,6 +40,10 @@ jobs:
         cd '../clang'
         sudo -u builder gpg --import keys/pgp/*
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
+        cd '../libcxx'
+        sudo -u builder gpg --import keys/pgp/*
+        sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
+        pacman -U *.zst
     - name: Upload Packages
       uses: actions/upload-artifact@v3
       with:
@@ -53,10 +53,10 @@ jobs:
             llvm/*.zst.sig
             !llvm/*debug*.zst
             !llvm/*debug*.zst.sig
-            libc++/*.zst
-            libc++/*.zst.sig
-            !libc++/*debug*.zst
-            !libc++/*debug*.zst.sig
+            libcxx/*.zst
+            libcxx/*.zst.sig
+            !libcxx/*debug*.zst
+            !libcxx/*debug*.zst.sig
             compiler-rt/*.zst
             compiler-rt/*.zst.sig
             !compiler-rt/*debug*.zst
@@ -72,8 +72,8 @@ jobs:
           path: |
             llvm/*debug*.zst
             llvm/*debug*.zst.sig
-            libc++/*debug*.zst
-            libc++/*debug*.zst.sig
+            libcxx/*debug*.zst
+            libcxx/*debug*.zst.sig
             compiler-rt/*debug*.zst
             compiler-rt/*debug*.zst.sig
             clang/*debug*.zst
