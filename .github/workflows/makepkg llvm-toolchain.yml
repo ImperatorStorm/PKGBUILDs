@@ -30,7 +30,7 @@ jobs:
         BASEDIR="$PWD"
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         pacman-key --init
-        pacman-key --import ./CI-pub.key
+        pacman-key --add ./CI-pub.key
         pacman-key --lsign-key 81FFCC2DEEDD159EC7569087C83B19A4ABF6284C
         cd llvm
         sudo -u builder gpg --import keys/pgp/*
