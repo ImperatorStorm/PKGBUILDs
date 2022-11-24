@@ -35,18 +35,19 @@ jobs:
         cd llvm
         sudo -u builder gpg --import keys/pgp/*
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
-        pacman -U *.zst
+        pacman -U *.zst --noconfirm
         cd '../compiler-rt'
         sudo -u builder gpg --import keys/pgp/*
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
-        pacman -U *.zst
+        pacman -U *.zst --noconfirm
         cd '../clang'
         sudo -u builder gpg --import keys/pgp/*
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
+        pacman -U *.zst --noconfirm
         cd '../libcxx'
         sudo -u builder gpg --import keys/pgp/*
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
-        pacman -U *.zst
+        pacman -U *.zst --noconfirm
     - name: Upload Packages
       uses: actions/upload-artifact@v3
       with:
