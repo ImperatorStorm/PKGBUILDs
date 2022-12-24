@@ -32,7 +32,7 @@ jobs:
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Namcap
-      run: namcap *.pkg.tar.zst
+      run: cd tenacity-wxgtk3-git && namcap *.pkg.tar.zst
     - name: Upload Packages
       uses: actions/upload-artifact@v3
       with:
