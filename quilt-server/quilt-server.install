@@ -1,0 +1,37 @@
+_quilt_name="quilt"
+_quilt_user="quilt"
+_server_root="/srv/${_quilt_name}"
+
+post_install() {
+	if ! getent group "$_quilt_user" &>/dev/null; then
+		echo "Adding ${_quilt_user} system group..."
+		groupadd -r "$_quilt_user" 1>/dev/null
+	fi
+
+	if ! getent passwd "$_quilt_user" &>/dev/null; then
+		echo "Adding ${_quilt_user} system user..."
+		useradd -r -g "${_quilt_user}" -d "$_server_root" "$_quilt_user" 1>/dev/null
+	fi
+
+	chown -R "${_quilt_user}:${_quilt_user}" "$_server_root"
+
+	echo "The world data is stored under ${_server_root} and the server runs as the quilt user to increase security."
+	echo "Use the ${_quilt_name}d script under /usr/bin/${_quilt_name}d to start, stop or backup the server."
+	echo "Adjust the configuration file under /etc/conf.d/${_quilt_name} to your liking."
+	echo -e "`tput setaf 3`To start the server you have to accept the EULA in ${_server_root}/eula.txt ${_quilt_name}d.service will fail to start otherwise!`tput sgr0`"
+}
+
+post_upgrade() {
+	chown -R "${_quilt_user}:${_quilt_user}" "${_server_root}"
+
+	echo "The management script switched from GNU screen to tmux."
+	echo "Manual intervention is needed to close any previous GNU screen sessions:"
+	echo "Use \`sudo -u ${_user} screen -S ${_game} -rx\` to attach to the ${_game} session and stop it."
+	echo "Do the same for the \`idle_server_${_game}\` session if one is running."
+}
+
+post_remove() {
+	[ -d "$_server_root" ] && echo "Game saves in ${_server_root} have been kept on your system."
+	echo "The configuration in /etc/conf.d/ has been kept on your system."
+	echo "The ${_quilt_user} user has been kept on your system."
+}
