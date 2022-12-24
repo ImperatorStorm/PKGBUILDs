@@ -30,7 +30,8 @@ jobs:
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
-        namcap *.pkg.tar.zst
+    - name: Namcap
+      run: namcap *.pkg.tar.zst
     - name: Upload Packages
       uses: actions/upload-artifact@v3
       with:

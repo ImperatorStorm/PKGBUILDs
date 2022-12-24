@@ -27,7 +27,8 @@ jobs:
         BASEDIR="$PWD"
         cd minizip-git
         sudo -u builder makepkg -s --noconfirm --skippgpcheck --config=../makepkg.conf
-        namcap *.pkg.tar.zst
+    - name: Namcap
+      run: namcap *.pkg.tar.zst
     - name: Upload Packages
       uses: actions/upload-artifact@v3
       with:
