@@ -21,7 +21,7 @@ jobs:
     - name: Build Font RPM
       run: |
         dnf distro-sync --assumeyes
-        dnf install rpmbuild gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make curl --assumeyes
+        dnf install rpmbuild gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make curl which --assumeyes
         cd noto-color-emoji-fox
         mkdir -p /github/home/rpmbuild/SOURCES/
         cp *.patch *.xml /github/home/rpmbuild/SOURCES/
