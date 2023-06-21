@@ -35,4 +35,11 @@ jobs:
           path: |
             /var/lib/mock/fedora-rawhide-x86_64/result/*.rpm
             !/var/lib/mock/fedora-rawhide-x86_64/result/*.src.rpm
-            
+    - name: Upload logs on failure
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+          name: logs
+          path: |
+            /var/lib/mock/fedora-rawhide-x86_64/result/*
+            !/var/lib/mock/fedora-rawhide-x86_64/result/*.src.rpm
