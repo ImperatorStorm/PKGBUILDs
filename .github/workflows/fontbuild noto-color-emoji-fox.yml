@@ -23,24 +23,13 @@ jobs:
     - name: Build Font RPM
       run: |
         dnf distro-sync --assumeyes
-        dnf install mock --assumeyes
+        dnf install rpmbuild
         cd noto-color-emoji-fox
-        mock -r fedora-rawhide-x86_64 --buildsrpm --spec google-noto-emoji-fonts.spec
-        cd /var/lib/mock/fedora-rawhide-x86_64/result/
-        mock -r fedora-rawhide-x86_64 google-noto-emoji-fonts.src.rpm
+        rpmbuild -bb google-noto-emoji-fonts.spec
     - name: Upload Font
       uses: actions/upload-artifact@v3
       with:
           name: font
           path: |
             /var/lib/mock/fedora-rawhide-x86_64/result/*.rpm
-            !/var/lib/mock/fedora-rawhide-x86_64/result/*.src.rpm
-    - name: Upload logs on failure
-      uses: actions/upload-artifact@v3
-      if: failure()
-      with:
-          name: logs
-          path: |
-            /var/lib/mock/fedora-rawhide-x86_64/result/
-            /var/lib/mock/fedora-rawhide-x86_64/result/*
             !/var/lib/mock/fedora-rawhide-x86_64/result/*.src.rpm
