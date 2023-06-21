@@ -76,8 +76,6 @@ Patch3:         0001-foxxo.patch
 
 rm -rf third_party/pngquant
 
-cp -p static/NotoEmoji-Regular.ttf .
-
 %build
 
 %if %buildfont
