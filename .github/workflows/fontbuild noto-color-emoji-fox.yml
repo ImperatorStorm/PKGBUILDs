@@ -41,5 +41,6 @@ jobs:
       with:
           name: logs
           path: |
+            /var/lib/mock/fedora-rawhide-x86_64/result/
             /var/lib/mock/fedora-rawhide-x86_64/result/*
             !/var/lib/mock/fedora-rawhide-x86_64/result/*.src.rpm
