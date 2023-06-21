@@ -22,8 +22,8 @@ jobs:
       uses: actions/checkout@v3
     - name: Build Font RPM
       run: |
-        dnf distro-sync
-        dnf install mock
+        dnf distro-sync --assumeyes
+        dnf install mock --assumeyes
         cd noto-color-emoji-fox
         mock -r fedora-rawhide-x86_64 --buildsrpm --spec google-noto-emoji-fonts.spec
         cd /var/lib/mock/fedora-rawhide-x86_64/result/
