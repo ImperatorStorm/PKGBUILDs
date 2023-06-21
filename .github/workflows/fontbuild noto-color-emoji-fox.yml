@@ -23,7 +23,7 @@ jobs:
     - name: Build Font RPM
       run: |
         dnf distro-sync --assumeyes
-        dnf install rpmbuild
+        dnf install rpmbuild gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make --assumeyes
         cd noto-color-emoji-fox
         rpmbuild -bb google-noto-emoji-fonts.spec
     - name: Upload Font
