@@ -1,0 +1,30 @@
+Index: noto-emoji-c05b4b47c8250ccd232780cae46d66a8179e77ab/Makefile
+===================================================================
+--- noto-emoji-c05b4b47c8250ccd232780cae46d66a8179e77ab.orig/Makefile
++++ noto-emoji-c05b4b47c8250ccd232780cae46d66a8179e77ab/Makefile
+@@ -16,10 +16,10 @@ EMOJI = NotoColorEmoji
+ EMOJI_WINDOWS = NotoColorEmoji_WindowsCompatible
+ all: $(EMOJI).ttf $(EMOJI_WINDOWS).ttf
+ 
+-CFLAGS = -std=c99 -Wall -Wextra `pkg-config --cflags --libs cairo`
++CFLAGS = $(OPT_CFLAGS) -Wextra `pkg-config --cflags --libs cairo`
+ LDFLAGS = -lm `pkg-config --libs cairo`
+ 
+-PNGQUANT = pngquant
++PNGQUANT = /usr/bin/pngquant
+ PYTHON = python3
+ PNGQUANTFLAGS = --speed 1 --skip-if-larger --quality 85-95 --force
+ BODY_DIMENSIONS = 136x128
+@@ -88,9 +88,9 @@ ifeq (,$(shell which $(ZOPFLIPNG)))
+   endif
+ endif
+ 
+-ifndef VIRTUAL_ENV
+-  MISSING_VENV = fail
+-endif
++#ifndef VIRTUAL_ENV
++#  MISSING_VENV = fail
++#endif
+ 
+ ifeq (, $(shell which $(VS_ADDER)))
+   MISSING_PY_TOOLS = fail

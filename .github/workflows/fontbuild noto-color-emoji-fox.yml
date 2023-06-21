@@ -16,49 +16,23 @@ on:
 jobs:
   fontbuild:
     runs-on: ubuntu-latest
-    container: archlinux/archlinux:base-devel
+    container: fedora:rawhide
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Prepare
+    - name: Build Font RPM
       run: |
+        dnf distro-sync
+        dnf install mock
         cd noto-color-emoji-fox
-        rm .gitkeep
-        cd ../
-    - name: Checkout Font
-      uses: actions/checkout@v3
-      with:
-        repository: googlefonts/noto-emoji
-        path: noto-color-emoji-fox
-    - name: Build Font
-      run: |
-        set -x
-        pacman -Syu --noconfirm
-        pacman -S base-devel python-pip inkscape git imagemagick pngquant cairo zopfli noto-fonts findutils zstd --needed --noconfirm
-        cd noto-color-emoji-fox
-        curl https://raw.githubusercontent.com/googlefonts/noto-emoji/5628587386c78161f87aa2ca9ddee37c2e8ea212/svg/emoji_u1f98a.svg -o svg/emoji_u1f98a.svg
-        inkscape -o png/32/emoji_u1f98a.png -w 32 -h 32 svg/emoji_u1f98a.svg
-        inkscape -o png/72/emoji_u1f98a.png -w 72 -h 72 svg/emoji_u1f98a.svg
-        inkscape -o png/128/emoji_u1f98a.png -w 128 -h 128 svg/emoji_u1f98a.svg
-        inkscape -o png/512/emoji_u1f98a.png -w 512 -h 512 svg/emoji_u1f98a.svg
-        rm --verbose fonts/*
-        python -m venv emojibuild
-        source emojibuild/bin/activate
-        pip install -r requirements.txt --verbose
-        python size_check.py
-        make -j$(nproc) VERBOSE=1
-        mv *.ttf fonts/
-        cd colrv1
-        nanoemoji all.toml
-        cp build/NotoColorEmoji.ttf ../fonts/Noto-COLRv1.ttf
-        cp build/NotoColorEmoji.ttf ../fonts/Noto-COLRv1-noflags.ttf
-        cd ..
-        python colrv1_postproc.py
-        tar --verbose -cf font.tar fonts/*.ttf
-        zstd -15 -T0 font.tar font.tar.zst
+        mock -r fedora-rawhide-x86_64 --buildsrpm --spec google-noto-emoji-fonts.spec
+        cd /var/lib/mock/fedora-rawhide-x86_64/result/
+        mock -r fedora-rawhide-x86_64 google-noto-emoji-fonts.src.rpm
     - name: Upload Font
       uses: actions/upload-artifact@v3
       with:
           name: font
           path: |
-            noto-color-emoji-fox/font.tar.zst
+            /var/lib/mock/fedora-rawhide-x86_64/result/*.rpm
+            !/var/lib/mock/fedora-rawhide-x86_64/result/*.src.rpm
+            

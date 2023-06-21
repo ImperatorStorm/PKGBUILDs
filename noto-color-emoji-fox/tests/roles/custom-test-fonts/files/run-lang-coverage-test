@@ -1,0 +1,252 @@
+#! /bin/bash -efu
+
+debug() {
+    if [ -n "$DEBUG" ]; then
+	echo "$*" >&2
+    fi
+}
+
+msg_usage() {
+    cat <<_EOF_
+Run language coverage test.
+
+Usage:
+$PROG <options>
+
+Options:
+-h, --help		Display this help and exit
+-v, --verbose		Turn on debug
+-l, --lang=LANG		Test LANG language coverage (default: en)
+-p, --path=PATH		Test fonts on PATH
+-k, --package=PACKAGE	Specify PACKAGE to obtain some information
+-n, --name=NAME		Set NAME to store a log file.
+-a, --artifactsdir=DIR	test environment dir to store artifacts
+-e, --exclude=FILE	Exclude FILE to check.
+-i, --include=FILE	Include File to check.
+_EOF_
+}
+
+PROG="${PROG:-${0##*/}}"
+DEBUG="${DEBUG:-}"
+OPT_LANG="${OPT_LANG:-en}"
+OPT_PATH=()
+OPT_PACKAGE=()
+OPT_ARTIFACTS_DIR="${OPT_ARTIFACTS_DIR:-}"
+OPT_EXCLUDE=()
+OPT_INCLUDE=()
+OPT_NAME="${OPT_NAME:-}"
+
+opt=$(getopt -n "$0" --options "hvl:p:k:n:a:e:i:" --longoptions "help,verbose,lang:,path:,package:,name:,artifactsdir:,exclude:,include:" -- "$@")
+eval set -- "$opt"
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+	-n|--name)
+	    OPT_NAME="$2"
+	    shift 2
+	    ;;
+	-i|--include)
+	    OPT_INCLUDE+=("$2")
+	    shift 2
+	    ;;
+	-e|--exclude)
+	    OPT_EXCLUDE+=("$2")
+	    shift 2
+	    ;;
+	-a|--artifactsdir)
+	    OPT_ARTIFACTS_DIR="$2"
+	    shift 2
+	    ;;
+	-p|--path)
+	    OPT_PATH+=("$2")
+	    shift 2
+	    ;;
+	-k|--package)
+	    OPT_PACKAGE+=("$2")
+	    shift 2
+	    ;;
+	-l|--lang)
+	    OPT_LANG="$2"
+	    shift 2
+	    ;;
+	-v|--verbose)
+	    DEBUG="-v"
+	    shift
+	    ;;
+	-h|--help)
+	    msg_usage
+	    exit 0
+	    ;;
+	--)
+	    shift
+	    ;;
+	*)
+	    msg_usage
+	    exit 1
+    esac
+done
+
+if [ -z "$OPT_ARTIFACTS_DIR" ] || [ -z "$OPT_LANG" ] || [ ! -v OPT_PATH ] && [ ! -v OPT_PACKAGE ]; then
+    echo "Use: $PROG -h for help."
+    exit 0
+fi
+
+STR_TEST_DASHED=$(echo "${OPT_NAME:-$OPT_LANG}" | sed -e 's/\//-/g')
+
+clean_exit() {
+    rc=$?;
+    trap - SIGINT SIGTERM SIGABRT EXIT
+    echo "Run test $OPT_LANG: done. Test's exit code: $rc"
+    for pid in $(ps -o pid --no-headers --ppid $$); do
+	if [ -n "$(ps -p $pid -o pid=)" ]; then
+	    kill -s HUP $pid
+	fi
+    done
+    local log_file_name="$STR_TEST_DASHED.log"
+    local log_file_path="$OPT_ARTIFACTS_DIR/$log_file_name"
+    local status
+    if [[ $rc -eq 127 ]]; then
+	status="ERROR"
+    elif grep -q "RESULT: WARN" "$log_file_path"; then
+	status="ERROR"
+    elif grep -q "RESULT: FAIL" "$log_file_path"; then
+	status="FAIL"
+    elif grep -q "RESULT: PASS" "$log_file_path"; then
+	status="PASS"
+    elif grep -q "WARN" "$log_file_path"; then
+	status="ERROR"
+    elif grep -q "FAIL" "$log_file_path"; then
+	status="FAIL"
+    elif grep -q "PASS" "$log_file_path"; then
+	status="PASS"
+    else
+	status="ERROR"
+    fi
+    echo "$status $OPT_LANG" >> "$OPT_ARTIFACTS_DIR/test.log"
+    mv "$log_file_path" "$OPT_ARTIFACTS_DIR/${status}-${log_file_name}"
+    local results="$OPT_ARTIFACTS_DIR/results.yml"
+    local result=$(echo $status | tr '[:upper:]' '[:lower:]')
+    test -f "$results" || echo 'results:' > "$results"
+    printf '%s\n' '' \
+	   "- test: $OPT_LANG" \
+	   "  result: $result" \
+	   "  logs:" \
+	   "  - ${status}_${log_file_name}" \
+	   >> "$results"
+    exit 0
+}
+trap clean_exit SIGINT SIGTERM SIGABRT EXIT
+
+mkdir -p "$OPT_ARTIFACTS_DIR"
+export OUTPUTFILE="$(realpath "$OPT_ARTIFACTS_DIR")/$STR_TEST_DASHED-out.log"
+logfile="$OPT_ARTIFACTS_DIR/$STR_TEST_DASHED.log"
+logfile="$(realpath "$logfile")"
+exec > >(tee -a "$logfile") 2>&1
+
+for pkg in ${OPT_PACKAGE[@]}; do
+    if ! rpm -q ${pkg} > /dev/null 2>&1; then
+	echo "Package isn't installed or maybe a typo: ${pkg}"
+	exit 127
+    fi
+    d=$(for d in $(rpm -ql ${pkg}|grep /usr/share/fonts); do
+	    dirname $d
+	done | sort | uniq | grep /usr/share/fonts/)
+    if [[ ! " ${OPT_PATH[@]} " =~ " ${d} " ]]; then
+	OPT_PATH+=("$d")
+    fi
+done
+
+expand_regex() {
+    local p ret=()
+    local regex="$1"
+    shift
+    debug "Expanding $regex"
+    for p; do
+	set +f
+	debug "$p: $regex"
+	 (cd $p;
+	  local x=$(find -regextype posix-egrep -regex "./$regex" -print|sed -e 's,^\./,,g')
+	  debug "$x"
+	  ret+=($x)
+	  set -f
+	  echo -n ${ret[@]}
+	 )
+    done
+    echo -n ${ret[@]}
+}
+
+iv=()
+ev=()
+x=()
+for p in ${OPT_INCLUDE[@]}; do
+    x=$(expand_regex $p ${OPT_PATH[@]})
+    if [ "x$x" == "x" ]; then
+	echo "RESULT: WARN: No matches on \"$p\". maybe typo or something changed?"
+	continue
+    fi
+    iv=("${iv[@]}" "${x[@]}")
+done
+for p in ${OPT_EXCLUDE[@]}; do
+    x=$(expand_regex $p ${OPT_PATH[@]})
+    if [ "x$x" == "x" ]; then
+	echo "RESULT: WARN: No matches on \"$p\". maybe typo or something changed?"
+	continue
+    fi
+    ev=("${ev[@]}" "${x[@]}")
+done
+OPT_EXCLUDE=(${ev[@]})
+OPT_INCLUDE=(${iv[@]})
+
+debug "Path: ${OPT_PATH[@]}"
+debug "Lang: $OPT_LANG"
+debug "Artifacts dir: $OPT_ARTIFACTS_DIR"
+debug "Exclude: ${#OPT_EXCLUDE[@]}: ${OPT_EXCLUDE[@]}"
+debug "Include: ${#OPT_INCLUDE[@]}: ${OPT_INCLUDE[@]}"
+
+contains() {
+    local e match="$1"
+    shift
+    for e; do [[ "$e" == "$match" ]] && return 1; done
+    return 0
+}
+
+debug "Check language coverage"
+ret=0
+set +f
+for p in ${OPT_PATH[@]}; do
+    for i in `find $p -regex '.*/*\.\(t1\)?\(ttf\)?\(otf\)?\(ttc\)?\(pcf.*\)?\(pfa\)?'`; do
+	set -f
+	debug "$i"
+	if test -f $i; then
+	    n=`basename $i`
+	    set +e
+	    contains "$n" "${OPT_EXCLUDE[@]}"
+	    r=$?
+	    set -e
+	    if [ $r -eq 1 ]; then
+		debug "ignoring $i"
+		continue
+	    fi
+	    if [ ${#OPT_INCLUDE[@]} -ne 0 ]; then
+		set +e
+		contains "$n" "${OPT_INCLUDE[@]}"
+		r=$?
+		set -e
+		if [ $r -eq 0 ]; then
+		    debug "$i isn't targeted file"
+		    continue
+		fi
+		NOT_MATCHED=("${NOT_MATCHED[@]/$n}")
+	    fi
+	    debug "  $i"
+	    res=`fc-validate -l $OPT_LANG $i || :`
+	    if echo $res | grep -q Missing; then
+		echo "RESULT: FAIL: $i doesn't satisfy $OPT_LANG language coverage."
+		ret=1
+	    else
+		echo "RESULT: PASS: $i satisfy $OPT_LANG language coverage."
+	    fi
+	fi
+    done
+done
+
+exit $ret
