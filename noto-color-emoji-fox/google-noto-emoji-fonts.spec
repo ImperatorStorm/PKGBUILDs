@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 
-%global commit0 934a5706f1f3dd2605c4d9b5d9162fd7f89d8702
+%global commit0 6b236020c7fbd6d0ae23d23f75d1d486fc1cd5e7
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
 %global fontname google-noto-emoji
@@ -26,7 +26,7 @@ BuildRequires:  cairo-devel
 %endif
 BuildRequires:  make
 
-Version: 20230310
+Version: 20231127
 Release: 1%{?dist}
 URL:     https://github.com/googlefonts/noto-emoji
 
@@ -99,6 +99,9 @@ cp -p fonts/NotoColorEmoji.ttf .
 
 
 %changelog
+* Wed Nov 27 2023 ImperatorStorm <imperatorstorm11@protonmail.com> - 20231127-1
+- Update to Unicode 15.1
+
 * Wed Jun 21 2023 ImperatorStorm <imperatorstorm11@protonmail.com> - 20230310-1
 - foxxo
 
