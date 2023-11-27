@@ -25,7 +25,7 @@ jobs:
         cd noto-color-emoji-fox
         mkdir -p /github/home/rpmbuild/SOURCES/
         cp *.patch *.xml /github/home/rpmbuild/SOURCES/
-        curl https://github.com/googlefonts/noto-emoji/archive/main.tar.gz -Lo /github/home/rpmbuild/SOURCES/noto-emoji-934a570.tar.gz
+        curl https://github.com/googlefonts/noto-emoji/archive/6b236020c7fbd6d0ae23d23f75d1d486fc1cd5e7.tar.gz -Lo /github/home/rpmbuild/SOURCES/noto-emoji-6b23602.tar.gz
         rpmbuild -bb google-noto-emoji-fonts.spec
     - name: Upload Font
       uses: actions/upload-artifact@v3

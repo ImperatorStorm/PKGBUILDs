@@ -99,7 +99,7 @@ cp -p fonts/NotoColorEmoji.ttf .
 
 
 %changelog
-* Wed Nov 27 2023 ImperatorStorm <imperatorstorm11@protonmail.com> - 20231127-1
+* Mon Nov 27 2023 ImperatorStorm <imperatorstorm11@protonmail.com> - 20231127-1
 - Update to Unicode 15.1
 
 * Wed Jun 21 2023 ImperatorStorm <imperatorstorm11@protonmail.com> - 20230310-1
