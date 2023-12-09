@@ -56,10 +56,9 @@ This package provides the Google “Noto Color Emoji” colored emoji font.
 
 Source0:        https://github.com/googlefonts/noto-emoji/archive/%{commit0}.tar.gz#/noto-emoji-%{shortcommit0}.tar.gz
 
-Patch0:         noto-emoji-build-all-flags.patch
-Patch1:         noto-emoji-use-gm.patch
-Patch2:         noto-emoji-use-system-pngquant.patch
-Patch3:         0001-foxxo.patch
+Patch0:         noto-emoji-use-gm.patch
+Patch1:         noto-emoji-use-system-pngquant.patch
+Patch2:         0001-foxxo.patch
 
 %fontpkg -a
 
