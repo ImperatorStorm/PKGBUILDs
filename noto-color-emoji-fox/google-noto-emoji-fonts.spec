@@ -66,7 +66,6 @@ Patch3:         0001-foxxo.patch
 
 %prep
 %autosetup -p1 -n noto-emoji-%{commit0}
-%autopatch
 
 rm -rf third_party/pngquant
 
