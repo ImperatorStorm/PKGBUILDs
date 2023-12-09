@@ -27,7 +27,7 @@ BuildRequires:  cairo-devel
 BuildRequires:  make
 
 Version: 20231208
-Release: 1%{?dist}
+Release: 2%{?dist}
 URL:     https://github.com/googlefonts/noto-emoji
 
 %global foundry           Google
@@ -43,21 +43,14 @@ URL:     https://github.com/googlefonts/noto-emoji
 %global fontlicenses      LICENSE OFL.txt
 %global fontdocs          AUTHORS CONTRIBUTING.md CONTRIBUTORS README.md README.txt
 
-%global fontfamily0       Noto Emoji
-%global fontsummary0      Google “Noto Emoji” Black-and-White emoji font
-%global fonts0            NotoEmoji-Regular.ttf
-%global fontdescription0  %{expand:
-This package provides the Google “Noto Emoji” Black-and-White emoji font.
-}
-
-%global fontfamily1       Noto Color Emoji
-%global fontsummary1      Google “Noto Color Emoji” colored emoji font
-%global fontpkgheader1    %{expand:
+%global fontfamily0       Noto Color Emoji
+%global fontsummary0      Google “Noto Color Emoji” colored emoji font
+%global fontpkgheader0    %{expand:
 Obsoletes:      google-noto-emoji-color-fonts < 20220916-6
 Provides:       google-noto-emoji-color-fonts = %{version}-%{release}
 }
-%global fonts1            NotoColorEmoji.ttf
-%global fontdescription1  %{expand:
+%global fonts0            NotoColorEmoji.ttf
+%global fontdescription0  %{expand:
 This package provides the Google “Noto Color Emoji” colored emoji font.
 }
 
@@ -73,6 +66,7 @@ Patch3:         0001-foxxo.patch
 
 %prep
 %autosetup -p1 -n noto-emoji-%{commit0}
+%autopatch
 
 rm -rf third_party/pngquant
 
