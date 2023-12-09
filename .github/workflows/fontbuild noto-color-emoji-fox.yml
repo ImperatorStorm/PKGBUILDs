@@ -21,11 +21,10 @@ jobs:
     - name: Build Font RPM
       run: |
         dnf distro-sync --assumeyes
-        dnf install rpm-build gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make curl which --assumeyes
+        dnf install rpm-build gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make curl which rpmdevtools --assumeyes
         cd noto-color-emoji-fox
-        mkdir -p /github/home/rpmbuild/SOURCES/
-        cp *.patch *.xml /github/home/rpmbuild/SOURCES/
-        curl https://github.com/googlefonts/noto-emoji/archive/6b236020c7fbd6d0ae23d23f75d1d486fc1cd5e7.tar.gz -Lo /github/home/rpmbuild/SOURCES/noto-emoji-6b23602.tar.gz
+        rpmdev-setuptree
+        spectool -gR google-noto-emoji-fonts.spec
         rpmbuild -bb google-noto-emoji-fonts.spec
     - name: Upload Font
       uses: actions/upload-artifact@v3
