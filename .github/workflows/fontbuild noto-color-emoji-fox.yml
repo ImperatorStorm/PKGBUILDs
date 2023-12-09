@@ -25,6 +25,7 @@ jobs:
         cd noto-color-emoji-fox
         rpmdev-setuptree
         spectool -gR google-noto-emoji-fonts.spec
+        cp ./*.patch $(rpm --eval=%{_sourcedir})
         rpmbuild -bb google-noto-emoji-fonts.spec
     - name: Upload Font
       uses: actions/upload-artifact@v3
