@@ -17,7 +17,7 @@ jobs:
     container: archlinux/archlinux:base-devel
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Makepkg
       run: |
         pacman -Syu --noconfirm
@@ -30,13 +30,13 @@ jobs:
     - name: Namcap
       run: cd quilt-server && namcap *.pkg.tar.zst
     - name: Upload Packages
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
           name: packages
           path: |
             quilt-server/*.zst
             !quilt-server/*debug*.zst
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
           name: debug_packages
           path: |

@@ -17,7 +17,7 @@ jobs:
     container: fedora:rawhide
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Build Font RPM
       run: |
         dnf distro-sync --assumeyes
@@ -28,7 +28,7 @@ jobs:
         cp ./*.patch $(rpm --eval=%{_sourcedir})
         rpmbuild -bb google-noto-emoji-fonts.spec
     - name: Upload Font
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
           name: font
           path: |
