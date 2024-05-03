@@ -3,11 +3,11 @@ name: Font CI - noto-color-emoji-fox
 on:
   push:
     paths:
-        - ".github/workflows/fontbuild noto-color-emoji-fox.yml"
+        - ".github/workflows/fontbuild_noto-color-emoji-fox.yml"
         - "noto-color-emoji-fox/*"
   pull_request:
     paths:
-        - ".github/workflows/fontbuild noto-color-emoji-fox.yml"
+        - ".github/workflows/fontbuild_noto-color-emoji-fox.yml"
         - "noto-color-emoji-fox/*"
   workflow_dispatch:
 

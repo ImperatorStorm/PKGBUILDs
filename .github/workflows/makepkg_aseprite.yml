@@ -8,7 +8,7 @@ on:
     paths:
         - "aseprite/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg aseprite.yml"
+        - ".github/workflows/makepkg_aseprite.yml"
   workflow_dispatch:
 
 jobs:

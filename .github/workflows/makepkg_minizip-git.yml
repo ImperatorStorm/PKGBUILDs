@@ -14,7 +14,7 @@ on:
     paths:
         - "minizip-git/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg minizip-git.yml"
+        - ".github/workflows/makepkg_minizip-git.yml"
   workflow_dispatch:
 
 jobs:

@@ -8,7 +8,7 @@ on:
     paths:
         - "quilt-server/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg quilt-server.yml"
+        - ".github/workflows/makepkg_quilt-server.yml"
   workflow_dispatch:
 
 jobs:
