@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 20f91f8..583ba58 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -25,7 +25,7 @@ file(CREATE_LINK "${CMAKE_CURRENT_BINARY_DIR}" "${BUILD_DIR}/current" SYMBOLIC)
+ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+     add_compile_options(-O0)  # Better debugging experience
+ endif()
+-add_compile_options(-Werror)  # Fail on any warning
++#add_compile_options(-Werror)  # Fail on any warning
+ 
+ # Global includes
+ # Allows #include <dcimgui/dcimgui.h> instead of just #include <dcimgui.h>
