@@ -10,7 +10,8 @@ license=('GPL-3.0-only')
 groups=()
 depends=(glibc)
 makedepends=(git cmake 'python>=3.10' python-jinja 'python-ply>=3.11' clang # memsed
-libxext libxrender libx11 libgl libxcursor hidapi libusb jack wayland-protocols alsa-lib mesa libpulse libxrandr libxinerama wayland libxkbcommon ibus fcitx5 libxss pipewire libdecor vulkan-headers sndio # SDL
+libxext libxrender libx11 libgl libxcursor hidapi libusb jack wayland-protocols alsa-lib mesa libpulse libxrandr libxinerama wayland libxkbcommon ibus fcitx
+libxss pipewire libdecor vulkan-headers sndio # SDL
 )
 provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}")
