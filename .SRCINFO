@@ -1,0 +1,30 @@
+pkgbase = memsed-git
+	pkgdesc = MEMory Search and EDit for Linux, inspired by Cheat Engine
+	pkgver = 0.1.r0.g6c78a41
+	pkgrel = 1
+	url = https://github.com/Willy-JL/MemSed
+	arch = x86_64
+	license = GPL-3.0-only
+	makedepends = git
+	makedepends = cmake
+	makedepends = python>=3.10
+	makedepends = python-jinja
+	makedepends = python-ply>=3.11
+	makedepends = clang
+	depends = glibc
+	provides = memsed
+	conflicts = memsed
+	source = memsed::git+https://github.com/Willy-JL/MemSed.git
+	source = memsed-dear_bindings::git+https://github.com/dearimgui/dear_bindings.git
+	source = memsed-imgui::git+https://github.com/ocornut/imgui.git
+	source = memsed-sdl3::git+https://github.com/libsdl-org/SDL.git
+	source = memsed-glad::git+https://github.com/Dav1dde/glad.git
+	source = do_not_pip.patch
+	sha256sums = SKIP
+	sha256sums = SKIP
+	sha256sums = SKIP
+	sha256sums = SKIP
+	sha256sums = SKIP
+	sha256sums = 984a5accc29029229778edb526f6121e0ded903f9477b2ecc399461192d0e840
+
+pkgname = memsed-git
