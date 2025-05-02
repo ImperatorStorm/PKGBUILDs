@@ -67,7 +67,7 @@ Patch4:         0002-syrian-revolution-flag.patch
 
 %prep
 %autosetup -p1 -n noto-emoji-%{commit0}
-mv SY.png third_party/region-flags/png/SY.png
+mv %{_sourcedir}/SY.png third_party/region-flags/png/SY.png
 rm -rf third_party/pngquant
 
 %build
