@@ -67,7 +67,7 @@ Patch4:         0002-syrian-revolution-flag.patch
 
 %prep
 %autosetup -p1 -n noto-emoji-%{commit0}
-
+mv SY.png third_party/region-flags/png/SY.png
 rm -rf third_party/pngquant
 
 %build
@@ -78,7 +78,7 @@ export LANG=C.UTF-8
 
 %make_build OPT_CFLAGS="$RPM_OPT_FLAGS" BYPASS_SEQUENCE_CHECK='True'
 %else
-cp -p fonts/NotoColorEmoji.ttf .
+cp -p fonts/Noto-COLRv1.ttf .
 %endif
 
 %fontbuild -a
