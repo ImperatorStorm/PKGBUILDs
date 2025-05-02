@@ -60,6 +60,7 @@ Patch0:         noto-emoji-build-all-flags.patch
 Patch1:         noto-emoji-use-gm.patch
 Patch2:         noto-emoji-use-system-pngquant.patch
 Patch3:         0001-foxxo.patch
+Patch4:         0002-syrian-revolution-flag.patch
 
 %fontpkg -a
 
