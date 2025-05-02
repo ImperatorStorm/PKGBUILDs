@@ -27,7 +27,7 @@ BuildRequires:  cairo-devel
 BuildRequires:  make
 
 Version: 2.047
-Release: 1%{?dist}
+Release: 2%{?dist}
 URL:     https://github.com/googlefonts/noto-emoji
 
 %global foundry           Google
@@ -49,7 +49,7 @@ URL:     https://github.com/googlefonts/noto-emoji
 Obsoletes:      google-noto-emoji-color-fonts < 20220916-6
 Provides:       google-noto-emoji-color-fonts = %{version}-%{release}
 }
-%global fonts0            NotoColorEmoji.ttf
+%global fonts0            Noto-COLRv1.ttf
 %global fontdescription0  %{expand:
 This package provides the Google “Noto Color Emoji” colored emoji font.
 }
