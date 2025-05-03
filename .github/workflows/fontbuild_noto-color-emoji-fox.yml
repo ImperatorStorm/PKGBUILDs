@@ -21,7 +21,7 @@ jobs:
     - name: Build Font RPM
       run: |
         dnf5 distro-sync --assumeyes
-        dnf5 install rpm-build gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make curl which rpmdevtools git-all --assumeyes
+        dnf5 install rpm-build gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make curl which rpmdevtools git-all python-absl-py python-lxml ninja-build --assumeyes
         cd noto-color-emoji-fox
         rpmdev-setuptree
         spectool -gR google-noto-emoji-fonts.spec

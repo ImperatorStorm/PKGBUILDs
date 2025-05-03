@@ -49,7 +49,7 @@ URL:     https://github.com/googlefonts/noto-emoji
 Obsoletes:      google-noto-emoji-color-fonts < 20220916-6
 Provides:       google-noto-emoji-color-fonts = %{version}-%{release}
 }
-%global fonts0            Noto-COLRv1.ttf
+%global fonts0            NotoColorEmoji.ttf
 %global fontdescription0  %{expand:
 This package provides the Google “Noto Color Emoji” colored emoji font.
 }
@@ -78,18 +78,8 @@ rm -rf fonts/*.ttf
 export LANG=C.UTF-8
 
 %make_build OPT_CFLAGS="$RPM_OPT_FLAGS" BYPASS_SEQUENCE_CHECK='True'
-mv *.ttf fonts/
-python drop_flags.py fonts/NotoColorEmoji.ttf
-python colrv1_generate_configs.py
-cd colrv1
-rm -rf build/
-nanoemoji *.toml
-cp colrv1/build/NotoColorEmoji.ttf fonts/Noto-COLRv1.ttf
-cp colrv1/build/NotoColorEmoji-noflags.ttf fonts/Noto-COLRv1-noflags.ttf
-python colrv1_postproc.py
-
 %else
-cp -p fonts/Noto-COLRv1.ttf .
+cp -p fonts/NotoColorEmoji.ttf .
 %endif
 
 %fontbuild -a
@@ -105,7 +95,7 @@ cp -p fonts/Noto-COLRv1.ttf .
 
 %changelog
 * Fri May 2 2025 ImperatorStorm <imperatorstorm11@protonmail.com> - 2.047-2
-- Switch to COLRv1, update Syrian flag.
+- Update Syrian flag.
 
 * Fri Dec 8 2023 ImperatorStorm <imperatorstorm11@protonmail.com> - 20231127-1
 - Bump to latest commit
