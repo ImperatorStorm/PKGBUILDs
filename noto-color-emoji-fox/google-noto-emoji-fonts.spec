@@ -69,6 +69,7 @@ Patch4:         0002-syrian-revolution-flag.patch
 %autosetup -p1 -n noto-emoji-%{commit0}
 mv %{_sourcedir}/SY.png third_party/region-flags/png/SY.png
 rm -rf third_party/pngquant
+rm -rf fonts/*.ttf
 
 %build
 
@@ -77,6 +78,16 @@ rm -rf third_party/pngquant
 export LANG=C.UTF-8
 
 %make_build OPT_CFLAGS="$RPM_OPT_FLAGS" BYPASS_SEQUENCE_CHECK='True'
+mv *.ttf fonts/
+python drop_flags.py fonts/NotoColorEmoji.ttf
+python colrv1_generate_configs.py
+cd colrv1
+rm -rf build/
+nanoemoji *.toml
+cp colrv1/build/NotoColorEmoji.ttf fonts/Noto-COLRv1.ttf
+cp colrv1/build/NotoColorEmoji-noflags.ttf fonts/Noto-COLRv1-noflags.ttf
+python colrv1_postproc.py
+
 %else
 cp -p fonts/Noto-COLRv1.ttf .
 %endif
@@ -93,6 +104,9 @@ cp -p fonts/Noto-COLRv1.ttf .
 
 
 %changelog
+* Fri May 2 2025 ImperatorStorm <imperatorstorm11@protonmail.com> - 2.047-2
+- Switch to COLRv1, update Syrian flag.
+
 * Fri Dec 8 2023 ImperatorStorm <imperatorstorm11@protonmail.com> - 20231127-1
 - Bump to latest commit
 
