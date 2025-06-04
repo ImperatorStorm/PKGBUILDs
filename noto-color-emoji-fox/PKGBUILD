@@ -42,10 +42,10 @@ build() {
   cd colrv1
   rm -rf build/
   nanoemoji *.toml
+  cd ..
   cp colrv1/build/NotoColorEmoji.ttf fonts/Noto-COLRv1.ttf
   cp colrv1/build/NotoColorEmoji-noflags.ttf fonts/Noto-COLRv1-noflags.ttf
   python colrv1_postproc.py
-  cd ..
   hb-subset --unicodes-file=flags-only-unicodes.txt \
    --output-file=fonts/NotoColorEmoji-flagsonly.ttf \
    fonts/NotoColorEmoji.ttf
