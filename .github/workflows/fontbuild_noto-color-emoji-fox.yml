@@ -24,10 +24,12 @@ jobs:
         dnf5 install rpm-build gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make curl which rpmdevtools git-all python-absl-py python-lxml ninja-build --assumeyes
         rpmdev-setuptree
         cd resvg
+        dnf5 builddep rust-resvg.spec
         spectool -gR rust-resvg.spec
         rpmbuild -bb rust-resvg.spec
         dnf5 install /github/home/rpmbuild/RPMS/*
         cd ../nanoemoji
+        dnf5 builddep nanoemoji.spec
         spectool -gR nanoemoji.spec
         rpmbuild -bb nanoemoji.spec
         dnf5 install /github/home/rpmbuild/RPMS/*
