@@ -20,6 +20,8 @@ jobs:
       uses: actions/checkout@v4
     - name: Makepkg
       run: |
+        echo $PWD
+        err
         pacman-key --init
         pacman-key --add CI-pub.key
         pacman-key --lsign-key 6C1A7D4F8106E34F40AB35645FDA85C06EFB9086
