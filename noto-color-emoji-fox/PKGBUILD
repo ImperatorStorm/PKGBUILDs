@@ -3,7 +3,6 @@
 pkgname=noto-color-emoji-fox
 pkgver=20241008
 pkgrel=1
-epoch=1
 pkgdesc='Google Noto Color Emoji font'
 arch=(any)
 url='https://www.google.com/get/noto/'
