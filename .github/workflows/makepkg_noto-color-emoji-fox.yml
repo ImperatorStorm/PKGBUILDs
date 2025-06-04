@@ -33,7 +33,7 @@ jobs:
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder makepkg -si --sign --noconfirm --config=../makepkg.conf
         cd ..
-        sudo -u builder paru -S nanoemoji python-nototools --noconfirm --failfast --nocheck --mflags --config=/__w/PKGBUILDs/PKGBUILDs/makepkg.conf
+        sudo -u builder paru -S resvg nanoemoji python-nototools --noconfirm --failfast --nocheck --mflags --config=/__w/PKGBUILDs/PKGBUILDs/makepkg.conf
         cd noto-color-emoji-fox
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Namcap
