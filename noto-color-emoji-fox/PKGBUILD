@@ -35,7 +35,7 @@ prepare() {
 
 build() {
   cd noto-emoji
-  make BYPASS_SEQUENCE_CHECK='True'
+  make BYPASS_SEQUENCE_CHECK='True' VIRTUAL_ENV=1
   mv *.ttf fonts/
   python drop_flags.py fonts/NotoColorEmoji.ttf
   python colrv1_generate_configs.py
