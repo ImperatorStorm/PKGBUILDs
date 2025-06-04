@@ -1,0 +1,22 @@
+pkgbase = noto-color-emoji-fox
+	pkgdesc = Google Noto Color Emoji font
+	pkgver = 20241008
+	pkgrel = 1
+	epoch = 1
+	url = https://www.google.com/get/noto/
+	arch = any
+	license = OFL-1.1
+	makedepends = git
+	makedepends = harfbuzz-utils
+	makedepends = nanoemoji
+	makedepends = python-nototools
+	makedepends = python-fonttools
+	makedepends = pngquant
+	makedepends = zopfli
+	makedepends = python-zopfli
+	makedepends = python-cairo
+	provides = emoji-font
+	source = git+https://github.com/googlefonts/noto-emoji.git#commit=22e564626297b4df0a40570ad81d6c05cc7c38bd
+	sha256sums = 49fc0a658a6acdb95977286f366f87d8061e15e36c571beb699ded852a04a0b1
+
+pkgname = noto-color-emoji-fox

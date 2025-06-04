@@ -1,7 +1,0 @@
----
-
-role_pkgs_req:
-  - fontconfig
-  - fontconfig-devel
-  - pkg-config
-  - rsync

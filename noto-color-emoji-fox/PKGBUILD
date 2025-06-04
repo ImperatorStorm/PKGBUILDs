@@ -1,0 +1,56 @@
+# Maintainer: Antonio Rojas <arojas@archlinux.org>
+
+pkgname=noto-color-emoji-fox
+pkgver=20241008
+pkgrel=1
+epoch=1
+pkgdesc='Google Noto Color Emoji font'
+arch=(any)
+url='https://www.google.com/get/noto/'
+license=(OFL-1.1)
+provides=(emoji-font)
+makedepends=(git harfbuzz-utils nanoemoji python-nototools python-fonttools pngquant zopfli python-zopfli python-cairo)
+source=(git+https://github.com/googlefonts/noto-emoji.git#commit=22e564626297b4df0a40570ad81d6c05cc7c38bd)
+sha256sums=('49fc0a658a6acdb95977286f366f87d8061e15e36c571beb699ded852a04a0b1')
+prepare() {
+  cd noto-emoji
+  local src
+  for src in "${source[@]}"; do
+    src="${src%%::*}"
+    src="${src##*/}"
+    src="${src%.zst}"
+    [[ $src = *.patch ]] || continue
+    echo "Applying patch $src..."
+    patch -Np1 < "../$src"
+  done
+  cp $srcdir/SY.png third_party/region-flags/png/SY.png
+  rm -rf third_party/pngquant fonts/*.ttf
+}
+
+build() {
+  cd noto-emoji
+  make BYPASS_SEQUENCE_CHECK='True'
+  mv *.ttf fonts/
+  python drop_flags.py fonts/NotoColorEmoji.ttf
+  python colrv1_generate_configs.py
+  cd colrv1
+  rm -rf build/
+  nanoemoji *.toml
+  cp colrv1/build/NotoColorEmoji.ttf fonts/Noto-COLRv1.ttf
+  cp colrv1/build/NotoColorEmoji-noflags.ttf fonts/Noto-COLRv1-noflags.ttf
+  python colrv1_postproc.py
+  cd ..
+  hb-subset --unicodes-file=flags-only-unicodes.txt \
+   --output-file=fonts/NotoColorEmoji-flagsonly.ttf \
+   fonts/NotoColorEmoji.ttf
+  python update_flag_name.py
+}
+
+package() {
+  cd noto-emoji
+
+  mkdir -p "$pkgdir"/usr/share/fonts/noto
+  install -m644 fonts/NotoCOLRv1.ttf "$pkgdir"/usr/share/fonts/noto
+  install -m644 fonts/Noto-COLRv1-noflags.ttf "$pkgdir"/usr/share/fonts/noto
+  install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
