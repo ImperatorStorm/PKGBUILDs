@@ -22,14 +22,22 @@ jobs:
       run: |
         dnf5 distro-sync --assumeyes
         dnf5 install rpm-build gcc fontpackages-devel fonttools python3-fonttools nototools python3-nototools python3-devel GraphicsMagick pngquant zopfli cairo-devel make curl which rpmdevtools git-all python-absl-py python-lxml ninja-build --assumeyes
-        cd noto-color-emoji-fox
         rpmdev-setuptree
+        cd resvg
+        spectool -gR rust-resvg.spec
+        rpmbuild -bb rust-resvg.spec
+        dnf5 install /github/home/rpmbuild/RPMS/*
+        cd ../nanoemoji
+        spectool -gR nanoemoji.spec
+        rpmbuild -bb nanoemoji.spec
+        dnf5 install /github/home/rpmbuild/RPMS/*
+        cd ../noto-color-emoji-fox
         spectool -gR google-noto-emoji-fonts.spec
         cp ./*.patch ./*.png $(rpm --eval=%{_sourcedir})
         rpmbuild -bb google-noto-emoji-fonts.spec
     - name: Upload Font
       uses: actions/upload-artifact@v4
       with:
-          name: font
+          name: RPMs
           path: |
             /github/home/rpmbuild/RPMS/*

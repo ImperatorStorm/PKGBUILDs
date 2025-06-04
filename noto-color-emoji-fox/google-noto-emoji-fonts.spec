@@ -5,11 +5,9 @@
 
 %global fontname google-noto-emoji
 
-%if (0%{?fedora} > 25)
-%global buildfont 1
-%else
+# The font build process need to download the code from the internet,
+# skip to build the font.
 %global buildfont 0
-%endif
 
 BuildRequires:  gcc
 BuildRequires:  fontpackages-devel
@@ -23,11 +21,12 @@ BuildRequires:  GraphicsMagick
 BuildRequires:  pngquant
 BuildRequires:  zopfli
 BuildRequires:  cairo-devel
+BuildRequires:  nanoemoji
 %endif
 BuildRequires:  make
 
-Version: 2.047
-Release: 2%{?dist}
+Version: 20241008
+Release: 3%{?dist}
 URL:     https://github.com/googlefonts/noto-emoji
 
 %global foundry           Google
@@ -49,18 +48,15 @@ URL:     https://github.com/googlefonts/noto-emoji
 Obsoletes:      google-noto-emoji-color-fonts < 20220916-6
 Provides:       google-noto-emoji-color-fonts = %{version}-%{release}
 }
-%global fonts0            NotoColorEmoji.ttf
+%global fonts0            Noto-COLRv1.ttf
 %global fontdescription0  %{expand:
 This package provides the Google “Noto Color Emoji” colored emoji font.
 }
 
 Source0:        https://github.com/googlefonts/noto-emoji/archive/%{commit0}.tar.gz#/noto-emoji-%{shortcommit0}.tar.gz
 
-Patch0:         noto-emoji-build-all-flags.patch
-Patch1:         noto-emoji-use-gm.patch
-Patch2:         noto-emoji-use-system-pngquant.patch
-Patch3:         0001-foxxo.patch
-Patch4:         0002-syrian-revolution-flag.patch
+Patch0:         0001-foxxo.patch
+Patch1:         0002-syrian-revolution-flag.patch
 
 %fontpkg -a
 
@@ -79,7 +75,7 @@ export LANG=C.UTF-8
 
 %make_build OPT_CFLAGS="$RPM_OPT_FLAGS" BYPASS_SEQUENCE_CHECK='True'
 %else
-cp -p fonts/NotoColorEmoji.ttf .
+cp -p fonts/Noto-COLRv1.ttf .
 %endif
 
 %fontbuild -a
