@@ -23,12 +23,13 @@ jobs:
         pacman -Syu --noconfirm namcap git
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-        chmod -R a+rw .
         BASEDIR="$PWD"
         git clone https://aur.archlinux.org/paru.git
+        chmod -R a+rw .
         cd paru
-        makepkg -si
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
+        sudo -u builder makepkg -si
+        cd ..
         sudo -u builder paru -S nanoemoji python-nototools --noconfirm --mflags --config=../makepkg.conf
         cd noto-color-emoji-fox
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
