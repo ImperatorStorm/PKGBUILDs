@@ -28,7 +28,7 @@ jobs:
         chmod -R a+rw .
         cd paru
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
-        sudo -u builder makepkg -si
+        sudo -u builder makepkg -si --sign --noconfirm --config=../makepkg.conf
         cd ..
         sudo -u builder paru -S nanoemoji python-nototools --noconfirm --mflags --config=../makepkg.conf
         cd noto-color-emoji-fox
