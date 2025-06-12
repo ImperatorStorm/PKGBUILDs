@@ -32,19 +32,3 @@ jobs:
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Namcap
       run: cd aseprite && namcap *.pkg.tar.zst
-    - name: Upload Packages
-      uses: actions/upload-artifact@v4
-      with:
-          name: packages
-          path: |
-            aseprite/*.zst
-            aseprite/*.zst.sig
-            !aseprite/*debug*.zst
-            !aseprite/*debug*.zst.sig
-    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
-    - uses: actions/upload-artifact@v4
-      with:
-          name: debug_packages
-          path: |
-            aseprite/*debug*.zst
-            aseprite/*debug*.zst.sig
