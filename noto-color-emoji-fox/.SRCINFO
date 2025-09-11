@@ -1,6 +1,6 @@
 pkgbase = noto-color-emoji-fox
 	pkgdesc = Google Noto Color Emoji font
-	pkgver = 20241008
+	pkgver = 2.048.r0.gb3e3051
 	pkgrel = 1
 	url = https://www.google.com/get/noto/
 	arch = any
@@ -16,13 +16,9 @@ pkgbase = noto-color-emoji-fox
 	makedepends = python-cairo
 	makedepends = imagemagick
 	provides = emoji-font
-	source = git+https://github.com/googlefonts/noto-emoji.git#commit=22e564626297b4df0a40570ad81d6c05cc7c38bd
+	source = git+https://github.com/googlefonts/noto-emoji.git#commit=b3e3051a088047d19fd4d49b1c3ac42fb8c3aaf8
 	source = 0001-foxxo.patch
-	source = 0002-syrian-revolution-flag.patch
-	source = SY.png
-	sha256sums = 49fc0a658a6acdb95977286f366f87d8061e15e36c571beb699ded852a04a0b1
-	sha256sums = fd56da9e11ff76cf1e7fb95a7bc076e90fb62116ac86818a2bcc8d3d7bf6c494
-	sha256sums = 1c23940138dafce79cd9dd7ea627b699a4e56d8e460d952d7d0477dee6e0317e
-	sha256sums = 6f7183330ddcdd8db979d7d94f990b87b06aafcb2cedaf260b5d39f2ba44537f
+	b2sums = 762b230b2a84228bf1adc6225fb501a2d9eee3349bf4fdbb316ad73763cda659e9dc5951e10e812c986c42e5da1f92c34a1ca16fe7d9178ccf46cdc87934b2a4
+	b2sums = 7486a043d46a30f4fe903dc4aae78184e0f4a34003421e9af5b1eb590748d433e2f7ee4b76f59724075065da83c4310fb0b6e9900fa3557fe3512c4c8b492967
 
 pkgname = noto-color-emoji-fox
