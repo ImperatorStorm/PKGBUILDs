@@ -1,6 +1,6 @@
 pkgbase = noto-color-emoji-fox
 	pkgdesc = Google Noto Color Emoji font
-	pkgver = 2.048.r0.gb3e3051
+	pkgver = 2.048.r2.g8998f5d
 	pkgrel = 1
 	url = https://www.google.com/get/noto/
 	arch = any
@@ -16,9 +16,9 @@ pkgbase = noto-color-emoji-fox
 	makedepends = python-cairo
 	makedepends = imagemagick
 	provides = emoji-font
-	source = git+https://github.com/googlefonts/noto-emoji.git#commit=b3e3051a088047d19fd4d49b1c3ac42fb8c3aaf8
+	source = git+https://github.com/googlefonts/noto-emoji.git#commit=8998f5dd683424a73e2314a8c1f1e359c19e8742
 	source = 0001-foxxo.patch
-	b2sums = 762b230b2a84228bf1adc6225fb501a2d9eee3349bf4fdbb316ad73763cda659e9dc5951e10e812c986c42e5da1f92c34a1ca16fe7d9178ccf46cdc87934b2a4
+	b2sums = d1a664ae0278965f100c5ee10b2a6dff5b9dd6903f8b1db4943c61647ed1bdbec435829cab585ed3936920f745514d48d1485f1c97266db2d6088d6e8ba3711b
 	b2sums = 7486a043d46a30f4fe903dc4aae78184e0f4a34003421e9af5b1eb590748d433e2f7ee4b76f59724075065da83c4310fb0b6e9900fa3557fe3512c4c8b492967
 
 pkgname = noto-color-emoji-fox
