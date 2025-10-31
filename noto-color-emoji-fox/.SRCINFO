@@ -1,7 +1,7 @@
 pkgbase = noto-color-emoji-fox
 	pkgdesc = Google Noto Color Emoji font
 	pkgver = 2.048.r2.g8998f5d
-	pkgrel = 2
+	pkgrel = 3
 	url = https://www.google.com/get/noto/
 	arch = any
 	license = OFL-1.1

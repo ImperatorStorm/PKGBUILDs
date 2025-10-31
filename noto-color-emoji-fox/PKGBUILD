@@ -2,7 +2,7 @@
 
 pkgname=noto-color-emoji-fox
 pkgver=2.048.r2.g8998f5d
-pkgrel=2
+pkgrel=3
 pkgdesc='Google Noto Color Emoji font'
 arch=(any)
 url='https://www.google.com/get/noto/'
@@ -57,5 +57,4 @@ package() {
   mkdir -p "$pkgdir"/usr/share/fonts/noto
   install -m644 fonts/Noto-COLRv1.ttf "$pkgdir"/usr/share/fonts/noto
 #   install -m644 fonts/Noto-COLRv1-noflags.ttf "$pkgdir"/usr/share/fonts/noto
-  install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
