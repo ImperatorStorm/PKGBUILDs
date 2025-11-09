@@ -1,0 +1,17 @@
+pkgbase = uzdoom-appimage
+	pkgdesc = UZDoom is a feature centric port for all Doom engine games, based on GZDoom, adding an advanced renderer and powerful scripting capabilities (Appimage)
+	pkgver = 4.14.3.rc1
+	pkgrel = 1
+	url = https://github.com/UZDoom/UZDoom
+	arch = x86_64
+	license = GPL-3.0-or-later
+	depends = zlib
+	depends = glibc
+	provides = uzdoom
+	conflicts = uzdoom
+	options = !strip
+	options = !debug
+	source = https://github.com/UZDoom/UZDoom/releases/download/4.14.3-rc1/Linux-UZDoom-4.14.3-rc1-x86_64.AppImage
+	sha256sums = 12af678fd9855723fda4319bf1dc833ae652e0ee4f792e9fc0f95df52372e932
+
+pkgname = uzdoom-appimage
