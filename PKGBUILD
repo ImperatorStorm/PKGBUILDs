@@ -4,10 +4,10 @@
 pkgname="uzdoom-appimage"
 pkgver=4.14.3.rc1
 _srctag=${pkgver%.*}-${pkgver##*.}
-pkgrel=2
+pkgrel=3
 pkgdesc="UZDoom is a feature centric port for all Doom engine games, based on GZDoom, adding an advanced renderer and powerful scripting capabilities (Appimage)"
 url="https://github.com/UZDoom/UZDoom"
-license=("GPL-3.0-or-later" "BSD-3-Clause" "LGPL-3.0-or-later" "License-Ref-DUMB" "bzip2-1.0.6" "0BSD" )
+license=("GPL-3.0-or-later" "BSD-3-Clause" "LGPL-3.0-or-later" "LicenseRef-DUMB" "bzip2-1.0.6" "0BSD" )
 arch=("x86_64")
 provides=("uzdoom")
 conflicts=("uzdoom")
