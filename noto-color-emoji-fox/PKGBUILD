@@ -1,4 +1,5 @@
-# Maintainer: Antonio Rojas <arojas@archlinux.org>
+# Maintainer: Imperator Storm <ImperatorStorm11@protonmail.com>
+# Contributor: Antonio Rojas <arojas@archlinux.org>
 
 pkgname=noto-color-emoji-fox
 pkgver=2.048.r2.g8998f5d
