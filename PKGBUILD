@@ -4,10 +4,10 @@
 pkgname="uzdoom-appimage"
 pkgver=4.14.3.rc1
 _srctag=${pkgver%.*}-${pkgver##*.}
-pkgrel=1
+pkgrel=2
 pkgdesc="UZDoom is a feature centric port for all Doom engine games, based on GZDoom, adding an advanced renderer and powerful scripting capabilities (Appimage)"
 url="https://github.com/UZDoom/UZDoom"
-license=("GPL-3.0-or-later")
+license=("GPL-3.0-or-later" "BSD-3-Clause" "LGPL-3.0-or-later" "License-Ref-DUMB" "bzip2-1.0.6" "0BSD" )
 arch=("x86_64")
 provides=("uzdoom")
 conflicts=("uzdoom")
@@ -24,4 +24,5 @@ package() {
   install -Dm755 "Linux-UZDoom-$_srctag-x86_64.AppImage" "$pkgdir/usr/bin/uzdoom"
   install -Dm644 "$srcdir/squashfs-root/org.zdoom.UZDoom.svg" -t "$pkgdir/usr/share/pixmaps/"
   install -Dm644 "$srcdir/squashfs-root/org.zdoom.UZDoom.desktop" -t "$pkgdir/usr/share/applications/"
+  install -Dm644 "$srcdir/squashfs-root/usr/share/doc/uzdoom/licenses/"* -t "$pkgdir/usr/share/licenses/uzdoom-appimage/"
 }
