@@ -4,8 +4,8 @@
 pkgbase=minizip-git
 pkgname=minizip-git
 pkgdesc="Fork of the popular zip manipulation library found in the zlib distribution."
-pkgver=4.0.10.r27.gf890d80
-pkgrel=3
+pkgver=4.0.10.r36.gbf92612
+pkgrel=1
 arch=('x86_64' 'aarch64' 'i686')
 license=('Zlib')
 url="https://github.com/zlib-ng/minizip-ng"
@@ -20,7 +20,7 @@ pkgver() {
 }
 
 build() {
-    mkdir ${srcdir}/${pkgbase}/build
+    mkdir -p ${srcdir}/${pkgbase}/build
     cd ${srcdir}/${pkgbase}/build
     cmake -DCMAKE_INSTALL_PREFIX=/usr \
         -DBUILD_SHARED_LIBS=ON \
@@ -29,7 +29,7 @@ build() {
         -DCMAKE_BUILD_TYPE=None \
         ..
     make
-    mkdir ${srcdir}/${pkgbase}/build-ng
+    mkdir -p ${srcdir}/${pkgbase}/build-ng
     cd ${srcdir}/${pkgbase}/build-ng
     cmake -DCMAKE_INSTALL_PREFIX=/usr \
         -DMZ_PROJECT_SUFFIX="-ng" \
