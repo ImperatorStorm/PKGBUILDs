@@ -27,7 +27,6 @@ jobs:
         BASEDIR="$PWD"
         cd quilt-server
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
-        sudo -u builder gpg --locate-keys torvalds@kernel.org gregkh@kernel.org
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Namcap
       run: cd quilt-server && namcap *.pkg.tar.zst

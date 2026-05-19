@@ -26,7 +26,7 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         cd quilt-server
-        sudo -u builder makepkg -s --noconfirm --skippgpcheck --config=../makepkg.conf
+        sudo -u builder makepkg -s --noconfirm --nosign --skippgpcheck --config=../makepkg.conf
     - name: Namcap
       run: cd quilt-server && namcap *.pkg.tar.zst
     - name: Upload Packages
