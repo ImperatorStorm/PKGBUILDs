@@ -35,7 +35,7 @@ jobs:
         BASEDIR="$PWD"
         cd repak
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
-        sudo -u builder env PATH="/usr/lib/sccache/bin:${PATH}" makepkg -s --sign --noconfirm --noarchive --config=../makepkg.conf
+        sudo -u builder env PATH="/usr/lib/sccache/bin:${PATH}" makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Namcap
       run: cd repak && namcap *.pkg.tar.zst
     - name: Upload Packages
