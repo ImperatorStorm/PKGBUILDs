@@ -23,6 +23,7 @@ jobs:
       with:
         path: |
           ~/.cache/sccache
+        key: ${{ runner.os }}-${{ hashFiles('**/makepkg.conf') }}
     - name: Makepkg
       run: |
         echo ${{ github.event.name }}
