@@ -17,13 +17,13 @@ jobs:
     container: archlinux/archlinux:base-devel
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
     - name: Cache sccache output
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           ~/.cache/sccache
-        key: ${{ runner.os }}-${{ hashFiles('**/makepkg.conf') }}
+        key: ${{ hashFiles('**/makepkg.conf') }}
     - name: Makepkg
       run: |
         echo ${{ github.event.name }}
@@ -34,6 +34,10 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         cd repak
+        sccache -s
+        sudo -u builder echo ${HOME}
+        sudo -u builder env PATH="/usr/lib/sccache/bin:${PATH}" whereis gcc
+        exit 1
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder env PATH="/usr/lib/sccache/bin:${PATH}" makepkg -s --sign --noconfirm --config=../makepkg.conf
     - name: Namcap
