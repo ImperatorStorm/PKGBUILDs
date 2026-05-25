@@ -24,14 +24,14 @@ jobs:
         path: |
           /github/home/.cache/sccache
         key: ${{ hashFiles('**/makepkg.conf') }}
-    - name: Set Path
-      run: |
+    - name: Add Sccache wrappers to PATH
+      run: |   
+        ./.ci/sccache-setup.sh
         echo "/usr/lib/sccache/bin" >> $GITHUB_PATH
     - name: Makepkg
       run: |
         echo ${{ github.event.name }}
         pacman -Syu --noconfirm namcap sccache which
-        ./.ci/sccache-setup.sh
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
