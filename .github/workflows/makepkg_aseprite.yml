@@ -30,10 +30,11 @@ jobs:
         ./.ci/sccache-setup.sh
     - name: Makepkg
       run: |
-        pacman -Syu --noconfirm --needed namcap sccache
+        pacman -Syu --noconfirm --needed sccache
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
+        chown -R builder:root /home/builder
         BASEDIR="$PWD"
         cd aseprite
         sudo -u builder makepkg -s --sign --noconfirm --noarchive --config=../makepkg.conf
