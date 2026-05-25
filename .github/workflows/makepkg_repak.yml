@@ -21,17 +21,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v6
     - name: Configure sccache
-      uses: actions/github-script@v7
-      with:
-        script: |
-          core.exportVariable('ACTIONS_RESULTS_URL', process.env.ACTIONS_RESULTS_URL || '');
-          core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
     - name: Add sccache wrappers to PATH
       run: |
+        pacman -Syu --noconfirm --needed sccache
         ./.ci/sccache-setup.sh
+    - name: Run sccache-cache
+      uses: mozilla-actions/sccache-action@v0.0.10
     - name: Makepkg
       run: |
-        pacman -Syu --noconfirm --needed namcap sccache
+        pacman -Syu --noconfirm --needed namcap
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
