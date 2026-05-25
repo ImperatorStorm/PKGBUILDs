@@ -39,9 +39,10 @@ jobs:
     - name: Namcap
       run: cd repak && namcap *.pkg.tar.zst
     - name: Upload Packages
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
           name: packages
+          compression-level: 0
           path: |
             repak/*.zst
             repak/*.zst.sig
