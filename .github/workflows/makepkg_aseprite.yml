@@ -37,6 +37,6 @@ jobs:
         chown -R builder:root /home/builder
         BASEDIR="$PWD"
         cd aseprite
-        sudo -u builder makepkg -s --sign --noconfirm --noarchive --config=../makepkg.conf
+        sudo -u builder makepkg -s --noconfirm --noarchive --config=../makepkg.conf
     # - name: Namcap
     #   run: cd aseprite && namcap *.pkg.tar.zst
