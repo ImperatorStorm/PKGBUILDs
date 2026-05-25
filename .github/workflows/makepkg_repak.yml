@@ -25,7 +25,7 @@ jobs:
           /github/home/.cache/sccache
         key: ${{ hashFiles('**/makepkg.conf') }}
     - name: Add Sccache wrappers to PATH
-      run: |   
+      run: |
         ./.ci/sccache-setup.sh
         echo "/usr/lib/sccache/bin" >> $GITHUB_PATH
     - name: Makepkg
@@ -37,6 +37,8 @@ jobs:
         chmod -R a+rw .
         BASEDIR="$PWD"
         cd repak
+        sudo -u builder ls /usr/lib/sccache/bin/
+        sudo -u builder echo $PATH
         sudo -u builder which rustc
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf

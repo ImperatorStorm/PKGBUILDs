@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 install -vdm 755 "/usr/lib/sccache/bin"
-local _prog
 for _prog in gcc g++ c++; do
   ln -vs /usr/bin/sccache "/usr/lib/sccache/bin/$_prog"
   ln -vs /usr/bin/sccache "/usr/lib/sccache/bin/$(uname -m)-$_prog"
