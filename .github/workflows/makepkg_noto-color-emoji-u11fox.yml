@@ -37,10 +37,10 @@ jobs:
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         BASEDIR="$PWD"
-        git clone https://aur.archlinux.org/paru-bin.git
+        git clone https://aur.archlinux.org/paru.git
         chmod -R a+rw .
         chown -R builder:root /home/builder
-        cd paru-bin
+        cd paru
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder makepkg -si --sign --noconfirm --config=../makepkg.conf
         cd ..
