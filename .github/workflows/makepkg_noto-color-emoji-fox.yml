@@ -1,14 +1,15 @@
-name: Makepkg CI - noto-color-emoji-fox
+name: Makepkg CI - noto-color-emoji-u11fox
 
 env:
   GPG_TTY: $(tty)
+  SCCACHE_CACHE_SIZE: 5G
 
 on:
   push:
     paths:
-        - "noto-color-emoji-fox/**"
+        - "noto-color-emoji-u11fox/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg_noto-color-emoji-fox.yml"
+        - ".github/workflows/makepkg_noto-color-emoji-u11fox.yml"
   workflow_dispatch:
 
 jobs:
@@ -17,13 +18,22 @@ jobs:
     container: archlinux/archlinux:base-devel
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
+    - name: Cache sccache output
+      uses: actions/cache@v5
+      with:
+        path: |
+          /home/builder/.cache/sccache
+        key: ${{ hashFiles('**/makepkg.conf') }}
+    - name: Add sccache wrappers to PATH
+      run: |
+        ./.ci/sccache-setup.sh
     - name: Makepkg
       run: |
         pacman-key --init
         pacman-key --add CI-pub.key
         pacman-key --lsign-key 6C1A7D4F8106E34F40AB35645FDA85C06EFB9086
-        pacman -Syu --noconfirm namcap git rust perl-rename
+        pacman -Syu --noconfirm --needed namcap git rust perl-rename sccache
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         BASEDIR="$PWD"
@@ -34,15 +44,15 @@ jobs:
         sudo -u builder makepkg -si --sign --noconfirm --config=../makepkg.conf
         cd ..
         sudo -u builder paru -S resvg nanoemoji python-nototools --noconfirm --failfast --nocheck --mflags --config=/__w/PKGBUILDs/PKGBUILDs/makepkg.conf
-        cd noto-color-emoji-fox
+        cd noto-color-emoji-u11fox
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
         perl-rename 's/://' *
     - name: Namcap
-      run: cd noto-color-emoji-fox && namcap *.pkg.tar.zst
+      run: cd noto-color-emoji-u11fox && namcap *.pkg.tar.zst
     - name: Upload Packages
       uses: actions/upload-artifact@v4
       with:
           name: packages
           path: |
-            noto-color-emoji-fox/*.zst
-            noto-color-emoji-fox/*.zst.sig
+            noto-color-emoji-u11fox/*.zst
+            noto-color-emoji-u11fox/*.zst.sig

@@ -1,14 +1,15 @@
 # Maintainer: Imperator Storm <ImperatorStorm11@protonmail.com>
 # Contributor: Antonio Rojas <arojas@archlinux.org>
 
-pkgname=noto-color-emoji-fox
+pkgname=noto-color-emoji-u11fox
 pkgver=2.048.r2.g8998f5d
-pkgrel=3
-pkgdesc='Google Noto Color Emoji font'
+pkgrel=1
+pkgdesc='Google Noto Color Emoji font (with unicode 11 :fox:)'
 arch=(any)
 url='https://www.google.com/get/noto/'
 license=(OFL-1.1)
 provides=(emoji-font noto-font-emoji)
+replaces=(noto-color-emoji-fox)
 makedepends=(git harfbuzz-utils nanoemoji python-nototools python-fonttools pngquant zopfli python-zopfli python-cairo imagemagick)
 source=(git+https://github.com/googlefonts/noto-emoji.git#commit=8998f5dd683424a73e2314a8c1f1e359c19e8742
         0001-foxxo.patch)
