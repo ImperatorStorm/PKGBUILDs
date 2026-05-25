@@ -3,6 +3,7 @@ name: Makepkg CI - aseprite
 env:
   GPG_TTY: $(tty)
   SCCACHE_CACHE_SIZE: 5G
+  SCCACHE_GHA_ENABLED: on
 
 on:
   push:
@@ -19,12 +20,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v6
-    - name: Cache sccache output
-      uses: actions/cache@v5
+    - name: Configure sccache
+      uses: actions/github-script@v7
       with:
-        path: |
-          /home/builder/.cache/sccache
-        key: ${{ hashFiles('**/makepkg.conf') }}
+        script: |
+          core.exportVariable('ACTIONS_RESULTS_URL', process.env.ACTIONS_RESULTS_URL || '');
+          core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
     - name: Add sccache wrappers to PATH
       run: |
         ./.ci/sccache-setup.sh
