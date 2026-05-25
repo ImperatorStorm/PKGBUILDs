@@ -22,14 +22,13 @@ jobs:
       uses: actions/cache@v5
       with:
         path: |
-          /github/home/.cache/sccache
+          $HOME/.cache/sccache
         key: ${{ hashFiles('**/makepkg.conf') }}
     - name: Add Sccache wrappers to PATH
       run: |
         ./.ci/sccache-setup.sh
     - name: Makepkg
       run: |
-        echo ${{ github.event.name }}
         pacman -Syu --noconfirm namcap sccache which
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -39,7 +38,7 @@ jobs:
         sudo -u builder which gcc
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
-        sudo -u builder du -hs $HOME/.cache/sccache
+        sudo -u builder sccache -s
     - name: Namcap
       run: cd repak && namcap *.pkg.tar.zst
     - name: Upload Packages
