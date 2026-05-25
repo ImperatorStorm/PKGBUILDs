@@ -20,12 +20,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v6
-    - name: Add sccache wrappers to PATH
-      run: |
-        pacman -Syu --noconfirm --needed sccache
-        ./.ci/sccache-setup.sh
     - name: Run sccache-cache
       uses: mozilla-actions/sccache-action@v0.0.10
+    - name: Add sccache compiler symlinks
+      run: |
+        ./.ci/sccache-setup.sh
     - name: Makepkg
       run: |
         pacman-key --init
