@@ -1,0 +1,23 @@
+pkgbase = autopkgtest
+	pkgdesc = automatic as-installed testing for Debian packages
+	pkgver = 5.39
+	pkgrel = 1
+	url = https://salsa.debian.org/ci-team/autopkgtest
+	arch = any
+	license = GPL-2.0-or-later
+	checkdepends = git
+	checkdepends = pre-commit
+	depends = fakeroot
+	depends = procps-ng
+	depends = python
+	depends = python-pycodestyle
+	depends = python-pyflakes
+	depends = python-debian
+	depends = python-docutils
+	depends = python-mock
+	provides = autopkgtest
+	conflicts = autopkgtest
+	source = https://salsa.debian.org/ci-team/autopkgtest/-/archive/debian/5.39/autopkgtest-debian-5.39.tar.gz
+	sha512sums = af608ff14dc78c819e29a3cb853ba2ed5a89848bad10edb7d8aef5e7c2bc92f8e81c5097992ae2d2d8208768002683d794fd03d3c45dd95ba83260f9eb308839
+
+pkgname = autopkgtest
