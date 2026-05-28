@@ -1,0 +1,26 @@
+pkgbase = piuparts
+	pkgdesc = .deb package installation, upgrading, and removal testing tool
+	pkgver = 1.6.0
+	pkgrel = 1
+	url = https://piuparts.debian.org/
+	arch = x86_64
+	arch = arm64
+	license = GPL-2.0-or-later
+	makedepends = go
+	depends = debsums
+	depends = lsof
+	depends = util-linux
+	depends = python-sphinx
+	depends = python-debian
+	depends = python-apt
+	depends = python-debianbts
+	depends = python-distro-info
+	depends = python-pytest
+	depends = python-sphinx
+	depends = python-yaml
+	source = https://deb.debian.org/debian/pool/main/p/piuparts/piuparts_1.6.0.tar.xz
+	sha256sums = 5d8d3e6d796337498e4e4d5a9a25b5ab3d1a07ce4650584710b19ac6ce765602
+
+pkgname = piuparts
+
+pkgname = piuparts-doc
