@@ -1,0 +1,14 @@
+pkgbase = perl-file-fnmatch
+	pkgdesc = Perl module that provides simple filename and pathname matching
+	pkgver = 0.02
+	pkgrel = 1
+	url = https://metacpan.org/dist/File-FnMatch
+	arch = x86_64
+	arch = arm64
+	license = Artistic-1.0-Perl OR GPL-1.0-or-later
+	depends = perl
+	options = !emptydirs
+	source = https://cpan.metacpan.org/authors/id/M/MJ/MJP/File-FnMatch-0.02.tar.gz
+	b2sums = 16701339747f9daf621bf2feb24a91ecb6df47d33093e6ff0aaebf35d472dab35d46e22cbb26f24b8effdfc257d159cd8680dfd7702c1a8714b39e48b9bf1244
+
+pkgname = perl-file-fnmatch

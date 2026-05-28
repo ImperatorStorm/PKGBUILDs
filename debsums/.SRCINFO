@@ -1,0 +1,15 @@
+pkgbase = debsums
+	pkgdesc = .deb package installation, upgrading, and removal testing tool
+	pkgver = 3.0.2.4
+	pkgrel = 1
+	url = https://debsums.debian.org/
+	arch = any
+	license = GPL-2.0-or-later
+	checkdepends = perl-test-command-simple
+	makedepends = po4a
+	depends = dpkg
+	depends = perl-file-fnmatch
+	source = https://deb.debian.org/debian/pool/main/d/debsums/debsums_3.0.2.4.tar.xz
+	sha256sums = ed960631eea07c494f802120d1810e5aaa92dc8a17517d9451d7314521c37495
+
+pkgname = debsums
