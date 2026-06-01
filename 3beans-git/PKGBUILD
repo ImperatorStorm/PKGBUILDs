@@ -1,7 +1,7 @@
 # Maintainer: Imperator Storm <imperatorstorm11@protonmail.com>
 pkgname=3beans-git
 pkgver=r234.059f190
-pkgrel=1
+pkgrel=2
 pkgdesc="A low-level 3DS emulator"
 arch=(x86_64 aarch64)
 url="https://github.com/Hydr8gon/3Beans"
@@ -38,5 +38,6 @@ build() {
 
 package() {
 	cd "$srcdir/3Beans"
-	make DESTDIR="$pkgdir/" install
+	mkdir -p "$pkgdir/usr/"
+	make DESTDIR="$pkgdir/usr/" install
 }
