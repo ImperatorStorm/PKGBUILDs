@@ -26,6 +26,9 @@ jobs:
         ./.ci/sccache-setup.sh
     - name: Makepkg
       run: |
+        pacman-key --init
+        pacman-key --add CI-pub.key
+        pacman-key --lsign-key 6C1A7D4F8106E34F40AB35645FDA85C06EFB9086
         pacman -Syu --noconfirm --needed namcap git
         git clone https://aur.archlinux.org/wxgtk-git.git
         useradd builder -m
