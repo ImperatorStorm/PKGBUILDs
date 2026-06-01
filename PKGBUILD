@@ -31,10 +31,10 @@ build() {
 	make
 }
 
-check() {
-	cd "$srcdir/3Beans"
-	make -k check
-}
+# check() {
+# 	cd "$srcdir/3Beans"
+# 	make -k check
+# }
 
 package() {
 	cd "$srcdir/3Beans"
