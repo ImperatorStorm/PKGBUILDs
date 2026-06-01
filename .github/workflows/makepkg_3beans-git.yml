@@ -1,4 +1,4 @@
-name: Makepkg CI - noto-color-emoji-u11fox
+name: Makepkg CI - 3beans-git
 
 env:
   GPG_TTY: $(tty)
@@ -7,9 +7,9 @@ env:
 on:
   push:
     paths:
-        - "noto-color-emoji-u11fox/**"
+        - "3beans-git/**"
         - "makepkg.conf"
-        - ".github/workflows/makepkg_noto-color-emoji-u11fox.yml"
+        - ".github/workflows/makepkg_3beans-git.yml"
   workflow_dispatch:
 
 jobs:
@@ -26,31 +26,26 @@ jobs:
         ./.ci/sccache-setup.sh
     - name: Makepkg
       run: |
-        pacman-key --init
-        pacman-key --add CI-pub.key
-        pacman-key --lsign-key 6C1A7D4F8106E34F40AB35645FDA85C06EFB9086
-        pacman -Syu --noconfirm --needed namcap git rust perl-rename
+        pacman -Syu --noconfirm --needed namcap
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-        BASEDIR="$PWD"
-        git clone https://aur.archlinux.org/paru.git
         chmod -R a+rw .
         chown -R builder:root /home/builder
-        cd paru
+        BASEDIR="$PWD"
+        git clone https://aur.archlinux.org/wxgtk-git.git
+        cd wxgtk-git
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder makepkg -si --sign --noconfirm --config=../makepkg.conf
-        cd ..
-        sudo -u builder paru -S resvg nanoemoji python-nototools --noconfirm --failfast --nocheck --mflags --config=/__w/PKGBUILDs/PKGBUILDs/makepkg.conf
-        cd noto-color-emoji-u11fox
+        cd ../3beans-git
         sudo -u builder makepkg -s --sign --noconfirm --config=../makepkg.conf
-        perl-rename 's/://' *
     - name: Namcap
-      run: cd noto-color-emoji-u11fox && namcap *.pkg.tar.zst
+      run: cd 3beans-git && namcap *.pkg.tar.zst
     - name: Upload Packages
       uses: actions/upload-artifact@v7
       with:
           name: packages
           compression-level: 0
           path: |
-            noto-color-emoji-u11fox/*.zst
-            noto-color-emoji-u11fox/*.zst.sig
+            3beans-git/*.zst
+            3beans-git/*.zst.sig
+    #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig

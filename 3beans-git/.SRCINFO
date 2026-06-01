@@ -1,0 +1,18 @@
+pkgbase = 3beans-git
+	pkgdesc = A low-level 3DS emulator
+	pkgver = r234.059f190
+	pkgrel = 1
+	url = https://github.com/Hydr8gon/3Beans
+	arch = x86_64
+	arch = aarch64
+	license = GPL-3.0-or-later
+	makedepends = git
+	depends = wxwidgets-gtk3-git
+	depends = portaudio
+	depends = libepoxy
+	provides = 3beans
+	conflicts = 3beans
+	source = git+https://github.com/Hydr8gon/3Beans.git
+	sha256sums = SKIP
+
+pkgname = 3beans-git
