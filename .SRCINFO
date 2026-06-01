@@ -1,7 +1,7 @@
 pkgbase = 3beans-git
 	pkgdesc = A low-level 3DS emulator
 	pkgver = r234.059f190
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/Hydr8gon/3Beans
 	arch = x86_64
 	arch = aarch64
