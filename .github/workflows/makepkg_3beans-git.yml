@@ -26,7 +26,7 @@ jobs:
         ./.ci/sccache-setup.sh
     - name: Makepkg
       run: |
-        pacman -Syu --noconfirm --needed namcap
+        pacman -Syu --noconfirm --needed namcap git
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         chmod -R a+rw .
@@ -46,6 +46,8 @@ jobs:
           name: packages
           compression-level: 0
           path: |
+            wxgtk-git/*.zst
+            wxgtk-git/*.zst.sig
             3beans-git/*.zst
             3beans-git/*.zst.sig
     #        ${{ steps.makepkg.outputs.pkgfile0 }}.sig
