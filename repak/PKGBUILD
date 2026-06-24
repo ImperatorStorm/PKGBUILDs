@@ -42,5 +42,5 @@ check() {
 
 package() {
 	cd $srcdir/repak
-    install -Dm0755 -t "$pkgdir/usr/bin/" "target/dist/repak"
+    install -Dm0755 -t "$pkgdir/usr/bin/" "target/release/repak"
 }
