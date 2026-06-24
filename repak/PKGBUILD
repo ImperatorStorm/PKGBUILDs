@@ -2,12 +2,12 @@
 
 pkgname=repak
 pkgver=0.2.3
-pkgrel=5
+pkgrel=6
 pkgdesc='Unreal Engine .pak file library and CLI in rust'
 url='https://github.com/trumank/repak'
 license=('Apache-2.0' 'MIT')
 makedepends=(cargo git)
-depends=(glibc libgcc zstd)
+depends=(glibc libgcc libzstd.so)
 options=(!lto)
 # unsure if repak actually supports 32bit architectures
 arch=(i686 x86_64 armv6h armv7h aarch64)
@@ -31,7 +31,7 @@ build() {
 	cd $srcdir/repak
     export RUSTUP_TOOLCHAIN=stable
     export CARGO_TARGET_DIR=target
-    cargo build --frozen --profile dist --all-features
+    cargo build --frozen --release --all-features
 }
 
 check() {

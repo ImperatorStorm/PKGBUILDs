@@ -1,0 +1,26 @@
+pkgbase = noto-color-emoji-u11fox
+	pkgdesc = Google Noto Color Emoji font (with unicode 11 :fox:)
+	pkgver = 2.051.r0.g8998f5d
+	pkgrel = 1
+	url = https://www.google.com/get/noto/
+	arch = any
+	license = OFL-1.1
+	makedepends = git
+	makedepends = harfbuzz-utils
+	makedepends = nanoemoji
+	makedepends = python-nototools
+	makedepends = python-fonttools
+	makedepends = pngquant
+	makedepends = zopfli
+	makedepends = python-zopfli
+	makedepends = python-cairo
+	makedepends = imagemagick
+	provides = emoji-font
+	provides = noto-font-emoji
+	replaces = noto-color-emoji-fox
+	source = git+https://github.com/googlefonts/noto-emoji.git#commit=8998f5dd683424a73e2314a8c1f1e359c19e8742
+	source = 0001-foxxo.patch
+	b2sums = d1a664ae0278965f100c5ee10b2a6dff5b9dd6903f8b1db4943c61647ed1bdbec435829cab585ed3936920f745514d48d1485f1c97266db2d6088d6e8ba3711b
+	b2sums = 7486a043d46a30f4fe903dc4aae78184e0f4a34003421e9af5b1eb590748d433e2f7ee4b76f59724075065da83c4310fb0b6e9900fa3557fe3512c4c8b492967
+
+pkgname = noto-color-emoji-u11fox

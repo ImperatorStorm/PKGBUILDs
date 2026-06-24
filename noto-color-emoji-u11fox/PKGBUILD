@@ -2,7 +2,7 @@
 # Contributor: Antonio Rojas <arojas@archlinux.org>
 
 pkgname=noto-color-emoji-u11fox
-pkgver=2.048.r2.g8998f5d
+pkgver=2.051.r0.g8998f5d
 pkgrel=1
 pkgdesc='Google Noto Color Emoji font (with unicode 11 :fox:)'
 arch=(any)
