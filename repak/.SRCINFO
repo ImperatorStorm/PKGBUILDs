@@ -1,7 +1,7 @@
 pkgbase = repak
 	pkgdesc = Unreal Engine .pak file library and CLI in rust
 	pkgver = 0.2.3
-	pkgrel = 6
+	pkgrel = 7
 	url = https://github.com/trumank/repak
 	arch = i686
 	arch = x86_64
@@ -14,9 +14,13 @@ pkgbase = repak
 	makedepends = git
 	depends = glibc
 	depends = libgcc
-	depends = libzstd.so
+	depends = zstd
 	options = !lto
 	source = git+https://github.com/trumank/repak#tag=v0.2.3
 	sha256sums = 2ec9119bdc58cbdede7f2ebfcc1d0a8324c587918bbe3fdf880d5af252fd26cb
 
 pkgname = repak
+	depends = glibc
+	depends = libgcc
+	depends = zstd
+	depends = libzstd.so
