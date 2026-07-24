@@ -1,0 +1,3 @@
+[perl-file-fnmatch]
+source = "cpan"
+cpan= "File-FnMatch"

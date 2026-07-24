@@ -1,0 +1,3 @@
+[debsums]
+source = "debianpkg"
+debianpkg = "debsums"
