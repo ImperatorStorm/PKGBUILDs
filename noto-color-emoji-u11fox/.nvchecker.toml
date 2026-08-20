@@ -1,0 +1,4 @@
+[noto-color-emoji-u11fox]
+source = "git"
+git = "https://github.com/googlefonts/noto-emoji.git"
+prefix = "v"
