@@ -3,6 +3,7 @@ name: Makepkg CI - aseprite
 env:
   GPG_TTY: $(tty)
   SCCACHE_GHA_ENABLED: on
+  SCCACHE_CLIENT_SIDE: true
 
 on:
   push:
