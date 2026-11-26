@@ -43,21 +43,21 @@ prepare() {
 build() {
   cd noto-emoji
   make BYPASS_SEQUENCE_CHECK='True' VIRTUAL_ENV=1
-  mv *.ttf 2D/fonts/
-  python drop_flags.py 2D/fonts/NotoColorEmoji.ttf
+  mv *.ttf fonts/
+  python drop_flags.py fonts/NotoColorEmoji.ttf
   python colrv1_generate_configs.py
   cd colrv1
   rm -rf build/
   nanoemoji *.toml
   cd ..
-  cp colrv1/build/NotoColorEmoji.ttf 2D/fonts/Noto-COLRv1.ttf
-  cp colrv1/build/NotoColorEmoji-noflags.ttf 2D/fonts/Noto-COLRv1-noflags.ttf
+  cp colrv1/build/NotoColorEmoji.ttf fonts/Noto-COLRv1.ttf
+  cp colrv1/build/NotoColorEmoji-noflags.ttf fonts/Noto-COLRv1-noflags.ttf
   python colrv1_postproc.py
   hb-subset --unicodes-file=flags-only-unicodes.txt \
-   --output-file=2D/fonts/NotoColorEmoji-flagsonly.ttf \
-   2D/fonts/NotoColorEmoji.ttf
+   --output-file=fonts/NotoColorEmoji-flagsonly.ttf \
+   fonts/NotoColorEmoji.ttf
   python update_flag_name.py
-  cp 2D/fonts/NotoColorEmoji.ttf .
+  cp fonts/NotoColorEmoji.ttf .
 }
 
 package_noto-fonts-emoji-u11fox() {
