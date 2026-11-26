@@ -64,6 +64,7 @@ package_noto-fonts-emoji-u11fox() {
 }
 
 package_noto-fonts-emoji-u11fox-3d() {
-  install -Dm644 Noto-3D-192.ttf -t "$pkgdir"/usr/share/fonts/noto
+ #TODO: NYI Upstream????????????????????????????
+  # install -Dm644 Noto-3D-192.ttf -t "$pkgdir"/usr/share/fonts/noto
   install -Dm644 noto-fons-emoji.LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
