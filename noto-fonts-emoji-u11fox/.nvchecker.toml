@@ -1,0 +1,7 @@
+[noto-color-emoji-u11fox]
+source = 'github'
+github = 'googlefonts/noto-emoji'
+use_latest_release= 'true'
+prefix = 'v'
+from_pattern = '(\d+)-(\d+)-(\d+)-.*'
+to_pattern = '\1\2\3'

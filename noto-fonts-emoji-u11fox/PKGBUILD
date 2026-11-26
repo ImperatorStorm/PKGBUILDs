@@ -1,20 +1,25 @@
 # Maintainer: Imperator Storm <ImperatorStorm11@protonmail.com>
 # Contributor: Antonio Rojas <arojas@archlinux.org>
 
-pkgname=noto-color-emoji-u11fox
-pkgver=2.051.r0.g8998f5d
+pkgname=(
+noto-fonts-emoji-u11fox
+noto-fonts-emoji-u11fox-3d
+)
+pkgver=20260924
 pkgrel=1
 pkgdesc='Google Noto Color Emoji font (with unicode 11 :fox:)'
 arch=(any)
 url='https://www.google.com/get/noto/'
 license=(OFL-1.1)
 provides=(emoji-font noto-font-emoji)
-replaces=(noto-color-emoji-fox)
+replaces=(noto-color-emoji-fox noto-color-emoji-u11fox)
 makedepends=(git harfbuzz-utils nanoemoji python-nototools python-fonttools pngquant zopfli python-zopfli python-cairo imagemagick)
-source=(git+https://github.com/googlefonts/noto-emoji.git#commit=8998f5dd683424a73e2314a8c1f1e359c19e8742
+source=(git+https://github.com/googlefonts/noto-emoji.git#commit=e20cbc2bbec1926686be9f9bee7d1d2cfa1fea0e
+        https://github.com/googlefonts/noto-emoji/commit/99701e07d3d1fe1bdbcdb14964547f0fd592966f.patch
         0001-foxxo.patch)
-b2sums=('d1a664ae0278965f100c5ee10b2a6dff5b9dd6903f8b1db4943c61647ed1bdbec435829cab585ed3936920f745514d48d1485f1c97266db2d6088d6e8ba3711b'
-        '7486a043d46a30f4fe903dc4aae78184e0f4a34003421e9af5b1eb590748d433e2f7ee4b76f59724075065da83c4310fb0b6e9900fa3557fe3512c4c8b492967')
+b2sums=('7e9b1c68f51c87bc34b1780726c24e6423e1220bb82a27b4ee1fa8427a0a792467a6fb246347feba2306f66557943fa38260764bf0785667c4c9696806b42c0c'
+        'e85fb8f0acaad98b16d7239585c163ad2fed5ea6ef5cc001eeeb5f49658706650439f4767fcc5694fbccb94d561ce8bc9c803b36b271477bb305466eee11829b'
+        '563fa4dbed0de673554e6841b6690604fb0329109cfe2600ed8ca704cc54ae21c9d0688976f46ad4a28532ba693be11e673c0b0054b4a18d916435760bcc1dc0')
 pkgver() {
   cd noto-emoji
   git describe --long --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
@@ -53,10 +58,12 @@ build() {
   python update_flag_name.py
 }
 
-package() {
-  cd noto-emoji
+package_noto-fonts-emoji-u11fox() {
+  install -Dm644 NotoColorEmoji.ttf -t "$pkgdir"/usr/share/fonts/noto
+  install -Dm644 noto-fons-emoji.LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}
 
-  mkdir -p "$pkgdir"/usr/share/fonts/noto
-  install -m644 fonts/Noto-COLRv1.ttf "$pkgdir"/usr/share/fonts/noto
-#   install -m644 fonts/Noto-COLRv1-noflags.ttf "$pkgdir"/usr/share/fonts/noto
+package_noto-fonts-emoji-u11fox-3d() {
+  install -Dm644 Noto-3D-192.ttf -t "$pkgdir"/usr/share/fonts/noto
+  install -Dm644 noto-fons-emoji.LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
 }
