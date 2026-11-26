@@ -6,6 +6,7 @@ pkgbase = noto-fonts-emoji-u11fox
 	arch = any
 	license = OFL-1.1
 	makedepends = git
+	makedepends = python-setuptools
 	makedepends = harfbuzz-utils
 	makedepends = nanoemoji
 	makedepends = python-nototools
