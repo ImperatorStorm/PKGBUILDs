@@ -34,7 +34,8 @@ prepare() {
     src="${src%.zst}"
     [[ $src = *.patch ]] || continue
     echo "Applying patch $src..."
-    patch -Np1 < "../$src"
+    # patch -Np1 < "../$src"
+    git apply < "../$src"
   done
   rm -rf third_party/pngquant fonts/*.ttf
 }
