@@ -30,6 +30,7 @@ jobs:
         pacman-key --init
         pacman-key --add CI-pub.key
         pacman-key --lsign-key 6C1A7D4F8106E34F40AB35645FDA85C06EFB9086
+        echo "[alerque]\nServer = https://arch.alerque.com/$arch" | tee -a /etc/pacman.conf
         pacman -Syu --noconfirm --needed namcap git rust perl-rename
         useradd builder -m
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -37,7 +38,6 @@ jobs:
         git clone https://aur.archlinux.org/paru.git
         chmod -R a+rw .
         chown -R builder:root /home/builder
-        echo "[alerque]\nServer = https://arch.alerque.com/$arch" | tee -a /etc/pacman.conf
         cd paru
         sudo -u builder echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | sudo -u builder base64 --decode | sudo -u builder gpg --import --batch --no-tty
         sudo -u builder makepkg -si --sign --noconfirm --config=../makepkg.conf
